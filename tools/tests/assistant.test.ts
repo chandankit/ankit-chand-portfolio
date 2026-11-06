@@ -223,6 +223,11 @@ test("validator still rejects the hallucinations the benchmark caught", () => {
   }
   // A project name quoted from the evidence is not an employer claim.
   assert.equal(validateAnswer("He worked on RAG-Powered QA for Medical Research [1].", ev, "q", known, employers).ok, true);
+  // …even when the next sentence starts with a capitalised word (final-run false alarm).
+  assert.equal(validateAnswer("He worked on RAG-Powered QA for Medical Research.   This project used FAISS [1].", ev, "q", known, employers).ok, true);
+  assert.equal(validateAnswer("He worked for Medical Research.\nThis shows his RAG skills [1].", ev, "q", known, employers).ok, true);
+  // A real invented employer is still caught in the same shape.
+  assert.equal(validateAnswer("He worked at Google. This was his first job [1].", ev, "q", known, employers).ok, false);
 });
 
 test("validator rejects citations that point at no evidence", () => {

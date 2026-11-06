@@ -96,6 +96,8 @@ export default function AskPage() {
           <AssistantChat variant="page" />
         </section>
         <aside className="space-y-6">
+          {/* The diagram's stage titles are h3s; give them a parent heading (the visible title is a span). */}
+          <h2 className="sr-only">How the assistant answers a question</h2>
           <ArchitectureDiagram architecture={architecture} />
           <div className="card space-y-4 p-5 text-sm">
             <h2 className="font-display text-lg font-semibold text-fg">Zero paid AI, three tiers</h2>

@@ -10,7 +10,7 @@ A fast, accessible, content-driven site built with **Next.js 16 (App Router), Ty
 | ![Home page, dark theme](docs/screenshots/01-desktop-home.webp) | ![Home page on a phone](docs/screenshots/16-phone-home.webp) |
 | ![NexusAI case study with interactive architecture diagram](docs/screenshots/05-desktop-nexusai-architecture.webp) | ![Mobile navigation menu](docs/screenshots/17-phone-menu.webp) |
 
-Lighthouse: **Accessibility 100 · Best practices 100 · SEO 100** on every page tested; desktop performance 93–100. More screenshots in [docs/screenshots](docs/screenshots).
+Lighthouse (production, desktop): **Accessibility 100 · Best practices 100 · SEO 100**; performance 98 on the home page and 80–91 on the heaviest case-study page on a throttled test laptop. Fresh-profile browser QA: **28/28 scenarios clean** on production. More screenshots in [docs/screenshots](docs/screenshots).
 
 ## Features
 

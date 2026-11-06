@@ -44,7 +44,7 @@ if (final) {
   if (failures.length) out.push("### Every replaced or wrong answer", "", "| Model | Case | Outcome | Validator findings |", "|---|---|---|---|", ...failures, "");
 } else out.push("## Final run", "", "_Not run yet._", "");
 if (speed) {
-  out.push(`## CPU speed (standardised) — ${speed.runAt.slice(0, 16).replace("T", " ")} UTC`, "", `${speed.tool}. ${speed.hardware}. Speeds in the quality tables above are lower because they were measured on real ~850-token prompts while the machine was busy; use these for comparison.`, "", "| Model | GGUF size | Prefill (pp512) tok/s | Decode (tg128) tok/s |", "|---|---|---|---|");
+  out.push(`## CPU speed (standardised) — ${speed.runAt.slice(0, 16).replace("T", " ")} UTC`, "", `${speed.tool}. ${speed.hardware}. Speeds in the quality tables above are lower because they were measured on real ~850-token prompts while the machine was busy; use these for comparison. Large ± values mean the laptop CPU was throttling or shared during the measurement (e.g. prefill for the 1.5B model coming out faster than for the 1B model is not physically plausible), so read them as a rough ranking, not absolute numbers.`, "", "| Model | GGUF size | Prefill (pp512) tok/s | Decode (tg128) tok/s |", "|---|---|---|---|");
   for (const r of speed.results) out.push(`| ${r.model} | ${r.sizeMB} MB | ${r.prefillTokS} ± ${r.prefillStd} | ${r.decodeTokS} ± ${r.decodeStd} |`);
   out.push("");
 }

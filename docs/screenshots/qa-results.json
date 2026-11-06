@@ -1,203 +1,201 @@
 {
-  "base": "http://localhost:3000",
+  "base": "https://ankit-chand-portfolio.vercel.app",
   "browser": "msedge.exe",
   "freshInPrivateProfile": true,
-  "runAt": "2026-11-06T12:54:36.415Z",
+  "runAt": "2026-11-06T13:31:21.681Z",
   "results": [
     {
       "name": "01-desktop-home",
-      "url": "http://localhost:3000/",
+      "url": "https://ankit-chand-portfolio.vercel.app/",
       "device": "1440x900",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "02-desktop-home-full",
-      "url": "http://localhost:3000/",
+      "url": "https://ankit-chand-portfolio.vercel.app/",
       "device": "1440x900",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "03-desktop-projects",
-      "url": "http://localhost:3000/projects",
+      "url": "https://ankit-chand-portfolio.vercel.app/projects",
       "device": "1440x900",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "04-desktop-projects-filtered",
-      "url": "http://localhost:3000/projects?category=Agentic%20AI",
+      "url": "https://ankit-chand-portfolio.vercel.app/projects?category=Agentic%20AI",
       "device": "1440x900",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "05-desktop-nexusai-architecture",
-      "url": "http://localhost:3000/projects/nexusai",
+      "url": "https://ankit-chand-portfolio.vercel.app/projects/nexusai",
       "device": "1440x900",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "06-desktop-experience",
-      "url": "http://localhost:3000/experience",
+      "url": "https://ankit-chand-portfolio.vercel.app/experience",
       "device": "1440x900",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "07-desktop-skills-explorer",
-      "url": "http://localhost:3000/skills",
+      "url": "https://ankit-chand-portfolio.vercel.app/skills",
       "device": "1440x900",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "08-desktop-certification-dialog",
-      "url": "http://localhost:3000/certifications",
+      "url": "https://ankit-chand-portfolio.vercel.app/certifications",
       "device": "1440x900",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "09-desktop-command-palette",
-      "url": "http://localhost:3000/",
+      "url": "https://ankit-chand-portfolio.vercel.app/",
       "device": "1440x900",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "10-desktop-resume",
-      "url": "http://localhost:3000/resume",
+      "url": "https://ankit-chand-portfolio.vercel.app/resume",
       "device": "1440x900",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "11-desktop-contact",
-      "url": "http://localhost:3000/contact",
+      "url": "https://ankit-chand-portfolio.vercel.app/contact",
       "device": "1440x900",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "12-desktop-knowledge-article",
-      "url": "http://localhost:3000/knowledge/routing-before-reasoning",
+      "url": "https://ankit-chand-portfolio.vercel.app/knowledge/routing-before-reasoning",
       "device": "1440x900",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "13-desktop-light-theme",
-      "url": "http://localhost:3000/",
+      "url": "https://ankit-chand-portfolio.vercel.app/",
       "device": "1440x900",
       "theme": "light",
       "problems": []
     },
     {
       "name": "14-tablet-about",
-      "url": "http://localhost:3000/about",
+      "url": "https://ankit-chand-portfolio.vercel.app/about",
       "device": "820x1180 (mobile)",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "15-tablet-achievements",
-      "url": "http://localhost:3000/achievements",
+      "url": "https://ankit-chand-portfolio.vercel.app/achievements",
       "device": "820x1180 (mobile)",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "16-phone-home",
-      "url": "http://localhost:3000/",
+      "url": "https://ankit-chand-portfolio.vercel.app/",
       "device": "390x844 (mobile)",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "17-phone-menu",
-      "url": "http://localhost:3000/",
+      "url": "https://ankit-chand-portfolio.vercel.app/",
       "device": "390x844 (mobile)",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "18-phone-project",
-      "url": "http://localhost:3000/projects/intellihub",
+      "url": "https://ankit-chand-portfolio.vercel.app/projects/intellihub",
       "device": "390x844 (mobile)",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "19-phone-projects",
-      "url": "http://localhost:3000/projects",
+      "url": "https://ankit-chand-portfolio.vercel.app/projects",
       "device": "390x844 (mobile)",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "20-phone-contact-light",
-      "url": "http://localhost:3000/contact",
+      "url": "https://ankit-chand-portfolio.vercel.app/contact",
       "device": "390x844 (mobile)",
       "theme": "light",
       "problems": []
     },
     {
       "name": "21-not-found",
-      "url": "http://localhost:3000/this-page-does-not-exist",
+      "url": "https://ankit-chand-portfolio.vercel.app/this-page-does-not-exist",
       "device": "1440x900",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "22-desktop-ask-page",
-      "url": "http://localhost:3000/ask",
+      "url": "https://ankit-chand-portfolio.vercel.app/ask",
       "device": "1440x900",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "23-desktop-assistant-answer",
-      "url": "http://localhost:3000/",
+      "url": "https://ankit-chand-portfolio.vercel.app/",
       "device": "1440x900",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "24-desktop-assistant-guardrail",
-      "url": "http://localhost:3000/ask",
+      "url": "https://ankit-chand-portfolio.vercel.app/ask",
       "device": "1440x900",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "25-desktop-recruiter-mode",
-      "url": "http://localhost:3000/?mode=recruiter",
+      "url": "https://ankit-chand-portfolio.vercel.app/?mode=recruiter",
       "device": "1440x900",
       "theme": "dark",
-      "problems": [
-        "expected text not found: /View:s*Recruiter/"
-      ]
+      "problems": []
     },
     {
       "name": "26-desktop-project-summary-view",
-      "url": "http://localhost:3000/projects/intellihub?mode=recruiter",
+      "url": "https://ankit-chand-portfolio.vercel.app/projects/intellihub?mode=recruiter",
       "device": "1440x900",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "27-phone-assistant-answer",
-      "url": "http://localhost:3000/",
+      "url": "https://ankit-chand-portfolio.vercel.app/",
       "device": "390x844 (mobile)",
       "theme": "dark",
       "problems": []
     },
     {
       "name": "28-desktop-admin-disabled",
-      "url": "http://localhost:3000/admin/login",
+      "url": "https://ankit-chand-portfolio.vercel.app/admin/login",
       "device": "1440x900",
       "theme": "dark",
       "problems": []

@@ -29,6 +29,8 @@ So the assistant has **three tiers that share one pipeline**:
 
 If tier B or C is unavailable, slow, hung or wrong, the visitor still gets a tier-A answer — and is told so.
 
+Tier C was verified end to end on this machine with a real model: `llama-server` (Qwen2.5-0.5B, `--api-key`) behind the site's proxy answered *“Does he have experience with RAG?”* in `llm` mode, validated with no issues, in 36 s on the laptop CPU; the upstream refused unauthenticated requests (401) and `/api/assistant/status` reported only the label.
+
 ## 2. Pipeline
 
 ```mermaid
@@ -86,7 +88,17 @@ Nine personas (Recruiter, Data Science, ML, GenAI, Agentic AI, Student, Collabor
 
 Selection rule from the brief: *the smallest model that is reliable*. Candidates (all open-weight, permissive or community licences): Qwen2.5-0.5B, Gemma-3-1B, Llama-3.2-1B, Qwen2.5-1.5B, Qwen3-1.7B. Measured results are in **[benchmarks/README.md](benchmarks/README.md)** (generated from the raw JSON in the same folder).
 
-How to read the numbers: because the validator replaces any draft that fails a fact check, *final* correctness is high for every model; the differentiator is **how often the model's own answer survives validation** and its speed. The chosen default is recorded in `src/lib/assistant/models.ts` (`DEFAULT_BROWSER_MODEL_ID`) with the justification next to it.
+How to read the numbers: because the validator replaces any draft that fails a fact check, *final* correctness is high for every model; the differentiator is **how often the model's own answer survives validation** and its speed.
+
+| Model (Q4_K_M) | Final answers correct | Own drafts accepted by the validator | Unknowns declined | Decode tok/s (llama-bench, CPU) | Download (WebLLM) |
+|---|---|---|---|---|---|
+| **Qwen2.5-0.5B-Instruct** — default | 35/35 | **97 %** | 3/3 | 14.3 | ~290 MB |
+| Llama-3.2-1B-Instruct | 35/35 | 85 % | 3/3 | 8.5 | ~700 MB |
+| Qwen2.5-1.5B-Instruct | 33/35 (preliminary run) | 79 % (preliminary) | 3/3 | 7.0 | ~880 MB |
+| Gemma-3-1B-it | 33/35 (preliminary run) | 61 % (preliminary) | 2/3 | 10.8 | not offered |
+| Qwen3-1.7B | not evaluated for quality | — | — | 6.9 | not offered |
+
+**Decision: Qwen2.5-0.5B-Instruct** (Apache-2.0) is the default. It is the smallest candidate, the fastest, the cheapest for visitors to download, and its drafts survived validation most often. Bigger models wrote slightly richer answers (higher keyword coverage) but were more often caught declining despite evidence or inventing names. The preliminary rows were measured before the validator's false-alarm fixes and on a busier machine, so they understate those models somewhat; the run was stopped there because at this laptop's throttled speed each extra model took 2–3 hours. Recorded in `src/lib/assistant/models.ts` (`DEFAULT_BROWSER_MODEL_ID`).
 
 ### Inference engines considered
 

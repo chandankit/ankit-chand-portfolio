@@ -84,10 +84,11 @@ export function validateAnswer(answer: string, evidence: Chunk[], question: stri
 
   // 4) employment claims: "worked at/for X" must name one of Ankit's actual employers,
   //    unless the phrase is quoted from the evidence ("…QA for Medical Research").
-  const EMPLOY = /\b(work(?:ed|s|ing)?|employ(?:ed)?|intern(?:ed|ing)?|join(?:ed)?)\b[^.\n]{0,20}?\b(at|for)\s+((?:[A-Z][\w&.\-]*)(?:\s+[A-Z][\w&.\-]*){0,4})/g;
+  // The organisation name stays on one line and stops at a sentence end ("Research. This…").
+  const EMPLOY = /\b(work(?:ed|s|ing)?|employ(?:ed)?|intern(?:ed|ing)?|join(?:ed)?)\b[^.\n]{0,20}?\b(at|for)[ \t]+((?:[A-Z][\w&.\-]*)(?:[ \t]+[A-Z][\w&.\-]*){0,4})/g;
   const employerKeys = employers.map((e) => e.toLowerCase().split(/\s+/)[0]);
   for (const m of body.matchAll(EMPLOY)) {
-    const org = m[3].replace(/[.\-]+$/, "");
+    const org = m[3].split(/\.[ \t]/)[0].replace(/[.\-]+$/, "");
     const first = org.toLowerCase().split(/\s+/)[0];
     if (/^(ankit|he|his|the|this|a|an)$/.test(first)) continue;
     const quoted = evidenceLower.includes(`${m[2]} ${org.toLowerCase()}`);

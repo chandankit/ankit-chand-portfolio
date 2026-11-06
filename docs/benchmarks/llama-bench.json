@@ -1,0 +1,58 @@
+{
+  "runAt": "2026-11-06T13:52:15.370Z",
+  "tool": "llama-bench (llama.cpp), -t 4 -p 512 -n 128 -r 3, CPU only",
+  "hardware": "Intel(R) Core(TM) i7-8665U CPU @ 1.90GHz, 16 GB RAM",
+  "cpuLoadAfterRunPct": 39,
+  "results": [
+    {
+      "model": "Qwen2.5-0.5B-Instruct",
+      "file": "qwen2.5-0.5b-instruct-q4_k_m.gguf",
+      "sizeMB": 463,
+      "params": 630167424,
+      "prefillTokS": 81.7,
+      "prefillStd": 3,
+      "decodeTokS": 14.3,
+      "decodeStd": 6.3
+    },
+    {
+      "model": "Gemma-3-1B-it",
+      "file": "gemma-3-1b-it-Q4_K_M.gguf",
+      "sizeMB": 762,
+      "params": 999885952,
+      "prefillTokS": 24.7,
+      "prefillStd": 11.2,
+      "decodeTokS": 10.8,
+      "decodeStd": 0.6
+    },
+    {
+      "model": "Llama-3.2-1B-Instruct",
+      "file": "Llama-3.2-1B-Instruct-Q4_K_M.gguf",
+      "sizeMB": 763,
+      "params": 1235814432,
+      "prefillTokS": 29.6,
+      "prefillStd": 4.8,
+      "decodeTokS": 8.5,
+      "decodeStd": 0.5
+    },
+    {
+      "model": "Qwen2.5-1.5B-Instruct",
+      "file": "qwen2.5-1.5b-instruct-q4_k_m.gguf",
+      "sizeMB": 1060,
+      "params": 1777088000,
+      "prefillTokS": 50.3,
+      "prefillStd": 0.5,
+      "decodeTokS": 7,
+      "decodeStd": 1.4
+    },
+    {
+      "model": "Qwen3-1.7B",
+      "file": "Qwen3-1.7B-Q4_K_M.gguf",
+      "sizeMB": 1050,
+      "params": 1720574976,
+      "prefillTokS": 25.3,
+      "prefillStd": 13.2,
+      "decodeTokS": 6.9,
+      "decodeStd": 2.3
+    }
+  ]
+}

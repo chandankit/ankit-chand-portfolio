@@ -32,13 +32,20 @@ In-app Chromium 152 and Microsoft Edge 156.
 | Failure handling for that GPU: capability probe rejects the model 20 s after loading with a clear message and doesn't save it; if a model hangs mid-answer, the watchdog answers from verified evidence in 30.8 s with the notice “AI model didn't respond — showing the verified instant answer” and switches back to instant mode | **pass** |
 | `/admin/login` without configuration shows “Admin features are disabled…”, `noindex, nofollow`; `/admin/photo` redirects | **pass** |
 | Photo Studio with throwaway test credentials on a local server: wrong password message; sign-in; 64×64 PNG rejected with size message; SVG rejected; 800×800 JPEG loaded; zoom changes the exported crop; publish disabled until approved, case-sensitive `PUBLISH` gate; approval withdrawn when the crop changes; publish/enhance disabled with “not connected” notes; download of the approved image offered; sign-out returns to login | **pass** |
-| Fresh InPrivate profile QA (`npm run qa`, 28 scenarios incl. assistant answers, guardrail, modes, phone, admin) | Local build: 27/28 on the full run; the one failure was the test's own regex (an unescaped `\s` in the assertion) — the page was correct (screenshot 25). After fixing the assertion the scenario passes (re-run with `QA_ONLY=25`). Visual review of the screenshots then found duplicate action buttons and an ungrammatical placeholder; both fixed, scenarios 23 and 27 re-run clean. |
-| Lighthouse | Pending — run against the deployment. |
-| Production deployment, fresh session | Pending — verified after deployment. |
+| Fresh InPrivate profile QA (`npm run qa`, 28 scenarios incl. assistant answers, guardrail, modes, phone, admin) | **Production: 28/28 clean** (no console errors, failed requests or overflow; answer, guardrail, mode and admin assertions all met). Before that, local build: 27/28 on the full run; the one failure was the test's own regex (an unescaped `\s` in the assertion) — the page was correct (screenshot 25). After fixing the assertion the scenario passes (re-run with `QA_ONLY=25`). Visual review of the screenshots then found duplicate action buttons and an ungrammatical placeholder; both fixed, scenarios 23 and 27 re-run clean. |
+| Lighthouse | Production, desktop preset: `/` performance 98, accessibility 100, best practices 100, SEO 100 (LCP 0.9 s, CLS 0); `/projects/nexusai` performance 80 / 89 / 91 over three runs (TBT 220–350 ms from framework hydration — the machine's Lighthouse benchmark index varied 470–850, below the ~1000 Lighthouse assumes), accessibility 100, best practices 100, SEO 100; `/ask` performance 85, accessibility 98 (a heading-order issue — fixed and re-checked after the follow-up deploy), best practices 100, SEO 100. |
+| Production deployment, fresh session | Preview deployment first (Vercel branch preview): `/ask?q=` answered, embedding worker 384-d on the real CDN path, CSP/HSTS headers present, `/admin/photo` redirects. Then production: all routes 200, and the fresh InPrivate QA above (**28/28 clean** against `https://ankit-chand-portfolio.vercel.app`). The only console messages on the *preview* were Vercel's own preview toolbar being blocked by the CSP, which production never loads. |
 
 ## 3. Model benchmark
 
-See [benchmarks/README.md](benchmarks/README.md) (generated from the raw JSON). The final 35-question run on the final code is in progress at the time of this commit; results are added as each model completes.
+Full tables: [benchmarks/README.md](benchmarks/README.md) (generated from the raw JSON).
+
+- **Final run, final code, 35 questions:** Qwen2.5-0.5B — 35/35 correct, 97 % of its own drafts accepted, 3/3 unknowns declined; Llama-3.2-1B — 35/35, 85 %, 3/3. Every replaced draft is listed with the validator's reason.
+- **Standardised CPU speed (llama-bench pp512/tg128, all five models):** decode 14.3 (Qwen2.5-0.5B) → 6.9 tok/s (Qwen3-1.7B). Large standard deviations show the laptop was throttling; treat as a ranking.
+- **Preliminary run (older validator, busy machine):** Qwen2.5-1.5B 79 % and Gemma-3-1B 61 % drafts accepted. Qwen3-1.7B was speed-tested only.
+- **Stopped early, by decision:** the final quality run for Qwen2.5-1.5B and Qwen3-1.7B (2–3 h each at this machine's speed). Not counted as passed.
+- **Found after the final run:** one validator false alarm in Llama's results (`unsupported employer "Medical Research.   This"` — the employer pattern crossed a sentence boundary). Fixed with a regression test; the published Llama numbers were measured *before* the fix, so its acceptance rate is, if anything, understated by one answer.
+- **Self-hosted tier with a real model:** see ASSISTANT.md §1 — `llm`-mode answer through the proxy, validated, 36 s; unauthenticated upstream requests refused (401).
 
 ## 4. Defects found by testing, root causes and fixes
 
@@ -64,6 +71,6 @@ See [benchmarks/README.md](benchmarks/README.md) (generated from the raw JSON). 
 ## 5. Not tested
 
 - On-device generation quality and speed on a GPU that can run WebLLM (no such GPU available).
-- Tier C against a real internet-facing self-hosted server (tested locally with a fake upstream; the real `llama-server` path is exercised by the CPU benchmark through the same OpenAI-compatible client).
+- Tier C against an internet-facing server (verified locally with a real `llama-server` + API key, and with a fake upstream for the security cases).
 - Photo publishing to GitHub and image enhancement against real services (deliberately not connected; only the refusal paths and the UI were tested).
 - Safari and Firefox.
