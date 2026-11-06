@@ -28,8 +28,13 @@ export default function ResumePrintPage() {
         <header className="border-b-2 border-[#4f46e5] pb-3">
           <h1 className="font-display text-[22pt] font-semibold leading-tight tracking-tight text-[#0b1222]">{profile.name}</h1>
           <p className="mt-0.5 text-[10.5pt] font-medium uppercase tracking-[0.12em] text-[#4f46e5]">Generative AI Engineer · Data Scientist · Agentic AI</p>
-          <p className="mt-2 text-[9pt] text-[#374151]">
-            {profile.email} · linkedin.com/in/ankitchand007 · github.com/chandankit · Portfolio: {host} · {profile.location}
+          <p className="mt-2 flex flex-wrap gap-x-2.5 text-[9pt] text-[#374151]">
+            {[profile.email, "linkedin.com/in/ankitchand007", "github.com/chandankit", host, profile.location].map((item, i) => (
+              <span key={item} className="whitespace-nowrap">
+                {i > 0 && <span className="mr-2.5 text-[#9ca3af]">·</span>}
+                {item}
+              </span>
+            ))}
           </p>
         </header>
 
