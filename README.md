@@ -88,7 +88,7 @@ npx vercel login
 npx vercel deploy --prod
 ```
 
-The production project is connected to this GitHub repository, so every push to `main` deploys automatically. Add the environment variables above, then redeploy. HTTPS is automatic; custom domains are added under Project → Settings → Domains.
+To deploy on every push, connect this GitHub repository to the Vercel project (`vercel git connect`, or Vercel → Project → Settings → Git); each push to `main` then deploys automatically. Add the environment variables above, then redeploy. HTTPS is automatic; custom domains are added under Project → Settings → Domains.
 
 ## Project structure
 
