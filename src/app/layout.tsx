@@ -3,7 +3,6 @@ import { Inter, JetBrains_Mono, Sora } from "next/font/google";
 import "./globals.css";
 import { profile, education } from "@/lib/content";
 import { siteUrl } from "@/lib/site";
-import { buildSearchIndex } from "@/lib/search-index";
 import { Providers } from "@/components/providers";
 import { CommandPaletteProvider } from "@/components/command-palette";
 import { Navbar } from "@/components/navbar";
@@ -63,7 +62,6 @@ const personLd = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const searchIndex = buildSearchIndex();
   return (
     <html lang="en" className={`dark ${sora.variable} ${inter.variable} ${jetbrains.variable}`} suppressHydrationWarning>
       <head>
@@ -75,7 +73,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <Providers>
-          <CommandPaletteProvider index={searchIndex}>
+          <CommandPaletteProvider>
             <Backdrop />
             <Navbar name={profile.name} github={profile.socials.github} linkedin={profile.socials.linkedin} />
             <main id="main" className="relative">

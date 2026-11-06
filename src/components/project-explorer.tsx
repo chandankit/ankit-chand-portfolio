@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { Search, X } from "lucide-react";
 import type { Project } from "@/lib/schema";
 import { cn } from "@/lib/format";
@@ -20,7 +20,7 @@ function matches(p: Project, q: string) {
     .every((term) => hay.includes(term));
 }
 
-export function ProjectExplorer({ projects, categories }: { projects: Project[]; categories: string[] }) {
+function ProjectExplorerInner({ projects, categories }: { projects: Project[]; categories: string[] }) {
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
@@ -129,5 +129,14 @@ export function ProjectExplorer({ projects, categories }: { projects: Project[];
         </div>
       )}
     </div>
+  );
+}
+
+/** Respects the visitor's reduced-motion preference for every animation inside. */
+export function ProjectExplorer(props: Parameters<typeof ProjectExplorerInner>[0]) {
+  return (
+    <MotionConfig reducedMotion="user">
+      <ProjectExplorerInner {...props} />
+    </MotionConfig>
   );
 }

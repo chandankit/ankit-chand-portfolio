@@ -3,14 +3,14 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { ArrowUpRight, ChartLine, Network, Search, Server, Sparkles, X } from "lucide-react";
 import type { SkillCategory } from "@/lib/schema";
 import { cn } from "@/lib/format";
 
 const catIcon = { chart: ChartLine, sparkles: Sparkles, network: Network, server: Server } as Record<string, typeof Sparkles>;
 
-export function SkillExplorer({ categories, projectTitles }: { categories: SkillCategory[]; projectTitles: Record<string, string> }) {
+function SkillExplorerInner({ categories, projectTitles }: { categories: SkillCategory[]; projectTitles: Record<string, string> }) {
   const params = useSearchParams();
   const [query, setQuery] = useState(params.get("q") ?? "");
   const [active, setActive] = useState<string>("all");
@@ -146,5 +146,14 @@ export function SkillExplorer({ categories, projectTitles }: { categories: Skill
         )}
       </div>
     </div>
+  );
+}
+
+/** Respects the visitor's reduced-motion preference for every animation inside. */
+export function SkillExplorer(props: Parameters<typeof SkillExplorerInner>[0]) {
+  return (
+    <MotionConfig reducedMotion="user">
+      <SkillExplorerInner {...props} />
+    </MotionConfig>
   );
 }

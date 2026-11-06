@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { ArrowUpRight, Briefcase, GraduationCap, Lightbulb, Rocket } from "lucide-react";
 import type { Milestone } from "@/lib/schema";
 import { cn } from "@/lib/format";
@@ -14,7 +14,7 @@ const meta = {
   Education: { icon: GraduationCap, color: "var(--sky)" },
 } as const;
 
-export function MilestoneTimeline({ items }: { items: Milestone[] }) {
+function MilestoneTimelineInner({ items }: { items: Milestone[] }) {
   const [filter, setFilter] = useState<"All" | Milestone["category"]>("All");
   const shown = items.filter((m) => filter === "All" || m.category === filter);
   return (
@@ -69,5 +69,14 @@ export function MilestoneTimeline({ items }: { items: Milestone[] }) {
         </AnimatePresence>
       </ol>
     </div>
+  );
+}
+
+/** Respects the visitor's reduced-motion preference for every animation inside. */
+export function MilestoneTimeline(props: Parameters<typeof MilestoneTimelineInner>[0]) {
+  return (
+    <MotionConfig reducedMotion="user">
+      <MilestoneTimelineInner {...props} />
+    </MotionConfig>
   );
 }

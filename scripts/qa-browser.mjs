@@ -119,10 +119,10 @@ async function main() {
       await waitFor("Page.loadEventFired");
       await sleep(1800);
       // Scroll through the page so scroll-reveal sections render, then return.
-      await evaluate(`for (let y=0; y<=document.body.scrollHeight; y+=500){ window.scrollTo(0,y); await new Promise(r=>setTimeout(r,90)); } window.scrollTo(0,0); await new Promise(r=>setTimeout(r,500));`);
+      await evaluate(`for (let y=0; y<=document.body.scrollHeight; y+=500){ window.scrollTo(0,y); await new Promise(r=>setTimeout(r,90)); } window.scrollTo(0,0); await new Promise(r=>setTimeout(r,1600));`);
       if (s.script) {
         await evaluate(s.script);
-        await sleep(900);
+        await sleep(1600);
       }
       const overflow = await evaluate(`return document.documentElement.scrollWidth - window.innerWidth`);
       if (overflow > 1) problems.push(`horizontal overflow: ${overflow}px`);

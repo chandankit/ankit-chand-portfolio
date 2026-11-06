@@ -2,17 +2,14 @@
   "base": "https://ankit-chand-portfolio.vercel.app",
   "browser": "msedge.exe",
   "freshInPrivateProfile": true,
-  "runAt": "2026-11-06T08:10:05.423Z",
+  "runAt": "2026-11-06T08:20:53.613Z",
   "results": [
     {
       "name": "01-desktop-home",
       "url": "https://ankit-chand-portfolio.vercel.app/",
       "device": "1440x900",
       "theme": "dark",
-      "problems": [
-        "HTTP 404: https://ankit-chand-portfolio.vercel.app/favicon.ico",
-        "log: Failed to load resource: the server responded with a status of 404 () https://ankit-chand-portfolio.vercel.app/favicon.ico"
-      ]
+      "problems": []
     },
     {
       "name": "02-desktop-home-full",
@@ -152,9 +149,7 @@
       "url": "https://ankit-chand-portfolio.vercel.app/this-page-does-not-exist",
       "device": "1440x900",
       "theme": "dark",
-      "problems": [
-        "log: Failed to load resource: the server responded with a status of 404 () https://ankit-chand-portfolio.vercel.app/this-page-does-not-exist"
-      ]
+      "problems": []
     }
   ]
 }

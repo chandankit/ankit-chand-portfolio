@@ -189,7 +189,7 @@ export default function HomePage() {
         <Container>
           <Reveal>
             <div className="card ring-gradient relative overflow-hidden p-8 sm:p-12">
-              <div aria-hidden className="absolute -right-20 -top-20 size-72 rounded-full blur-3xl" style={{ background: "radial-gradient(closest-side, color-mix(in oklab, var(--grad-c) 30%, transparent), transparent)" }} />
+              <div aria-hidden className="absolute -right-20 -top-20 size-72 rounded-full" style={{ background: "radial-gradient(closest-side, color-mix(in oklab, var(--grad-c) 30%, transparent), transparent)" }} />
               <Eyebrow>Let&apos;s talk</Eyebrow>
               <h2 id="cta-title" className="mt-4 max-w-2xl font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
                 Building something where AI has to be reliable?

@@ -22,7 +22,7 @@ export function AgentOrbit({ src, alt }: { src: string; alt: string }) {
   return (
     <div className="relative mx-auto aspect-square w-full max-w-[min(440px,88vw)]">
       {/* glow */}
-      <div aria-hidden className="absolute inset-[18%] rounded-full blur-3xl" style={{ background: "radial-gradient(closest-side, color-mix(in oklab, var(--grad-b) 45%, transparent), transparent)" }} />
+      <div aria-hidden className="absolute inset-[18%] rounded-full" style={{ background: "radial-gradient(closest-side, color-mix(in oklab, var(--grad-b) 45%, transparent), transparent)" }} />
       {/* static rings */}
       <div aria-hidden className="absolute inset-[9%] rounded-full border border-line" />
       <div aria-hidden className="absolute inset-[22%] rounded-full border border-dashed border-line" />

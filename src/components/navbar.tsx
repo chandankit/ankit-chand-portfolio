@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
 import { ChevronDown, Menu, Search, X } from "lucide-react";
 import { credentialsNav, primaryNav } from "@/lib/site";
 import { cn } from "@/lib/format";
@@ -90,24 +89,18 @@ export function Navbar({ name, github, linkedin }: { name: string; github: strin
             >
               Credentials <ChevronDown className={cn("size-3.5 transition-transform", credOpen && "rotate-180")} aria-hidden />
             </button>
-            <AnimatePresence>
-              {credOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: -6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -6 }}
-                  transition={{ duration: 0.16 }}
-                  className="absolute left-1/2 top-full mt-3 w-64 -translate-x-1/2 rounded-2xl border border-line-strong bg-elev p-2 shadow-[var(--shadow)]"
-                >
+            {credOpen && (
+              <div className="absolute left-1/2 top-full mt-3 w-64 -translate-x-1/2">
+                <div className="menu-in rounded-2xl border border-line-strong bg-elev p-2 shadow-[var(--shadow)]">
                   {credentialsNav.map((item) => (
                     <Link key={item.href} href={item.href} className="block rounded-xl px-3 py-2.5 hover:bg-surface-strong">
                       <span className="block text-sm font-medium text-fg">{item.label}</span>
                       <span className="block text-xs text-subtle">{item.description}</span>
                     </Link>
                   ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
+                </div>
+              </div>
+            )}
           </div>
           {primaryNav.slice(4).map((item) => (
             <Link key={item.href} href={item.href} className={linkCls(isActive(pathname, item.href))} aria-current={isActive(pathname, item.href) ? "page" : undefined}>
@@ -121,7 +114,7 @@ export function Navbar({ name, github, linkedin }: { name: string; github: strin
             type="button"
             onClick={openPalette}
             className="flex h-9 items-center gap-2 rounded-full border border-line bg-surface px-3 text-sm text-muted transition hover:bg-surface-strong hover:text-fg"
-            aria-label="Search the portfolio (Ctrl or Command + K)"
+            aria-label="Search the portfolio, Ctrl K" title="Search (Ctrl / ⌘ K)"
           >
             <Search className="size-4" aria-hidden />
             <kbd className="hidden font-mono text-[0.65rem] xl:inline">Ctrl K</kbd>
@@ -146,15 +139,10 @@ export function Navbar({ name, github, linkedin }: { name: string; github: strin
         </div>
       </nav>
 
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
+      {mobileOpen && (
+          <div
             id="mobile-menu"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="mx-auto mt-2 max-h-[calc(100dvh-5.5rem)] max-w-6xl overflow-y-auto rounded-3xl border border-line-strong bg-elev p-3 shadow-[var(--shadow)] lg:hidden"
+            className="menu-in mx-auto mt-2 max-h-[calc(100dvh-5.5rem)] max-w-6xl overflow-y-auto rounded-3xl border border-line-strong bg-elev p-3 shadow-[var(--shadow)] lg:hidden"
           >
             <ul className="grid grid-cols-2 gap-1">
               {[{ href: "/", label: "Home" }, ...primaryNav, ...credentialsNav, { href: "/contact", label: "Contact" }].map((item) => (
@@ -180,9 +168,8 @@ export function Navbar({ name, github, linkedin }: { name: string; github: strin
                 <LinkedInIcon className="size-4" /> LinkedIn
               </a>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+      )}
     </header>
   );
 }

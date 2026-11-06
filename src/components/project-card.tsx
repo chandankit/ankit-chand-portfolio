@@ -23,7 +23,7 @@ export function RepoStatus({ project, compact = false }: { project: Project; com
         target="_blank"
         rel="noopener noreferrer"
         className="relative z-10 inline-flex items-center gap-1.5 text-xs font-medium text-muted transition hover:text-fg"
-        aria-label={`${project.title} source code on GitHub`}
+        aria-label={`${compact ? "Code" : "Public repo"}: ${project.title} on GitHub`}
       >
         <GitHubIcon className="size-3.5" /> {compact ? "Code" : "Public repo"}
       </a>
@@ -45,7 +45,7 @@ export function ProjectCard({ project, size = "md", headingLevel = 3 }: { projec
   const H = `h${headingLevel}` as const;
   return (
     <article className={cn("card group relative flex h-full flex-col overflow-hidden p-6 transition-all duration-300 hover:-translate-y-1 hover:border-line-strong", size === "lg" && "sm:p-7")}>
-      <div aria-hidden className="pointer-events-none absolute -right-24 -top-24 size-56 rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100" style={{ background: "radial-gradient(closest-side, color-mix(in oklab, var(--grad-b) 30%, transparent), transparent)" }} />
+      <div aria-hidden className="pointer-events-none absolute -right-24 -top-24 size-56 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: "radial-gradient(closest-side, color-mix(in oklab, var(--grad-b) 30%, transparent), transparent)" }} />
       <div className="flex flex-wrap items-center gap-2">
         <Badge tone={contextTone[project.context]}>{project.context}</Badge>
         <Badge>{project.categories[0]}</Badge>

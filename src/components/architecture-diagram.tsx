@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { GitBranch } from "lucide-react";
 import type { Project } from "@/lib/schema";
 import { cn } from "@/lib/format";
@@ -13,7 +13,7 @@ type Architecture = NonNullable<Project["architecture"]>;
  * spine; selecting a block expands its explanation in place, so the diagram
  * works the same on phones and desktops and with keyboard or screen reader.
  */
-export function ArchitectureDiagram({ architecture }: { architecture: Architecture }) {
+function ArchitectureDiagramInner({ architecture }: { architecture: Architecture }) {
   const first = architecture.stages[0];
   const [selected, setSelected] = useState<{ stage: string; node: string }>({ stage: first.id, node: first.nodes[0].id });
 
@@ -97,5 +97,14 @@ export function ArchitectureDiagram({ architecture }: { architecture: Architectu
         })}
       </ol>
     </figure>
+  );
+}
+
+/** Respects the visitor's reduced-motion preference for every animation inside. */
+export function ArchitectureDiagram(props: Parameters<typeof ArchitectureDiagramInner>[0]) {
+  return (
+    <MotionConfig reducedMotion="user">
+      <ArchitectureDiagramInner {...props} />
+    </MotionConfig>
   );
 }
