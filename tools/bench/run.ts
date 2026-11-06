@@ -12,6 +12,7 @@ import { mkdirSync, writeFileSync, existsSync } from "node:fs";
 import path from "node:path";
 import { EVAL_SET } from "./eval-set.ts";
 import { createHarness, grade } from "./harness.ts";
+import { draftAcceptance } from "./metrics.ts";
 import { HttpLlmEngine } from "../../src/lib/assistant/llm-http.ts";
 import { ROOT } from "../kb/content.ts";
 
@@ -142,7 +143,7 @@ for (const m of models) {
     cases: ok.length,
     errors: rows.length - ok.length,
     passRate: ok.filter((r) => r.pass).length / Math.max(1, ok.length),
-    validatorAcceptRate: llmAnswered.length / Math.max(1, ok.filter((r) => r.mode !== "guardrail" && !(r.kind === "unknown" && r.mode === "retrieval")).length),
+    validatorAcceptRate: draftAcceptance(ok).rate,
     replacedByValidator: ok.filter((r) => r.replaced).length,
     keywordCoverage: answerRows.reduce((n, r) => n + (r.keywords ?? 0), 0) / Math.max(1, answerRows.length),
     unknownDeclined: unknownRows.filter((r) => r.pass).length + "/" + unknownRows.length,

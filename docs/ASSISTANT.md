@@ -90,15 +90,17 @@ Selection rule from the brief: *the smallest model that is reliable*. Candidates
 
 How to read the numbers: because the validator replaces any draft that fails a fact check, *final* correctness is high for every model; the differentiator is **how often the model's own answer survives validation** and its speed.
 
-| Model (Q4_K_M) | Final answers correct | Own drafts accepted by the validator | Unknowns declined | Decode tok/s (llama-bench, CPU) | Download (WebLLM) |
-|---|---|---|---|---|---|
-| **Qwen2.5-0.5B-Instruct** — default | 35/35 | **97 %** | 3/3 | 14.3 | ~290 MB |
-| Llama-3.2-1B-Instruct | 35/35 | 85 % | 3/3 | 8.5 | ~700 MB |
-| Qwen2.5-1.5B-Instruct | 33/35 (preliminary run) | 79 % (preliminary) | 3/3 | 7.0 | ~880 MB |
-| Gemma-3-1B-it | 33/35 (preliminary run) | 61 % (preliminary) | 2/3 | 10.8 | not offered |
-| Qwen3-1.7B | not evaluated for quality | — | — | 6.9 | not offered |
+| Model (Q4_K_M) | Final answers correct | Own drafts accepted by the validator | Keyword coverage | Unknowns declined | Decode tok/s (llama-bench, CPU) | Download (WebLLM) |
+|---|---|---|---|---|---|---|
+| **Qwen2.5-0.5B-Instruct** — default | 35/35 | 94 % (31/33) | 75 % | 3/3 | 14.3 | ~290 MB |
+| Llama-3.2-1B-Instruct | 35/35 | 85 % (28/33) | 84 % | 3/3 | 8.5 | ~700 MB |
+| Qwen2.5-1.5B-Instruct | 35/35 | 94 % (31/33) | 88 % | 3/3 | 7.0 | ~880 MB |
+| Gemma-3-1B-it | 33/35 (preliminary run) | 61 % (preliminary) | 83 % (preliminary) | 2/3 | 10.8 | not offered |
+| Qwen3-1.7B | 35/35 | 94 % (31/33) — 32/33 without one validator false alarm | 86 % | 3/3 | 6.9 | not offered |
 
-**Decision: Qwen2.5-0.5B-Instruct** (Apache-2.0) is the default. It is the smallest candidate, the fastest, the cheapest for visitors to download, and its drafts survived validation most often. Bigger models wrote slightly richer answers (higher keyword coverage) but were more often caught declining despite evidence or inventing names. The preliminary rows were measured before the validator's false-alarm fixes and on a busier machine, so they understate those models somewhat; the run was stopped there because at this laptop's throttled speed each extra model took 2–3 hours. Recorded in `src/lib/assistant/models.ts` (`DEFAULT_BROWSER_MODEL_ID`).
+All rows except Gemma-3-1B come from the final code. Qwen2.5-0.5B was first published here as 97 %; that figure came from a benchmark metric bug (a rejected draft on an unknown-topic question was left out of its denominator, 31/32), fixed and regression-tested — see the [test report](ASSISTANT_TEST_REPORT.md) §3–4.
+
+**Decision: Qwen2.5-0.5B-Instruct** (Apache-2.0) stays the default — but not because its drafts are better. On the final code the three Qwen models **tie** on reliability (31 of 33 drafts accepted, every final answer correct, every unknown topic declined) and Llama-3.2-1B trails (28/33). Re-running every rejected Qwen draft showed that a larger model is, if anything, slightly ahead: one of Qwen3-1.7B's two rejections is a validator false alarm (“AutoGen-based” flagged as an unknown name), so on model behaviour alone it would be 32/33; and the larger Qwens write richer answers (keyword coverage 88 % / 86 % vs 75 %). A one-answer gap is within run-to-run noise at temperature 0.2, though (Qwen2.5-1.5B's `interesting` draft was accepted on one retry and rejected on the next). With reliability effectively equal, the brief's rule — *the smallest model that is reliable* — picks Qwen2.5-0.5B: roughly twice the decode speed on CPU (llama-bench 14.3 vs 7.0 / 6.9 tok/s, noisy) and a ~290 MB one-time download instead of ~880 MB, which visitors pay for with their own bandwidth. Qwen2.5-1.5B stays selectable for visitors who prefer richer answers. Gemma-3-1B was only measured in the preliminary run (older validator, busier machine) and not re-run. Recorded in `src/lib/assistant/models.ts` (`DEFAULT_BROWSER_MODEL_ID`).
 
 ### Inference engines considered
 
@@ -207,7 +209,7 @@ Then on Vercel set `INFERENCE_BASE_URL=https://your-host/v1`, `INFERENCE_API_KEY
 
 - **On-device AI needs a capable GPU.** It is opt-in, and on the development laptop (Intel UHD 620) generation hangs, so tier B was verified only up to “model loads + probe fails safely + watchdog fallback works”. Token/s for tier B on working hardware is unmeasured here.
 - **Instant answers are extractive.** They are correct and cited but read like a summary of facts, and the lead sentence is the top-ranked chunk — e.g. “explain his multi-agent architecture” leads with the two-agent code generator before NexusAI.
-- **Small models are weak writers.** Even the best candidate has drafts rejected; the validator is deliberately strict, so some acceptable phrasings are replaced by the instant answer.
+- **Small models are weak writers.** Even the best candidate has drafts rejected; the validator is deliberately strict, so some acceptable phrasings are replaced by the instant answer. Known open false alarm: a hyphenated form of a known name (“AutoGen-based”) is flagged as an unsupported name, which cost Qwen3-1.7B an accurate draft in the benchmark.
 - **The validator is lexical.** It can't judge reasoning quality, only that names, numbers, quantities, employers and citations are supported; a fluent but misleading paraphrase built entirely from supported words could pass.
 - **English only**, and knowledge is only as current as `content/` (rebuild embeddings after edits; the tests fail if the build drifts).
 - **Rate limits are per instance**, and the free CDNs (HF Hub, jsDelivr) are third-party dependencies outside this project's control.
