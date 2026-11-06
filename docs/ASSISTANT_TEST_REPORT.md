@@ -58,6 +58,7 @@ See [benchmarks/README.md](benchmarks/README.md) (generated from the raw JSON). 
 | Chat input focus scrolled the page past the hero in AI-conversation mode; no “clear” on `/ask` | Autofocus without `preventScroll`; clear only existed in the panel header | `focus({ preventScroll: true })`; *New conversation* button |
 | Navbar labels wrapped onto two lines at 1440 px; “Let's connect” overflowed at 1024 px | The new mode switcher and Ask AI button exceeded the navbar's 1152 px cap | Ask AI button only where links are collapsed (md–lg), compact switcher below xl, brand text hidden at lg–xl, `whitespace-nowrap`; measured no wrap/overflow at 768–1920 px |
 | Three identical “Explore NexusAI” buttons under an answer; placeholder “Ask as a explore…” | Actions de-duplicated by URL only (one per section anchor); naive placeholder template | De-duplicate by label too; persona-aware placeholder; test |
+| On the Vercel preview, a question sent right after page load reloaded the page (`/ask?`) and was lost | Before hydration the chat form had no handler, so the browser performed a native GET submit | The form is now a real `GET /ask?q=…` form and `/ask` answers `?q=` on load (asked once, URL cleaned) — works before hydration and without JavaScript; shareable question links |
 | Floating launcher covered hero buttons on phones and showed on admin pages | Full-width pill at all sizes; no route exclusion | Icon-only below `sm`; hidden on `/admin` |
 
 ## 5. Not tested

@@ -68,6 +68,17 @@ export function AssistantChat({ variant = "panel" }: { variant?: "panel" | "page
     // Never scroll the page to the chat (the inline chat sits below the hero).
     inputRef.current?.focus({ preventScroll: true });
   }, []);
+  // Progressive enhancement: the form is a real GET /ask?q=… form, so a question sent
+  // before JavaScript has loaded (or without it) still arrives — and is answered here.
+  const askedFromUrl = useRef(false);
+  useEffect(() => {
+    if (variant !== "page" || askedFromUrl.current || window.location.pathname !== "/ask") return;
+    const q = new URLSearchParams(window.location.search).get("q")?.trim();
+    if (!q) return;
+    askedFromUrl.current = true;
+    window.history.replaceState(null, "", "/ask");
+    ask(q);
+  }, [variant, ask]);
 
   const send = (q = draft) => {
     if (!q.trim() || busy) return;
@@ -118,6 +129,8 @@ export function AssistantChat({ variant = "panel" }: { variant?: "panel" | "page
       <div className={cn("space-y-2 border-t border-line", variant === "page" ? "pt-3" : "p-3")}>
         <EngineCard compact={variant === "panel"} />
         <form
+          action="/ask"
+          method="get"
           onSubmit={(e) => {
             e.preventDefault();
             send();
@@ -129,6 +142,7 @@ export function AssistantChat({ variant = "panel" }: { variant?: "panel" | "page
           </label>
           <textarea
             id={`ask-input-${variant}`}
+            name="q"
             ref={inputRef}
             rows={1}
             value={draft}

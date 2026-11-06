@@ -5,7 +5,7 @@ A multi-agent assistant that answers questions about Ankit Chand's portfolio, bu
 point** — not for answering, embedding, routing or validating. Claude Code was used
 to *develop* it; nothing at runtime depends on Claude or any other commercial model.
 
-- Live: `/ask` (full page), the **Ask about Ankit** launcher on every page, and the *AI conversation* view.
+- Live: `/ask` (full page; `/ask?q=…` asks a question directly), the **Ask about Ankit** launcher on every page, and the *AI conversation* view.
 - Code: `src/lib/assistant/` (pipeline, framework-free TypeScript), `src/components/assistant/` (UI),
   `public/workers/` (browser workers), `tools/` (offline embedding build, tests, benchmarks).
 
