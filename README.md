@@ -1,7 +1,16 @@
 # Ankit Chand — Portfolio
 
+**Live:** https://ankit-chand-portfolio.vercel.app · **Resume:** [PDF](https://ankit-chand-portfolio.vercel.app/resume/Ankit_Chand_Resume.pdf) · **QA report:** [docs/QA_REPORT.md](docs/QA_REPORT.md)
+
 Personal portfolio of **Ankit Chand**, Data Scientist and Generative AI & Agentic AI Engineer.
 A fast, accessible, content-driven site built with **Next.js 16 (App Router), TypeScript, Tailwind CSS v4 and Motion**, with a secure serverless contact API.
+
+| Desktop | Phone |
+|---|---|
+| ![Home page, dark theme](docs/screenshots/01-desktop-home.webp) | ![Home page on a phone](docs/screenshots/16-phone-home.webp) |
+| ![NexusAI case study with interactive architecture diagram](docs/screenshots/05-desktop-nexusai-architecture.webp) | ![Mobile navigation menu](docs/screenshots/17-phone-menu.webp) |
+
+Lighthouse: **Accessibility 100 · Best practices 100 · SEO 100** on every page tested; desktop performance 93–100. More screenshots in [docs/screenshots](docs/screenshots).
 
 ## Features
 
@@ -38,7 +47,8 @@ Requires Node.js ≥ 20.9.
 | `npm run typecheck` | TypeScript check |
 | `npm run validate:content` | JSON + asset checks, privacy/secret scan of `/content` |
 | `npm test` | Contact API tests against a running server (`BASE_URL`, default `http://localhost:3000`) |
-| `npm run resume:pdf` | Regenerate `public/resume/Ankit_Chand_Resume.pdf` from `/resume/print` (server must be running) |
+| `npm run resume:pdf` | Regenerate `public/resume/Ankit_Chand_Resume.pdf` from `/resume/print` (server must be running; `RESUME_URL` to print from production) |
+| `npm run qa` | Fresh-profile browser QA (console/network errors, overflow) + screenshots into `docs/screenshots/` (`BASE_URL` to test production) |
 
 ## Updating content (no code changes)
 
@@ -78,7 +88,7 @@ npx vercel login
 npx vercel deploy --prod
 ```
 
-Or import the GitHub repository at vercel.com/new — every push to `main` deploys. Add the environment variables above, then redeploy. HTTPS is automatic; custom domains are added under Project → Settings → Domains.
+The production project is connected to this GitHub repository, so every push to `main` deploys automatically. Add the environment variables above, then redeploy. HTTPS is automatic; custom domains are added under Project → Settings → Domains.
 
 ## Project structure
 
