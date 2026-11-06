@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+// Never probe for eval(): the site's CSP forbids it, and the probe logs a violation.
+z.config({ jitless: true });
+
 export const enquiryTypes = ["Full-time role", "Freelance / project", "Collaboration", "Other"] as const;
 
 /** Shared by the browser form (instant feedback) and the API route (authoritative check). */

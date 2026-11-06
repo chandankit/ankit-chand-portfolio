@@ -27,7 +27,7 @@ export default function ProjectsPage() {
         description="From multi-agent LLM platforms to production NER and classic machine-learning case studies. Search by technology, filter by category or type, and open any project for its architecture, decisions and results."
       />
       <Container>
-        <Suspense fallback={<div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{projects.map((p) => <ProjectCard key={p.slug} project={p} />)}</div>}>
+        <Suspense fallback={<div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{projects.map((p) => <ProjectCard key={p.slug} project={p} headingLevel={2} />)}</div>}>
           <ProjectExplorer projects={projects} categories={categories} />
         </Suspense>
       </Container>

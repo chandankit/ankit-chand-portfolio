@@ -117,7 +117,7 @@ function ProjectExplorerInner({ projects, categories }: { projects: Project[]; c
         <AnimatePresence mode="popLayout">
           {filtered.map((p) => (
             <motion.div key={p.slug} layout initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.97 }} transition={{ duration: 0.25 }} className="h-full">
-              <ProjectCard project={p} />
+              <ProjectCard project={p} headingLevel={2} />
             </motion.div>
           ))}
         </AnimatePresence>

@@ -68,9 +68,10 @@ export function Navbar({ name, github, linkedin }: { name: string; github: strin
             : "border border-transparent",
         )}
       >
-        <Link href="/" className="group flex items-center gap-2.5" aria-label={`${name} — home`}>
-          <span className="grid size-8 place-items-center rounded-full bg-gradient-brand font-display text-sm font-bold text-[#0b1222]">AC</span>
-          <span className="hidden font-display text-sm font-semibold tracking-tight text-fg sm:block">{name}</span>
+        <Link href="/" className="group flex items-center gap-2.5">
+          <span aria-hidden className="grid size-8 place-items-center rounded-full bg-gradient-brand font-display text-sm font-bold text-[#0b1222]">AC</span>
+          <span className="font-display text-sm font-semibold tracking-tight text-fg max-sm:sr-only">{name}</span>
+          <span className="sr-only"> — home</span>
         </Link>
 
         <div className="hidden items-center gap-0.5 lg:flex">
