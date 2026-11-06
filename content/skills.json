@@ -1,0 +1,415 @@
+[
+  {
+    "id": "data-science-ml",
+    "title": "Data Science & Machine Learning",
+    "description": "Turning raw data into evaluated models — from EDA and feature engineering to forecasting and classification.",
+    "icon": "chart",
+    "skills": [
+      {
+        "name": "Python",
+        "evidence": [
+          "nexusai",
+          "intellihub",
+          "search-intelligence-tool",
+          "uac-care-load-forecasting"
+        ]
+      },
+      {
+        "name": "Pandas",
+        "evidence": [
+          "credit-eda",
+          "telecom-churn",
+          "uac-care-load-forecasting"
+        ]
+      },
+      {
+        "name": "NumPy",
+        "evidence": [
+          "neural-network-from-scratch",
+          "telecom-churn"
+        ]
+      },
+      {
+        "name": "Scikit-learn",
+        "evidence": [
+          "telecom-churn",
+          "lead-scoring",
+          "windy-day-power-prediction"
+        ]
+      },
+      {
+        "name": "Statistical Analysis",
+        "evidence": [
+          "credit-eda",
+          "housing-price-regression",
+          "lead-scoring"
+        ]
+      },
+      {
+        "name": "Feature Engineering",
+        "evidence": [
+          "search-intelligence-tool",
+          "telecom-churn",
+          "uac-care-load-forecasting"
+        ]
+      },
+      {
+        "name": "Model Evaluation",
+        "evidence": [
+          "lead-scoring",
+          "telecom-churn",
+          "uac-care-load-forecasting"
+        ]
+      },
+      {
+        "name": "Regression & Classification",
+        "evidence": [
+          "housing-price-regression",
+          "lead-scoring",
+          "telecom-churn"
+        ]
+      },
+      {
+        "name": "Random Forest",
+        "evidence": [
+          "telecom-churn",
+          "uac-care-load-forecasting",
+          "windy-day-power-prediction"
+        ]
+      },
+      {
+        "name": "XGBoost & LightGBM",
+        "evidence": [
+          "windy-day-power-prediction"
+        ]
+      },
+      {
+        "name": "Time-Series Forecasting (SARIMA, ETS)",
+        "evidence": [
+          "uac-care-load-forecasting",
+          "recommendations-engine"
+        ]
+      },
+      {
+        "name": "NER with CRF",
+        "evidence": [
+          "search-intelligence-tool"
+        ]
+      },
+      {
+        "name": "Clustering",
+        "evidence": [
+          "country-clustering"
+        ]
+      },
+      {
+        "name": "Deep Learning (CNN, RNN, attention)",
+        "evidence": [
+          "eye-for-the-blind",
+          "gesture-recognition"
+        ]
+      },
+      {
+        "name": "TensorFlow / Keras",
+        "evidence": [
+          "eye-for-the-blind",
+          "gesture-recognition"
+        ]
+      },
+      {
+        "name": "PySpark",
+        "evidence": [],
+        "link": "https://github.com/chandankit/PySpark"
+      },
+      {
+        "name": "SQL",
+        "evidence": [
+          "search-intelligence-tool",
+          "recommendations-engine"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "generative-ai",
+    "title": "Generative AI",
+    "description": "LLM applications that are grounded, structured and testable.",
+    "icon": "sparkles",
+    "skills": [
+      {
+        "name": "Large Language Models (GPT-4o, GPT-4)",
+        "evidence": [
+          "nexusai",
+          "rag-medical-research-qa",
+          "autogen-code-generation"
+        ]
+      },
+      {
+        "name": "Prompt Engineering",
+        "evidence": [
+          "nexusai",
+          "intellihub",
+          "teachable-metadata-extractor"
+        ]
+      },
+      {
+        "name": "Retrieval-Augmented Generation (RAG)",
+        "evidence": [
+          "rag-medical-research-qa"
+        ]
+      },
+      {
+        "name": "Embeddings",
+        "evidence": [
+          "rag-medical-research-qa"
+        ]
+      },
+      {
+        "name": "Vector Databases (FAISS, ChromaDB)",
+        "evidence": [
+          "rag-medical-research-qa",
+          "intellihub"
+        ]
+      },
+      {
+        "name": "LangChain",
+        "evidence": [
+          "rag-medical-research-qa"
+        ]
+      },
+      {
+        "name": "Azure OpenAI",
+        "evidence": [
+          "nexusai",
+          "intellihub",
+          "teachable-metadata-extractor"
+        ]
+      },
+      {
+        "name": "OpenAI API",
+        "evidence": [
+          "rag-medical-research-qa",
+          "autogen-code-generation"
+        ]
+      },
+      {
+        "name": "Structured Outputs (JSON, Pydantic)",
+        "evidence": [
+          "nexusai",
+          "teachable-metadata-extractor"
+        ]
+      },
+      {
+        "name": "LLM Testing with Mock Clients",
+        "evidence": [
+          "nexusai",
+          "intellihub"
+        ]
+      },
+      {
+        "name": "Claude & Claude Code",
+        "evidence": []
+      },
+      {
+        "name": "Hugging Face",
+        "evidence": []
+      },
+      {
+        "name": "Mistral",
+        "evidence": []
+      }
+    ]
+  },
+  {
+    "id": "agentic-ai",
+    "title": "Agentic AI",
+    "description": "Agents that plan, call tools and collaborate — with routing, guardrails and memory around them.",
+    "icon": "network",
+    "skills": [
+      {
+        "name": "Multi-Agent Systems",
+        "evidence": [
+          "nexusai",
+          "intellihub",
+          "autogen-code-generation"
+        ]
+      },
+      {
+        "name": "Microsoft AutoGen",
+        "evidence": [
+          "intellihub",
+          "teachable-metadata-extractor",
+          "autogen-code-generation"
+        ]
+      },
+      {
+        "name": "Agent Orchestration",
+        "evidence": [
+          "nexusai",
+          "intellihub"
+        ]
+      },
+      {
+        "name": "Tool / Function Calling (ReAct)",
+        "evidence": [
+          "nexusai",
+          "intellihub"
+        ]
+      },
+      {
+        "name": "Intent Routing & Clarification",
+        "evidence": [
+          "nexusai"
+        ]
+      },
+      {
+        "name": "Guardrails & PII Redaction",
+        "evidence": [
+          "nexusai",
+          "intellihub"
+        ]
+      },
+      {
+        "name": "Conversational AI",
+        "evidence": [
+          "nexusai",
+          "teachable-metadata-extractor"
+        ]
+      },
+      {
+        "name": "Workflow Automation",
+        "evidence": [
+          "autogen-code-generation",
+          "rag-medical-research-qa",
+          "intellihub"
+        ]
+      },
+      {
+        "name": "Multi-Agent Collaboration",
+        "evidence": [
+          "autogen-code-generation",
+          "intellihub"
+        ]
+      },
+      {
+        "name": "Context, State & Memory Management",
+        "evidence": [
+          "nexusai",
+          "intellihub"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "backend-engineering",
+    "title": "Backend & Engineering",
+    "description": "The services, storage and tooling that put models in front of users.",
+    "icon": "server",
+    "skills": [
+      {
+        "name": "FastAPI",
+        "evidence": [
+          "nexusai"
+        ]
+      },
+      {
+        "name": "Server-Sent Events (streaming)",
+        "evidence": [
+          "nexusai"
+        ]
+      },
+      {
+        "name": "Flask",
+        "evidence": [
+          "teachable-metadata-extractor"
+        ]
+      },
+      {
+        "name": "REST APIs",
+        "evidence": [
+          "nexusai",
+          "rag-medical-research-qa",
+          "search-intelligence-tool"
+        ]
+      },
+      {
+        "name": "Pydantic",
+        "evidence": [
+          "nexusai"
+        ]
+      },
+      {
+        "name": "asyncio & Concurrency",
+        "evidence": [
+          "intellihub",
+          "nexusai"
+        ]
+      },
+      {
+        "name": "Streamlit",
+        "evidence": [
+          "nexusai",
+          "intellihub"
+        ]
+      },
+      {
+        "name": "Docker",
+        "evidence": [
+          "intellihub"
+        ]
+      },
+      {
+        "name": "pytest & Test-Driven Development",
+        "evidence": [
+          "nexusai",
+          "intellihub"
+        ]
+      },
+      {
+        "name": "Git",
+        "evidence": [
+          "search-intelligence-tool"
+        ]
+      },
+      {
+        "name": "SQLite",
+        "evidence": [
+          "nexusai",
+          "intellihub",
+          "teachable-metadata-extractor"
+        ]
+      },
+      {
+        "name": "MySQL",
+        "evidence": [
+          "search-intelligence-tool",
+          "recommendations-engine"
+        ]
+      },
+      {
+        "name": "PostgreSQL",
+        "evidence": []
+      },
+      {
+        "name": "AWS (S3)",
+        "evidence": [
+          "rag-medical-research-qa"
+        ]
+      },
+      {
+        "name": "Azure",
+        "evidence": [
+          "nexusai",
+          "teachable-metadata-extractor"
+        ]
+      },
+      {
+        "name": "GCP (BigQuery, Dataproc, App Engine, Composer)",
+        "evidence": [
+          "search-intelligence-tool",
+          "recommendations-engine"
+        ]
+      }
+    ]
+  }
+]

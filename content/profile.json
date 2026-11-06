@@ -1,0 +1,137 @@
+{
+  "name": "Ankit Chand",
+  "shortName": "Ankit",
+  "headline": "Data Scientist · Generative AI Engineer · Agentic AI Developer · AI/ML Engineer",
+  "roles": ["Data Scientist", "Generative AI Engineer", "Agentic AI Developer", "AI/ML Engineer"],
+  "tagline": "I build multi-agent AI systems that are predictable — deterministic where it matters, observable, tested, and honest about failure.",
+  "intro": "Data Scientist turned Generative AI engineer. Nearly three years of industry data science — entity extraction for e-commerce search, product-trend analytics and GCP model pipelines — and, since mid-2024, hands-on work designing multi-agent LLM systems with Python, FastAPI, Microsoft AutoGen and Azure OpenAI.",
+  "location": "India",
+  "availability": "Open to full-time Data Scientist, GenAI Engineer and Agentic AI roles, and to collaboration or freelance projects.",
+  "currently": [
+    { "label": "Data Science Intern", "detail": "Unified Mentor · time-series forecasting", "href": "/experience#unified-mentor" },
+    { "label": "Pursuing PG Program", "detail": "Data Science with Generative AI · Great Learning", "href": "/education" }
+  ],
+  "photo": { "src": "/images/ankit-chand.jpg", "alt": "Portrait of Ankit Chand in a navy suit" },
+  "email": "chand07ankit@gmail.com",
+  "socials": {
+    "github": "https://github.com/chandankit",
+    "linkedin": "https://www.linkedin.com/in/ankitchand007/"
+  },
+  "resume": {
+    "file": "/resume/Ankit_Chand_Resume.pdf",
+    "fileName": "Ankit_Chand_Resume.pdf",
+    "updated": "2026-11"
+  },
+  "expertise": [
+    {
+      "title": "Data Science & ML",
+      "description": "Forecasting, entity extraction, classification and regression — from feature engineering to evaluated models.",
+      "icon": "chart"
+    },
+    {
+      "title": "Generative AI & RAG",
+      "description": "LLM applications grounded in documents: retrieval, embeddings, prompt design and structured outputs.",
+      "icon": "sparkles"
+    },
+    {
+      "title": "Agentic AI",
+      "description": "Multi-agent orchestration with tool calling, intent routing, guardrails and memory.",
+      "icon": "network"
+    },
+    {
+      "title": "AI Engineering",
+      "description": "FastAPI and streaming services, Docker, offline test suites and cloud pipelines on GCP, Azure and AWS.",
+      "icon": "server"
+    }
+  ],
+  "highlights": [
+    { "value": "2021–24", "label": "Industry data science", "detail": "Data Scientist at AIE Software and Retisio India" },
+    { "value": "8", "label": "Specialist agents", "detail": "Coordinated by NexusAI's routing and orchestration pipeline" },
+    { "value": "571", "label": "Offline tests", "detail": "214 (NexusAI) + 357 (IntelliHub), run against deterministic mock LLM clients" },
+    { "value": "4", "label": "Courses completed", "detail": "Three Anthropic Academy courses and a Udemy course on AutoGen agent teams" }
+  ],
+  "about": {
+    "summary": [
+      "I'm a data scientist who moved into generative AI and agentic systems. For nearly three years (2021–2024) I built machine learning in industry: most recently at Retisio, where I developed a Conditional Random Field model that extracts entities from e-commerce search queries and ran model workflows on Google Cloud (Cloud Composer/Airflow, App Engine) in an Agile team.",
+      "Since mid-2024 I've specialised in LLM systems. I started with retrieval-augmented question answering and Microsoft AutoGen agent teams, then designed two multi-agent platforms end to end: NexusAI, which routes each request to one of eight tool-using specialist agents behind guardrails and PII redaction, and IntelliHub, which turns one question into a single sourced briefing by running collector agents concurrently.",
+      "Today I'm a Data Science Intern working on time-series forecasting, and I'm pursuing Great Learning's Post Graduate Program in Data Science with Generative AI."
+    ],
+    "journey": [
+      {
+        "period": "Until 2020",
+        "title": "Engineering roots, data science foundations",
+        "body": "B.Tech in Mechanical Engineering at Lovely Professional University, then a Post Graduate Diploma in Data Science from IIIT Bangalore (2020): statistics, machine learning, deep learning and big-data tooling."
+      },
+      {
+        "period": "2021 – 2022",
+        "title": "First Data Scientist role",
+        "body": "At AIE Software India I delivered data-science solutions over high-dimensional text and image data — from requirements gathering and gap analysis through modelling and deployment."
+      },
+      {
+        "period": "2022 – 2024",
+        "title": "Search intelligence for e-commerce",
+        "body": "At Retisio India I built a CRF-based named-entity recognition model for search queries, owned its data-preparation pipeline, analysed product-view and purchase trends for recommendations, and scheduled model workflows on GCP."
+      },
+      {
+        "period": "2024 – 2025",
+        "title": "Retraining toward Generative AI",
+        "body": "Independent builds to learn the stack properly: RAG question answering over medical-research PDFs, a teachable AutoGen agent that extracts structured metadata, and an AutoGen code-writing and code-executing agent team."
+      },
+      {
+        "period": "2026",
+        "title": "Multi-agent platforms",
+        "body": "Designed and built NexusAI and IntelliHub — orchestration, ReAct tool calling, intent routing with clarification, guardrails, streaming APIs and 571 offline tests between them — and completed Anthropic Academy courses on Claude Code, Agent Skills and Claude with Amazon Bedrock."
+      },
+      {
+        "period": "Oct 2026 – now",
+        "title": "Forecasting internship, continued study",
+        "body": "Data Science Intern at Unified Mentor building care-load and placement forecasts, while pursuing the PG Program in Data Science with Generative AI."
+      }
+    ],
+    "approach": [
+      {
+        "title": "Deterministic where it matters",
+        "body": "Rules before models, and code before prose: route with cheap rules first, call an LLM classifier only when needed, and compute every number in Python so figures stay reproducible."
+      },
+      {
+        "title": "Test without the network",
+        "body": "Deterministic mock LLM clients let routing, guardrail and tool changes be regression-checked locally, without API keys or cost."
+      },
+      {
+        "title": "Fail visibly",
+        "body": "When a data feed or tool fails, degrade to a clearly labelled partial result instead of a confident wrong answer."
+      },
+      {
+        "title": "Guardrails by design",
+        "body": "Input and output rails, PII redaction and mandatory disclaimers are pipeline stages, not afterthoughts."
+      }
+    ],
+    "interests": [
+      "Multi-agent orchestration",
+      "Retrieval-augmented generation",
+      "LLM reliability and testing",
+      "Time-series forecasting",
+      "NLP and information extraction"
+    ],
+    "goals": "Join a team shipping production GenAI — as a Data Scientist, GenAI Engineer or Agentic AI Engineer — where reliability matters as much as capability."
+  },
+  "languages": ["English", "Hindi", "Odia", "Bengali"],
+  "seo": {
+    "title": "Ankit Chand | Data Scientist | Generative AI & Agentic AI Engineer",
+    "description": "Ankit Chand — Data Scientist and Generative AI & Agentic AI Engineer. Multi-agent LLM systems, RAG, Microsoft AutoGen, Azure OpenAI, FastAPI and production machine learning. Projects, experience, certifications and resume.",
+    "keywords": [
+      "Ankit Chand",
+      "Data Scientist",
+      "Generative AI Engineer",
+      "Agentic AI",
+      "Multi-Agent Systems",
+      "Microsoft AutoGen",
+      "RAG",
+      "LLM",
+      "Azure OpenAI",
+      "FastAPI",
+      "Machine Learning",
+      "Portfolio"
+    ]
+  }
+}

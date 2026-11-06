@@ -1,0 +1,65 @@
+[
+  {
+    "id": "unified-mentor",
+    "company": "Unified Mentor Private Limited",
+    "role": "Data Science Intern",
+    "type": "Internship",
+    "start": "2026-10",
+    "end": null,
+    "summary": "Data-science internship focused on time-series forecasting.",
+    "highlights": [
+      "UAC Care Load & Placement Forecasting: built time-series forecasts with SARIMA, ETS, Random Forest and Gradient Boosting models; halved the 4-week forecast error against the baseline."
+    ],
+    "technologies": ["Python", "Time-Series Forecasting", "SARIMA", "ETS", "Random Forest", "Gradient Boosting", "Machine Learning"],
+    "projects": ["uac-care-load-forecasting"]
+  },
+  {
+    "id": "independent-genai",
+    "company": "Independent Projects & Specialization",
+    "role": "Generative AI & Agentic AI — Independent Projects",
+    "type": "Independent",
+    "start": "2024-06",
+    "end": "2026-10",
+    "summary": "Self-directed, full-time specialization in generative AI and multi-agent systems, combining structured coursework with end-to-end builds.",
+    "highlights": [
+      "Designed and built multi-agent LLM systems end to end — orchestration, ReAct tool calling, intent routing with clarification, guardrails, PII redaction and streaming APIs — using Python, FastAPI, Microsoft AutoGen and Azure OpenAI.",
+      "Backed each system with automated test suites that run offline against deterministic mock LLM clients, so routing, guardrail and tool changes are regression-checked without API calls: 214 tests for NexusAI and 357 for IntelliHub.",
+      "Earlier builds (2024–25): RAG question answering over medical-research PDFs (LangChain, OpenAI embeddings, FAISS, AWS S3), a teachable AutoGen metadata extractor (Flask, Azure OpenAI) and an AutoGen code-generation agent team.",
+      "Completed Anthropic Academy courses (Claude Code in Action, Introduction to Agent Skills, Claude with Amazon Bedrock) and a Udemy course on AutoGen agent teams; pursuing Great Learning's PG Program in Data Science with Generative AI."
+    ],
+    "technologies": ["Python", "Microsoft AutoGen", "Azure OpenAI", "FastAPI", "Server-Sent Events", "Pydantic", "asyncio", "Streamlit", "LangChain", "FAISS", "Docker", "pytest"],
+    "projects": ["nexusai", "intellihub", "rag-medical-research-qa", "teachable-metadata-extractor", "autogen-code-generation"]
+  },
+  {
+    "id": "retisio",
+    "company": "Retisio India Pvt. Ltd.",
+    "role": "Data Scientist",
+    "type": "Full-time",
+    "start": "2022-09",
+    "end": "2024-05",
+    "summary": "Data science for an e-commerce platform — search understanding and product analytics — in an Agile/Scrum team across the full software development lifecycle.",
+    "highlights": [
+      "Search Intelligence Tool (SIT): built a Conditional Random Field (CRF) named-entity recognition model in Python that extracts entities from user search queries, sharpening query understanding and result relevance.",
+      "Built the entity-identification module and owned the supporting data-preparation pipeline: feature engineering, noise reduction and spell-checking.",
+      "Recommendations Engine (RXE): analysed time-series product-view and purchase data, historical sales, customer feedback and ratings to surface trending products, selecting the top 500 SKUs for further insight.",
+      "Deployed and scheduled model workflows on Google Cloud (Cloud Composer / Airflow, App Engine), working with REST APIs, MySQL, Git and Jira."
+    ],
+    "technologies": ["Python", "CRF", "NER", "Feature Engineering", "MySQL", "REST APIs", "GCP", "Cloud Composer / Airflow", "App Engine", "Git", "Jira", "Agile / Scrum"],
+    "projects": ["search-intelligence-tool", "recommendations-engine"]
+  },
+  {
+    "id": "aie-software",
+    "company": "AIE Software India Pvt. Ltd.",
+    "role": "Data Scientist",
+    "type": "Full-time",
+    "start": "2021-09",
+    "end": "2022-09",
+    "summary": "Data-science solutions over high-dimensional text and image data.",
+    "highlights": [
+      "Delivered data-science solutions over high-dimensional text and image data, from requirements gathering and gap analysis through modelling and deployment.",
+      "Gathered, analysed and documented business requirements, working within both Agile (Scrum) and Waterfall delivery models."
+    ],
+    "technologies": ["Python", "Machine Learning", "Text Data", "Image Data", "Requirements Analysis"],
+    "projects": []
+  }
+]

@@ -1,0 +1,40 @@
+[
+  {
+    "id": "great-learning-pgp",
+    "institution": "Great Learning",
+    "qualification": "Post Graduate Program in Data Science with Generative AI",
+    "specialization": "Data Science · Generative AI",
+    "period": "Pursuing",
+    "status": "In progress",
+    "coursework": [],
+    "description": "Structured program spanning data science and generative AI, pursued alongside independent multi-agent builds."
+  },
+  {
+    "id": "iiit-bangalore",
+    "institution": "IIIT Bangalore",
+    "qualification": "Post Graduate Diploma in Data Science",
+    "specialization": "Data Science",
+    "period": "Completed March 2020",
+    "status": "Completed",
+    "coursework": [
+      "Exploratory data analysis",
+      "Linear & logistic regression",
+      "Regularisation (Ridge, Lasso)",
+      "Clustering (K-Means, hierarchical)",
+      "Tree models & ensembles",
+      "Neural networks",
+      "CNNs, RNNs & attention"
+    ],
+    "description": "Program case studies and projects — lead scoring, telecom churn, house-price regression, gesture recognition and an image-captioning capstone — are public on GitHub."
+  },
+  {
+    "id": "lpu",
+    "institution": "Lovely Professional University, Punjab",
+    "qualification": "Bachelor of Technology (B.Tech)",
+    "specialization": "Mechanical Engineering",
+    "period": "Completed",
+    "status": "Completed",
+    "coursework": [],
+    "description": "Engineering foundation in mathematics, mechanics and analytical problem solving."
+  }
+]

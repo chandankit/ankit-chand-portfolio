@@ -1,0 +1,62 @@
+[
+  {
+    "id": "great-learning-pgp-dsgai",
+    "title": "Post Graduate Program in Data Science with Generative AI",
+    "issuer": "Great Learning",
+    "status": "In progress",
+    "date": null,
+    "category": "Data Science",
+    "skills": ["Data Science", "Machine Learning", "Generative AI"],
+    "description": "Long-form program covering the data-science workflow and generative AI. Listed under Education as well.",
+    "verifyUrl": null,
+    "file": null
+  },
+  {
+    "id": "anthropic-claude-code-in-action",
+    "title": "Claude Code in Action",
+    "issuer": "Anthropic Academy",
+    "status": "Completed",
+    "date": null,
+    "category": "Agentic AI",
+    "skills": ["Claude Code", "AI-assisted development", "Agentic coding workflows"],
+    "description": "Using Claude Code as an agentic pair programmer: context management, custom commands and integrating it into a development workflow.",
+    "verifyUrl": null,
+    "file": null
+  },
+  {
+    "id": "anthropic-intro-agent-skills",
+    "title": "Introduction to Agent Skills",
+    "issuer": "Anthropic Academy",
+    "status": "Completed",
+    "date": null,
+    "category": "Agentic AI",
+    "skills": ["Agent Skills", "Reusable agent instructions", "Agent design"],
+    "description": "Packaging reusable instructions and resources as skills that agents load when a task calls for them.",
+    "verifyUrl": null,
+    "file": null
+  },
+  {
+    "id": "anthropic-claude-with-bedrock",
+    "title": "Claude with Amazon Bedrock",
+    "issuer": "Anthropic Academy",
+    "status": "Completed",
+    "date": null,
+    "category": "Generative AI",
+    "skills": ["Claude API on Amazon Bedrock", "Prompt engineering & evaluation", "Tool use", "RAG & agent workflows"],
+    "description": "Building with Claude through Amazon Bedrock — prompting and prompt evaluation, tool use, retrieval and agentic workflows — across multiple modules and assessments.",
+    "verifyUrl": null,
+    "file": null
+  },
+  {
+    "id": "udemy-ai-agents-teams",
+    "title": "AI Agents: Building Teams of LLM Agents that Work For You",
+    "issuer": "Udemy",
+    "status": "Completed",
+    "date": null,
+    "category": "Multi-Agent Systems",
+    "skills": ["Microsoft AutoGen", "Multi-agent conversations", "LLM agent teams"],
+    "description": "Designing teams of collaborating LLM agents with Microsoft AutoGen — the framework behind several of my projects.",
+    "verifyUrl": null,
+    "file": null
+  }
+]

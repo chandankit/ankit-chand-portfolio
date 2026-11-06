@@ -1,0 +1,101 @@
+[
+  {
+    "id": "iiitb-pgd",
+    "date": "Mar 2020",
+    "sortKey": "2020-03",
+    "title": "Post Graduate Diploma in Data Science — IIIT Bangalore",
+    "description": "Completed a year-long program in statistics, machine learning and deep learning, including an image-captioning capstone with attention.",
+    "category": "Education",
+    "href": "/education"
+  },
+  {
+    "id": "github-portfolio",
+    "date": "May 2021",
+    "sortKey": "2021-05",
+    "title": "Published 16 machine-learning projects on GitHub",
+    "description": "Case studies and challenges in regression, classification, clustering, deep learning and PySpark — open for anyone to read.",
+    "category": "Learning",
+    "href": "/projects?context=Coursework"
+  },
+  {
+    "id": "aie-start",
+    "date": "Sep 2021",
+    "sortKey": "2021-09",
+    "title": "First role as a Data Scientist — AIE Software India",
+    "description": "Data-science solutions over high-dimensional text and image data, from requirements through deployment.",
+    "category": "Career",
+    "href": "/experience#aie-software"
+  },
+  {
+    "id": "retisio-start",
+    "date": "Sep 2022",
+    "sortKey": "2022-09",
+    "title": "Data Scientist — Retisio India",
+    "description": "Joined an e-commerce platform team to work on search understanding and product analytics.",
+    "category": "Career",
+    "href": "/experience#retisio"
+  },
+  {
+    "id": "sit-ner",
+    "date": "2022 – 2024",
+    "sortKey": "2023-06",
+    "title": "Shipped CRF-based entity extraction for e-commerce search",
+    "description": "Search Intelligence Tool: a Conditional Random Field NER model with its own data-preparation pipeline, scheduled on GCP.",
+    "category": "Project",
+    "href": "/projects/search-intelligence-tool"
+  },
+  {
+    "id": "genai-first-builds",
+    "date": "2024 – 2025",
+    "sortKey": "2024-12",
+    "title": "First generative-AI builds",
+    "description": "RAG question answering over medical-research PDFs, a teachable AutoGen metadata extractor and an AutoGen code-generation agent team.",
+    "category": "Project",
+    "href": "/projects?category=Generative%20AI"
+  },
+  {
+    "id": "anthropic-courses",
+    "date": "2025 – 2026",
+    "sortKey": "2026-03",
+    "title": "Completed three Anthropic Academy courses",
+    "description": "Claude Code in Action, Introduction to Agent Skills and Claude with Amazon Bedrock — plus a Udemy course on AutoGen agent teams.",
+    "category": "Learning",
+    "href": "/certifications"
+  },
+  {
+    "id": "nexusai",
+    "date": "2026",
+    "sortKey": "2026-06",
+    "title": "Built NexusAI — 8 specialist agents, 214 offline tests",
+    "description": "A seven-stage per-turn pipeline with four-stage hybrid routing, guardrails, PII redaction and a FastAPI/SSE gateway serving Streamlit and Android clients.",
+    "category": "Project",
+    "href": "/projects/nexusai"
+  },
+  {
+    "id": "intellihub",
+    "date": "2026",
+    "sortKey": "2026-07",
+    "title": "Built IntelliHub — one question, one sourced briefing",
+    "description": "A planner that runs AutoGen collector agents concurrently, computes every figure in Python and is covered by 357 offline tests.",
+    "category": "Project",
+    "href": "/projects/intellihub"
+  },
+  {
+    "id": "unified-mentor",
+    "date": "Oct 2026",
+    "sortKey": "2026-10",
+    "title": "Data Science Intern — Unified Mentor",
+    "description": "Care-load and placement forecasting with SARIMA, ETS and tree ensembles; halved the 4-week error against the baseline.",
+    "category": "Career",
+    "href": "/experience#unified-mentor"
+  },
+  {
+    "id": "great-learning",
+    "date": "Ongoing",
+    "sortKey": "2026-11",
+    "title": "Pursuing the PG Program in Data Science with Generative AI",
+    "description": "Great Learning's long-form program, taken alongside hands-on multi-agent work.",
+    "category": "Education",
+    "href": "/education"
+  }
+]

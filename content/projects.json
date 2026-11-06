@@ -1,0 +1,1826 @@
+[
+  {
+    "slug": "nexusai",
+    "title": "NexusAI",
+    "tagline": "One chat box, eight specialist agents — routed cheaply, grounded in tools, guarded on the way in and out.",
+    "categories": [
+      "Agentic AI",
+      "Multi-Agent Systems",
+      "Generative AI",
+      "AI Automation"
+    ],
+    "featured": true,
+    "order": 1,
+    "period": "2026",
+    "year": 2026,
+    "context": "Independent",
+    "role": "Designer & developer (end to end)",
+    "summary": "A multi-agent assistant where a MasterOrchestrator sends each turn to one or more of eight GPT-4o specialist agents. Each specialist runs a ReAct tool-calling loop over 31 tools, and the answer streams as typed events to a Streamlit UI and to an Android app through a FastAPI/SSE gateway.",
+    "problem": "People ask about unrelated things in one conversation — weather, news, money, careers — and shouldn't have to pick a mode first. But sending every message through an LLM router adds delay and cost, free public APIs are flaky, and user input can carry prompt injection or personal data.",
+    "objective": "Route each request to the right specialist cheaply, ground answers in real tool data, fail safely when a source is down, and keep every step observable and testable offline.",
+    "stack": [
+      "Python",
+      "asyncio",
+      "Azure OpenAI (GPT-4o)",
+      "Pydantic",
+      "FastAPI",
+      "Server-Sent Events",
+      "Streamlit",
+      "SQLite",
+      "httpx",
+      "pytest",
+      "Kotlin / Jetpack Compose (Android client)"
+    ],
+    "approach": [
+      "Custom Python orchestration engine: a MasterOrchestrator runs a seven-stage pipeline on every turn — input guardrails, routing, clarification, concurrent fan-out, aggregation, output rails and a single-writer memory commit.",
+      "Four-stage hybrid router: keyword rules first, then follow-up context, then a GPT-4o JSON classifier, then a fallback. The classifier's output is validated, and a confidence floor turns uncertain turns into a clarifying question instead of a guess.",
+      "Each specialist is built by an agent factory from a playbook, a prompt, guardrail overlays and a tool allow-list, and runs a ReAct loop with an iteration cap — the final round runs without tools to force an answer.",
+      "Tools are declared with a decorator that generates the function schema from the Python signature. Tools never raise: each returns a structured result with a status, recovery hint and source label.",
+      "When several agents run, their outputs merge into one stream through an asyncio queue, and an aggregation step combines the answers.",
+      "One typed event format feeds both clients: the Streamlit web app and the Android app over the FastAPI/SSE gateway."
+    ],
+    "features": [
+      "Answers that combine several specialists in one turn",
+      "Asks a clarifying question when routing confidence is low",
+      "Offline fallbacks for network tools, clearly labelled as sample data",
+      "PII redaction: Luhn-checked card numbers, email, SSN, Aadhaar, PAN and phone",
+      "Automatic finance and medical disclaimers on the way out",
+      "Per-user memory across sessions (SQLite preferences and episodes)",
+      "Custom span-level tracer visualised in the UI, plus agent-activity and analytics tabs"
+    ],
+    "agents": [
+      {
+        "name": "Weather",
+        "role": "Forecasts, current conditions and air quality",
+        "tools": [
+          "geocode_city",
+          "get_current_weather",
+          "get_weather_forecast",
+          "get_air_quality"
+        ]
+      },
+      {
+        "name": "News",
+        "role": "Headlines, search and trending topics",
+        "tools": [
+          "get_top_headlines",
+          "search_news",
+          "get_trending_topics"
+        ]
+      },
+      {
+        "name": "Knowledge",
+        "role": "Encyclopedic lookups and country facts",
+        "tools": [
+          "wiki_summary",
+          "wiki_search",
+          "country_facts"
+        ]
+      },
+      {
+        "name": "Travel",
+        "role": "Destinations, itineraries and budgets",
+        "tools": [
+          "search_destination_info",
+          "get_destination_weather",
+          "build_itinerary_skeleton",
+          "estimate_trip_budget"
+        ]
+      },
+      {
+        "name": "Finance",
+        "role": "Quotes, FX rates, concepts and SIP maths",
+        "tools": [
+          "get_stock_quote",
+          "get_fx_rate",
+          "explain_financial_concept",
+          "sip_calculator"
+        ]
+      },
+      {
+        "name": "Career",
+        "role": "Resume analysis, interview prep and roadmaps",
+        "tools": [
+          "analyze_resume_text",
+          "generate_interview_questions",
+          "skill_gap_analysis",
+          "learning_roadmap"
+        ]
+      },
+      {
+        "name": "Research",
+        "role": "Web and arXiv search, topic comparison",
+        "tools": [
+          "web_search",
+          "arxiv_search",
+          "compare_topics",
+          "wiki_search"
+        ]
+      },
+      {
+        "name": "Productivity",
+        "role": "Schedules, priorities and timelines",
+        "tools": [
+          "create_schedule",
+          "prioritize_tasks",
+          "create_timeline",
+          "meeting_summary_template"
+        ]
+      }
+    ],
+    "architecture": {
+      "title": "Seven-stage pipeline per turn",
+      "description": "Every user turn flows top to bottom. Select any block to see what it does.",
+      "stages": [
+        {
+          "id": "clients",
+          "title": "Clients",
+          "nodes": [
+            {
+              "id": "streamlit",
+              "label": "Streamlit web UI",
+              "detail": "Chat interface with live agent-activity, tracing and analytics tabs."
+            },
+            {
+              "id": "android",
+              "label": "Android app",
+              "detail": "Kotlin / Jetpack Compose client that consumes the same typed event stream."
+            }
+          ]
+        },
+        {
+          "id": "gateway",
+          "title": "Gateway",
+          "nodes": [
+            {
+              "id": "fastapi",
+              "label": "FastAPI + SSE",
+              "detail": "Streams typed events (tokens, agent status, final answer) to clients over Server-Sent Events."
+            }
+          ]
+        },
+        {
+          "id": "input-rails",
+          "title": "Input guardrails",
+          "nodes": [
+            {
+              "id": "flood",
+              "label": "Flood control",
+              "detail": "Throttles bursts of requests before any model is called."
+            },
+            {
+              "id": "injection",
+              "label": "Injection & toxicity checks",
+              "detail": "Blocked input is replaced with a placeholder, so it never re-enters conversation history."
+            },
+            {
+              "id": "pii",
+              "label": "PII redaction",
+              "detail": "Masks Luhn-checked card numbers, email, SSN, Aadhaar, PAN and phone numbers."
+            }
+          ]
+        },
+        {
+          "id": "router",
+          "title": "Hybrid router",
+          "caption": "Cheapest method first",
+          "nodes": [
+            {
+              "id": "rules",
+              "label": "1 · Keyword rules",
+              "detail": "Fast path: high-confidence rule matches skip the LLM entirely."
+            },
+            {
+              "id": "followup",
+              "label": "2 · Follow-up context",
+              "detail": "Short follow-ups inherit the previous turn's agent."
+            },
+            {
+              "id": "classifier",
+              "label": "3 · GPT-4o JSON classifier",
+              "detail": "Returns agents and confidence as JSON; unknown agent names are discarded."
+            },
+            {
+              "id": "clarify",
+              "label": "4 · Fallback / clarify",
+              "detail": "Below the confidence floor the system asks a clarifying question instead of guessing."
+            }
+          ]
+        },
+        {
+          "id": "specialists",
+          "title": "Concurrent fan-out",
+          "caption": "8 specialists · ReAct loops",
+          "parallel": true,
+          "nodes": [
+            {
+              "id": "weather",
+              "label": "Weather",
+              "detail": "4 tools: geocoding, current weather, forecast, air quality."
+            },
+            {
+              "id": "news",
+              "label": "News",
+              "detail": "3 tools: headlines, search, trending topics."
+            },
+            {
+              "id": "knowledge",
+              "label": "Knowledge",
+              "detail": "3 tools: Wikipedia summary and search, country facts."
+            },
+            {
+              "id": "travel",
+              "label": "Travel",
+              "detail": "4 tools: destination info, destination weather, itinerary skeleton, budget."
+            },
+            {
+              "id": "finance",
+              "label": "Finance",
+              "detail": "4 tools: stock quotes, FX rates, concept explainer, SIP calculator."
+            },
+            {
+              "id": "career",
+              "label": "Career",
+              "detail": "4 tools: resume analysis, interview questions, skill gaps, learning roadmap."
+            },
+            {
+              "id": "research",
+              "label": "Research",
+              "detail": "4 tools: web search, arXiv search, topic comparison, Wikipedia."
+            },
+            {
+              "id": "productivity",
+              "label": "Productivity",
+              "detail": "4 tools: schedules, prioritisation, timelines, meeting summaries."
+            }
+          ]
+        },
+        {
+          "id": "aggregate",
+          "title": "Aggregation",
+          "nodes": [
+            {
+              "id": "merge",
+              "label": "Answer merge",
+              "detail": "When two or more agents ran, GPT-4o merges their answers into one response."
+            }
+          ]
+        },
+        {
+          "id": "output-rails",
+          "title": "Output guardrails",
+          "nodes": [
+            {
+              "id": "leak",
+              "label": "Prompt-leak check",
+              "detail": "Stops system-prompt content from leaking into answers."
+            },
+            {
+              "id": "disclaimers",
+              "label": "Disclaimers & PII",
+              "detail": "Adds finance and medical disclaimers and re-checks for personal data."
+            }
+          ]
+        },
+        {
+          "id": "memory",
+          "title": "Memory commit",
+          "nodes": [
+            {
+              "id": "writer",
+              "label": "Single-writer memory",
+              "detail": "Only text that passed the output rails is saved: session memory plus SQLite preferences and episodes."
+            }
+          ]
+        }
+      ]
+    },
+    "challenges": [
+      {
+        "challenge": "Routing every turn through an LLM is slow and costly, but pure rules misroute paraphrases.",
+        "solution": "A router that tries the cheapest method first and only escalates when needed, with a confidence margin check and a clarification floor for genuinely ambiguous turns."
+      },
+      {
+        "challenge": "Free public APIs fail or rate-limit unpredictably.",
+        "solution": "Tools never raise. They return structured results and fall back to deterministic sample data, which the agents must disclose to the user."
+      },
+      {
+        "challenge": "Prompt-injection text could re-enter the model through conversation history.",
+        "solution": "Blocked input is stored only as a withheld placeholder, and memory saves only text that has passed the output guardrails."
+      },
+      {
+        "challenge": "Streamlit reruns synchronously while the engine is fully async.",
+        "solution": "The engine runs on a background thread's event loop that is cancelled cleanly on rerun; tracer spans always close, and one failing parallel agent doesn't stop the others."
+      }
+    ],
+    "quality": [
+      "214 automated tests pass fully offline.",
+      "A fake LLM client lets the whole suite run without spending tokens.",
+      "All network calls go through one seam, so a single fixture can cut the network and exercise every tool's fallback path."
+    ],
+    "metrics": [
+      {
+        "value": "8",
+        "label": "specialist agents"
+      },
+      {
+        "value": "31",
+        "label": "tools in 9 modules"
+      },
+      {
+        "value": "7",
+        "label": "pipeline stages per turn"
+      },
+      {
+        "value": "214",
+        "label": "offline tests passing"
+      }
+    ],
+    "links": {
+      "repoVisibility": "private"
+    },
+    "availabilityNote": "The source lives in a private repository. I'm happy to walk through the code or run a live demo on a call."
+  },
+  {
+    "slug": "intellihub",
+    "title": "IntelliHub",
+    "tagline": "One question in, one sourced briefing out — news, markets, jobs and lab reports, with every figure computed in Python.",
+    "categories": [
+      "Agentic AI",
+      "Multi-Agent Systems",
+      "Generative AI",
+      "AI Automation"
+    ],
+    "featured": true,
+    "order": 2,
+    "period": "2026",
+    "year": 2026,
+    "context": "Independent",
+    "role": "Designer & developer (end to end)",
+    "summary": "A multi-agent intelligence platform. A plain-Python ReAct-style planner decides which domain agents to run, executes them concurrently, and merges their results into one briefing with sources, a status and token cost. Each domain agent wraps a Microsoft AutoGen AssistantAgent that calls its own tools.",
+    "problem": "The information behind everyday decisions is scattered across news and RSS feeds, research APIs, market data, government job portals and lab-report PDFs. Pulling it together by hand is slow, inconsistent and leaves no record of where each fact came from.",
+    "objective": "Turn one free-text question into a single sourced briefing that can be tested, stored and demoed at zero API cost.",
+    "stack": [
+      "Python",
+      "asyncio",
+      "Microsoft AutoGen",
+      "Azure OpenAI (GPT-4o)",
+      "Pydantic",
+      "SQLAlchemy / SQLite",
+      "ChromaDB (optional)",
+      "PyMuPDF",
+      "Tesseract OCR",
+      "Streamlit",
+      "Plotly",
+      "pytest",
+      "Docker"
+    ],
+    "approach": [
+      "A deterministic intent classifier scores the query, picks the agents, a strategy (concurrent or sequential), a confidence and a time window — then a planner builds the execution plan.",
+      "Collector agents run concurrently with asyncio.gather; the health pipeline runs afterwards, in a fixed order.",
+      "Each domain agent wraps an AutoGen AssistantAgent whose tools are AutoGen FunctionTools. Full tool results go to a side collector; the model sees only a short status line.",
+      "The LLM writes prose only. Every schema-bearing section is computed in Python, so figures are reproducible and testable.",
+      "Six layers talk only through typed Pydantic contracts; agents are built lazily, only when a request needs them.",
+      "A deterministic mock implements AutoGen's real client interface — turn one requests every tool, turn two writes the narrative — so the full agent loop runs without API keys."
+    ],
+    "features": [
+      "Multi-domain answers from a single question",
+      "De-duplicated sources on every briefing",
+      "Honest status: PARTIAL when only some agents succeed, sample data marked DEGRADED when the network fails",
+      "Lab-value trends with abnormal-value flags and a risk score",
+      "Health access limited to an allowed-user list, with a mandatory medical disclaimer on every path",
+      "Per-request token and cost metrics",
+      "Streamlit chat, file upload and dashboard; optional ChromaDB memory with an in-memory fallback"
+    ],
+    "agents": [
+      {
+        "name": "AI Intelligence",
+        "role": "AI news and research",
+        "tools": [
+          "NewsSearch",
+          "RSSAggregator",
+          "Arxiv",
+          "SemanticScholar"
+        ]
+      },
+      {
+        "name": "India Market",
+        "role": "Indian market snapshot",
+        "tools": [
+          "NSE",
+          "BSE",
+          "FinancialNews",
+          "YahooFinance"
+        ]
+      },
+      {
+        "name": "US Market",
+        "role": "US quotes and company news",
+        "tools": [
+          "YahooFinance",
+          "CompanyNews",
+          "FinancialNews"
+        ]
+      },
+      {
+        "name": "Global News",
+        "role": "World news; default when nothing else matches",
+        "tools": [
+          "NewsSearch",
+          "RSSAggregator",
+          "Arxiv",
+          "CrossRef"
+        ]
+      },
+      {
+        "name": "Gov Jobs",
+        "role": "Government job notifications",
+        "tools": [
+          "UPSC",
+          "SSC",
+          "PSU",
+          "State job portal",
+          "GovJobsScraper"
+        ]
+      },
+      {
+        "name": "Private & World Jobs",
+        "role": "Private-sector and international openings"
+      },
+      {
+        "name": "World Market",
+        "role": "Global market overview"
+      },
+      {
+        "name": "Health",
+        "role": "Longitudinal lab-report analysis (fixed pipeline)",
+        "tools": [
+          "PDFParser",
+          "OCR",
+          "MedicalReportExtractor",
+          "TrendAnalysis"
+        ]
+      }
+    ],
+    "architecture": {
+      "title": "From one question to one briefing",
+      "description": "Collectors run in parallel; health runs after them in a fixed, guarded order. Click any block for detail.",
+      "stages": [
+        {
+          "id": "interface",
+          "title": "Interface",
+          "nodes": [
+            {
+              "id": "ui",
+              "label": "Streamlit / CLI",
+              "detail": "Chat, optional file upload (lab reports) and a dashboard; a CLI for scripted runs."
+            }
+          ]
+        },
+        {
+          "id": "understand",
+          "title": "Understand",
+          "nodes": [
+            {
+              "id": "intent",
+              "label": "Intent classifier",
+              "detail": "Deterministic keyword scoring picks agents, strategy, confidence and time window."
+            },
+            {
+              "id": "continuity",
+              "label": "Follow-up continuity",
+              "detail": "Keeps context across turns so follow-ups route correctly."
+            }
+          ]
+        },
+        {
+          "id": "plan",
+          "title": "Plan",
+          "nodes": [
+            {
+              "id": "planner",
+              "label": "ReAct-style planner",
+              "detail": "Plain-Python orchestrator that builds the plan; the health step depends on all collectors."
+            }
+          ]
+        },
+        {
+          "id": "collect",
+          "title": "Collect",
+          "caption": "AutoGen agents · concurrent",
+          "parallel": true,
+          "nodes": [
+            {
+              "id": "ai",
+              "label": "AI Intelligence",
+              "detail": "News search, RSS, arXiv and Semantic Scholar."
+            },
+            {
+              "id": "india",
+              "label": "India Market",
+              "detail": "Indian market snapshot and financial news (NSE/BSE currently served from sample data)."
+            },
+            {
+              "id": "us",
+              "label": "US Market",
+              "detail": "Quotes and company news."
+            },
+            {
+              "id": "world",
+              "label": "World Market",
+              "detail": "Global market overview."
+            },
+            {
+              "id": "global",
+              "label": "Global News",
+              "detail": "World news, research and CrossRef lookups."
+            },
+            {
+              "id": "gov",
+              "label": "Gov Jobs",
+              "detail": "UPSC, SSC, PSU and state portals."
+            },
+            {
+              "id": "jobs",
+              "label": "Private & World Jobs",
+              "detail": "Private-sector and international openings."
+            }
+          ]
+        },
+        {
+          "id": "health",
+          "title": "Health pipeline",
+          "caption": "Sequential · guarded",
+          "nodes": [
+            {
+              "id": "guard",
+              "label": "Allowed-user guard",
+              "detail": "Checks the user against an allowed list before any health data is read."
+            },
+            {
+              "id": "parse",
+              "label": "Parse / OCR",
+              "detail": "Extracts text from lab-report PDFs, with OCR for scans."
+            },
+            {
+              "id": "flag",
+              "label": "Flag & risk score",
+              "detail": "Extracts values, flags abnormal ones and scores risk."
+            },
+            {
+              "id": "trend",
+              "label": "Trend vs history",
+              "detail": "History is read before the new report is saved, so a report is never compared with itself."
+            }
+          ]
+        },
+        {
+          "id": "consolidate",
+          "title": "Consolidate",
+          "nodes": [
+            {
+              "id": "sections",
+              "label": "Python section builders",
+              "detail": "Every table and figure is computed in code."
+            },
+            {
+              "id": "narrative",
+              "label": "LLM narrative",
+              "detail": "GPT-4o (or the mock) writes the prose around computed sections."
+            },
+            {
+              "id": "status",
+              "label": "Status, sources & cost",
+              "detail": "SUCCESS / PARTIAL / DEGRADED status, de-duplicated sources and token cost."
+            }
+          ]
+        },
+        {
+          "id": "persist",
+          "title": "Persist",
+          "nodes": [
+            {
+              "id": "sqlite",
+              "label": "SQLite",
+              "detail": "Briefings and history stored via SQLAlchemy."
+            },
+            {
+              "id": "chroma",
+              "label": "Optional ChromaDB",
+              "detail": "Memory with a hashing embedder and an in-memory fallback."
+            }
+          ]
+        }
+      ]
+    },
+    "challenges": [
+      {
+        "challenge": "No API budget for development and demos.",
+        "solution": "A deterministic mock that implements AutoGen's real client interface, so the true agent and tool loop runs keyless."
+      },
+      {
+        "challenge": "LLM output is unstable for anything numeric or structured.",
+        "solution": "The model writes prose only; Python computes every structured section, which also makes the briefing testable."
+      },
+      {
+        "challenge": "Health data needs stronger safety than the other domains.",
+        "solution": "An allowed-user check runs before any data is read, a disclaimer is attached on every path, and history is read before saving."
+      },
+      {
+        "challenge": "A misconfigured deployment could silently fall back to the mock.",
+        "solution": "A require-live flag that fails loudly with a configuration error, plus a mock-mode warning and a verify command."
+      }
+    ],
+    "quality": [
+      "357 tests across 31 files pass without API keys.",
+      "A test fixture forces offline mode for every test, so results are deterministic.",
+      "If one agent crashes it returns an error result instead of failing the whole batch."
+    ],
+    "metrics": [
+      {
+        "value": "8+",
+        "label": "domain agents"
+      },
+      {
+        "value": "6",
+        "label": "typed layers"
+      },
+      {
+        "value": "357",
+        "label": "offline tests passing"
+      },
+      {
+        "value": "0",
+        "label": "API keys needed for the test suite"
+      }
+    ],
+    "links": {
+      "repoVisibility": "private"
+    },
+    "availabilityNote": "The source lives in a private repository. I'm happy to walk through the code or run it live in mock mode on a call."
+  },
+  {
+    "slug": "rag-medical-research-qa",
+    "title": "RAG-Powered QA for Medical Research",
+    "tagline": "Ask questions of a library of research PDFs and get grounded answers and summaries.",
+    "categories": [
+      "Generative AI",
+      "RAG Applications",
+      "AI Automation"
+    ],
+    "featured": true,
+    "order": 3,
+    "period": "2024 – 2025",
+    "year": 2025,
+    "context": "Independent",
+    "role": "Developer",
+    "summary": "Automates question answering and summarisation over medical-research PDFs stored in AWS S3. Text is extracted from each PDF, embedded with OpenAI embeddings and indexed in FAISS; user questions retrieve the most relevant passages, which GPT-4 uses to answer.",
+    "problem": "Researchers lose time searching long PDFs for specific findings, and a general-purpose chatbot answers from memory rather than from the papers in front of them.",
+    "objective": "Answer questions and summarise papers using only the content of a given document collection.",
+    "stack": [
+      "Python",
+      "LangChain",
+      "OpenAI embeddings",
+      "GPT-4",
+      "FAISS",
+      "PyPDF2",
+      "AWS S3 (boto3)",
+      "REST API"
+    ],
+    "approach": [
+      "Load research PDFs from cloud storage (AWS S3) with boto3.",
+      "Extract text with PyPDF2 and generate embeddings with the OpenAI API.",
+      "Index embeddings in FAISS for fast similarity search.",
+      "At question time, retrieve the most relevant passages and pass them to GPT-4 through LangChain to answer or summarise.",
+      "Expose question answering and summarisation through a REST API."
+    ],
+    "features": [
+      "Question answering grounded in the uploaded papers",
+      "Paper summarisation",
+      "Cloud-stored document source (S3)",
+      "Fast vector similarity search with FAISS"
+    ],
+    "architecture": {
+      "title": "Retrieval-augmented generation pipeline",
+      "stages": [
+        {
+          "id": "source",
+          "title": "Source",
+          "nodes": [
+            {
+              "id": "s3",
+              "label": "PDFs in AWS S3",
+              "detail": "Research papers fetched with boto3."
+            }
+          ]
+        },
+        {
+          "id": "extract",
+          "title": "Extract",
+          "nodes": [
+            {
+              "id": "pypdf",
+              "label": "PyPDF2",
+              "detail": "Text extraction from each PDF."
+            }
+          ]
+        },
+        {
+          "id": "index",
+          "title": "Embed & index",
+          "nodes": [
+            {
+              "id": "embed",
+              "label": "OpenAI embeddings",
+              "detail": "Each passage becomes a vector."
+            },
+            {
+              "id": "faiss",
+              "label": "FAISS index",
+              "detail": "Vectors stored for similarity search."
+            }
+          ]
+        },
+        {
+          "id": "retrieve",
+          "title": "Retrieve",
+          "nodes": [
+            {
+              "id": "topk",
+              "label": "Similarity search",
+              "detail": "Most relevant passages for the user's question."
+            }
+          ]
+        },
+        {
+          "id": "generate",
+          "title": "Generate",
+          "nodes": [
+            {
+              "id": "gpt4",
+              "label": "GPT-4 via LangChain",
+              "detail": "Answers or summarises from the retrieved passages."
+            }
+          ]
+        },
+        {
+          "id": "serve",
+          "title": "Serve",
+          "nodes": [
+            {
+              "id": "api",
+              "label": "REST API",
+              "detail": "Question-answering and summarisation endpoints."
+            }
+          ]
+        }
+      ]
+    },
+    "links": {
+      "repoVisibility": "private"
+    },
+    "availabilityNote": "Not publicly hosted. A walkthrough is available on request."
+  },
+  {
+    "slug": "teachable-metadata-extractor",
+    "title": "Teachable AI for Structured Metadata Extraction",
+    "tagline": "A teachable agent that turns e-commerce and retail text into structured JSON — and asks for what's missing.",
+    "categories": [
+      "Agentic AI",
+      "Generative AI",
+      "AI Automation"
+    ],
+    "featured": false,
+    "order": 4,
+    "period": "2024 – 2025",
+    "year": 2025,
+    "context": "Independent",
+    "role": "Developer",
+    "summary": "A Flask web service built around a teachable Microsoft AutoGen agent on Azure OpenAI. It extracts structured metadata from user input for e-commerce and retail content, returns it as JSON, and guides the user to supply any details that are missing.",
+    "problem": "Product and campaign communications arrive as free text, while downstream systems need consistent structured fields. Rules break on new phrasings, and missing fields go unnoticed.",
+    "objective": "Extract reliable structured metadata from free text, learn from corrections, and prompt for incomplete input instead of guessing.",
+    "stack": [
+      "Python",
+      "Flask",
+      "Microsoft AutoGen",
+      "Azure OpenAI",
+      "SQLite"
+    ],
+    "approach": [
+      "Wrap a teachable AutoGen agent in a Flask web service.",
+      "Use Azure OpenAI to extract metadata fields from e-commerce and retail text.",
+      "Persist what the agent is taught in a local SQLite store so it improves across sessions.",
+      "Validate the extracted fields and ask the user for any required details that are missing.",
+      "Return results as JSON for downstream systems."
+    ],
+    "features": [
+      "Structured JSON output",
+      "Learns from user teaching across sessions",
+      "Detects missing fields and asks for them",
+      "Simple HTTP interface"
+    ],
+    "architecture": {
+      "title": "Extraction loop",
+      "stages": [
+        {
+          "id": "in",
+          "title": "Input",
+          "nodes": [
+            {
+              "id": "flask",
+              "label": "Flask endpoint",
+              "detail": "Receives free-text e-commerce or retail content."
+            }
+          ]
+        },
+        {
+          "id": "agent",
+          "title": "Agent",
+          "nodes": [
+            {
+              "id": "teachable",
+              "label": "Teachable AutoGen agent",
+              "detail": "Extracts metadata with Azure OpenAI."
+            }
+          ]
+        },
+        {
+          "id": "memory",
+          "title": "Memory",
+          "nodes": [
+            {
+              "id": "store",
+              "label": "Local SQLite store",
+              "detail": "Keeps what the agent has been taught."
+            }
+          ]
+        },
+        {
+          "id": "check",
+          "title": "Validate",
+          "nodes": [
+            {
+              "id": "missing",
+              "label": "Missing-field check",
+              "detail": "Asks the user for required details instead of guessing."
+            }
+          ]
+        },
+        {
+          "id": "out",
+          "title": "Output",
+          "nodes": [
+            {
+              "id": "json",
+              "label": "Structured JSON",
+              "detail": "Consistent fields for downstream systems."
+            }
+          ]
+        }
+      ]
+    },
+    "links": {
+      "repoVisibility": "private"
+    },
+    "availabilityNote": "Not publicly hosted. A walkthrough is available on request."
+  },
+  {
+    "slug": "autogen-code-generation",
+    "title": "Autonomous Code Generation & Execution",
+    "tagline": "Two AutoGen agents — one writes code, one runs it — iterating until the task works.",
+    "categories": [
+      "Agentic AI",
+      "Multi-Agent Systems",
+      "AI Automation"
+    ],
+    "featured": false,
+    "order": 5,
+    "period": "2024 – 2025",
+    "year": 2025,
+    "context": "Independent",
+    "role": "Developer",
+    "summary": "A multi-agent system built with Microsoft AutoGen that automates code generation and execution. Conversable agents with specialised roles — a Code Writer Agent and a Code Executor Agent — collaborate on a task inside an isolated virtual environment.",
+    "problem": "LLM-generated code often fails on first run, and a human has to copy, run and report errors back by hand.",
+    "objective": "Close the loop automatically: generate code, execute it safely, feed results back, and iterate.",
+    "stack": [
+      "Python",
+      "Microsoft AutoGen",
+      "OpenAI GPT-4o",
+      "Python virtual environment"
+    ],
+    "approach": [
+      "Define two conversable AutoGen agents with distinct roles and system messages.",
+      "The Code Writer Agent (GPT-4o) proposes code for the user's task.",
+      "The Code Executor Agent runs it in an isolated virtual environment and returns output or errors.",
+      "The agents iterate until the task succeeds or a turn limit is reached."
+    ],
+    "features": [
+      "Role-specialised agent collaboration",
+      "Automatic execution feedback loop",
+      "Isolated execution environment"
+    ],
+    "architecture": {
+      "title": "Write → execute → refine",
+      "stages": [
+        {
+          "id": "task",
+          "title": "Task",
+          "nodes": [
+            {
+              "id": "prompt",
+              "label": "Natural-language task",
+              "detail": "The user describes what the code should do."
+            }
+          ]
+        },
+        {
+          "id": "write",
+          "title": "Write",
+          "nodes": [
+            {
+              "id": "writer",
+              "label": "Code Writer Agent",
+              "detail": "GPT-4o drafts the code."
+            }
+          ]
+        },
+        {
+          "id": "execute",
+          "title": "Execute",
+          "nodes": [
+            {
+              "id": "executor",
+              "label": "Code Executor Agent",
+              "detail": "Runs the code in an isolated virtual environment."
+            }
+          ]
+        },
+        {
+          "id": "feedback",
+          "title": "Refine",
+          "nodes": [
+            {
+              "id": "loop",
+              "label": "Feedback loop",
+              "detail": "Output and errors go back to the writer until the task succeeds."
+            }
+          ]
+        }
+      ]
+    },
+    "links": {
+      "repoVisibility": "private"
+    },
+    "availabilityNote": "Not publicly hosted. A walkthrough is available on request."
+  },
+  {
+    "slug": "uac-care-load-forecasting",
+    "title": "UAC Care Load & Placement Forecasting",
+    "tagline": "Statistical and machine-learning forecasts that halved the 4-week error against the baseline.",
+    "categories": [
+      "Data Science",
+      "Machine Learning",
+      "Time Series"
+    ],
+    "featured": true,
+    "order": 6,
+    "period": "Oct 2026 – present",
+    "year": 2026,
+    "context": "Internship",
+    "organisation": "Unified Mentor Private Limited",
+    "role": "Data Science Intern",
+    "summary": "Time-series forecasting of care load and placements during a data-science internship, comparing classical statistical models with tree-based machine-learning models against a baseline.",
+    "problem": "Capacity planning depends on knowing how care load and placements will move over the coming weeks; naive forecasts leave too much error to plan against.",
+    "objective": "Produce 4-week-ahead forecasts that beat the baseline by a clear margin.",
+    "stack": [
+      "Python",
+      "Pandas",
+      "SARIMA",
+      "ETS",
+      "Random Forest",
+      "Gradient Boosting"
+    ],
+    "approach": [
+      "Prepare the historical series for time-series modelling.",
+      "Fit classical models (SARIMA, ETS) and tree-based models (Random Forest, Gradient Boosting).",
+      "Compare every model's 4-week-ahead error against the baseline.",
+      "Select the approach that halved the 4-week error relative to the baseline."
+    ],
+    "features": [
+      "Statistical and ML models compared side by side",
+      "Evaluation on a 4-week forecast horizon",
+      "Error halved against the baseline"
+    ],
+    "architecture": {
+      "title": "Forecasting workflow",
+      "stages": [
+        {
+          "id": "data",
+          "title": "Data",
+          "nodes": [
+            {
+              "id": "series",
+              "label": "Historical series",
+              "detail": "Care-load and placement history."
+            }
+          ]
+        },
+        {
+          "id": "prep",
+          "title": "Prepare",
+          "nodes": [
+            {
+              "id": "features",
+              "label": "Time-series preparation",
+              "detail": "Series prepared for statistical and ML models."
+            }
+          ]
+        },
+        {
+          "id": "models",
+          "title": "Model",
+          "parallel": true,
+          "nodes": [
+            {
+              "id": "sarima",
+              "label": "SARIMA",
+              "detail": "Seasonal ARIMA."
+            },
+            {
+              "id": "ets",
+              "label": "ETS",
+              "detail": "Exponential smoothing."
+            },
+            {
+              "id": "rf",
+              "label": "Random Forest",
+              "detail": "Tree ensemble on time-series features."
+            },
+            {
+              "id": "gb",
+              "label": "Gradient Boosting",
+              "detail": "Boosted trees on time-series features."
+            }
+          ]
+        },
+        {
+          "id": "eval",
+          "title": "Evaluate",
+          "nodes": [
+            {
+              "id": "error",
+              "label": "4-week error vs baseline",
+              "detail": "The chosen approach halved the 4-week error."
+            }
+          ]
+        }
+      ]
+    },
+    "metrics": [
+      {
+        "value": "½",
+        "label": "4-week error vs baseline"
+      }
+    ],
+    "links": {
+      "repoVisibility": "none"
+    },
+    "availabilityNote": "Internship work in progress; code and data aren't public."
+  },
+  {
+    "slug": "search-intelligence-tool",
+    "title": "Search Intelligence Tool (SIT)",
+    "tagline": "CRF-based entity extraction that helps an e-commerce search understand what shoppers mean.",
+    "categories": [
+      "Machine Learning",
+      "NLP",
+      "Enterprise AI Solutions"
+    ],
+    "featured": true,
+    "order": 7,
+    "period": "2022 – 2024",
+    "year": 2024,
+    "context": "Industry",
+    "organisation": "Retisio India Pvt. Ltd.",
+    "role": "Data Scientist (team of 3)",
+    "summary": "Enhanced an e-commerce search platform's ability to deliver relevant results by recognising the entities in shoppers' queries — built as a Conditional Random Field named-entity recognition model with its own data-preparation pipeline, scheduled on Google Cloud.",
+    "problem": "Shoppers type short, noisy, misspelled queries. Without knowing which words are brands, product types or attributes, search returns less relevant results.",
+    "objective": "Identify the entities in each search query so the platform can return more relevant results.",
+    "stack": [
+      "Python",
+      "CRF",
+      "NER",
+      "MySQL",
+      "REST API",
+      "GCP Cloud Composer (Airflow)",
+      "GCP App Engine",
+      "Git",
+      "Jira"
+    ],
+    "approach": [
+      "Built a data-preparation pipeline with feature engineering, noise reduction and spell-checking.",
+      "Developed and implemented a Conditional Random Field model for named-entity recognition in user queries.",
+      "Built a module that identifies entities from search queries for downstream search.",
+      "Deployed and scheduled the workflows on GCP (Cloud Composer / Airflow, App Engine) in an Agile/Scrum team."
+    ],
+    "features": [
+      "Entity extraction from short, noisy queries",
+      "Spell-checking and noise reduction before tagging",
+      "Scheduled, cloud-hosted model workflows"
+    ],
+    "architecture": {
+      "title": "Query understanding pipeline",
+      "stages": [
+        {
+          "id": "query",
+          "title": "Input",
+          "nodes": [
+            {
+              "id": "q",
+              "label": "Search queries",
+              "detail": "Raw shopper queries."
+            }
+          ]
+        },
+        {
+          "id": "clean",
+          "title": "Clean",
+          "nodes": [
+            {
+              "id": "noise",
+              "label": "Noise reduction",
+              "detail": "Removes junk tokens and characters."
+            },
+            {
+              "id": "spell",
+              "label": "Spell-check",
+              "detail": "Corrects common misspellings."
+            }
+          ]
+        },
+        {
+          "id": "features",
+          "title": "Features",
+          "nodes": [
+            {
+              "id": "fe",
+              "label": "Feature engineering",
+              "detail": "Token-level features for the sequence model."
+            }
+          ]
+        },
+        {
+          "id": "model",
+          "title": "Model",
+          "nodes": [
+            {
+              "id": "crf",
+              "label": "CRF NER",
+              "detail": "Tags each token with its entity type."
+            }
+          ]
+        },
+        {
+          "id": "ops",
+          "title": "Operate",
+          "nodes": [
+            {
+              "id": "gcp",
+              "label": "GCP Composer + App Engine",
+              "detail": "Scheduled workflows and serving."
+            }
+          ]
+        }
+      ]
+    },
+    "links": {
+      "repoVisibility": "proprietary"
+    },
+    "availabilityNote": "Built for an employer; code and data are proprietary."
+  },
+  {
+    "slug": "recommendations-engine",
+    "title": "Recommendations Engine (RXE)",
+    "tagline": "Surfacing trending products from views, purchases, sales history and ratings.",
+    "categories": [
+      "Data Science",
+      "Time Series",
+      "Enterprise AI Solutions"
+    ],
+    "featured": false,
+    "order": 8,
+    "period": "2022 – 2024",
+    "year": 2024,
+    "context": "Industry",
+    "organisation": "Retisio India Pvt. Ltd.",
+    "role": "Data Scientist (team of 2)",
+    "summary": "Designed and implemented a recommendations engine that highlights trending products by evaluating time-series data on product views and purchases, together with historical sales, customer feedback and ratings.",
+    "problem": "An e-commerce catalogue is too large to merchandise by hand; trending items need to be found from behaviour data.",
+    "objective": "Identify trending products and select the top 500 SKUs for further insight.",
+    "stack": [
+      "Python",
+      "MySQL",
+      "Time-Series Analysis",
+      "REST API",
+      "GCP (Airflow, App Engine)",
+      "Git",
+      "Jira"
+    ],
+    "approach": [
+      "Combined time-series product-view and purchase data with historical sales, customer feedback and ratings.",
+      "Analysed trends to identify products gaining momentum.",
+      "Selected the top 500 SKUs for further insight."
+    ],
+    "features": [
+      "Trend detection from behaviour data",
+      "Top-500 SKU selection",
+      "Scheduled on GCP"
+    ],
+    "architecture": {
+      "title": "Trend pipeline",
+      "stages": [
+        {
+          "id": "data",
+          "title": "Data",
+          "parallel": true,
+          "nodes": [
+            {
+              "id": "views",
+              "label": "Product views",
+              "detail": "Time-series view counts."
+            },
+            {
+              "id": "purchases",
+              "label": "Purchases & sales",
+              "detail": "Historical sales data."
+            },
+            {
+              "id": "ratings",
+              "label": "Feedback & ratings",
+              "detail": "Customer signals."
+            }
+          ]
+        },
+        {
+          "id": "analyse",
+          "title": "Analyse",
+          "nodes": [
+            {
+              "id": "trend",
+              "label": "Trend analysis",
+              "detail": "Identifies products gaining momentum."
+            }
+          ]
+        },
+        {
+          "id": "select",
+          "title": "Select",
+          "nodes": [
+            {
+              "id": "top",
+              "label": "Top 500 SKUs",
+              "detail": "Shortlist for further insight."
+            }
+          ]
+        }
+      ]
+    },
+    "links": {
+      "repoVisibility": "proprietary"
+    },
+    "availabilityNote": "Built for an employer; code and data are proprietary."
+  },
+  {
+    "slug": "eye-for-the-blind",
+    "title": "Eye for the Blind — Image Captioning",
+    "tagline": "A CNN encoder with attention and a GRU decoder that describes images in words.",
+    "categories": [
+      "Deep Learning",
+      "NLP"
+    ],
+    "featured": true,
+    "order": 9,
+    "period": "PG Diploma capstone",
+    "year": 2020,
+    "context": "Coursework",
+    "role": "Capstone project",
+    "summary": "Deep-learning capstone that captions Flickr8K images so the captions can be read aloud to people with visual impairments. An InceptionV3 encoder extracts image features, a Bahdanau-style attention layer focuses on regions, and a GRU decoder generates the caption.",
+    "problem": "People with visual impairments can't see the content of images shared online; an automatic description can be converted to speech.",
+    "objective": "Generate accurate natural-language captions for images.",
+    "stack": [
+      "Python",
+      "TensorFlow / Keras",
+      "InceptionV3",
+      "Attention",
+      "GRU",
+      "NLTK (BLEU)"
+    ],
+    "approach": [
+      "Extracted image features with InceptionV3 pre-trained on ImageNet.",
+      "Tokenised captions with a Keras tokenizer.",
+      "Implemented a custom Bahdanau-style attention layer and a GRU decoder.",
+      "Generated captions with greedy search and evaluated them with the BLEU score."
+    ],
+    "features": [
+      "Attention over image regions",
+      "End-to-end encoder–decoder",
+      "BLEU evaluation"
+    ],
+    "architecture": {
+      "title": "Encoder–attention–decoder",
+      "stages": [
+        {
+          "id": "img",
+          "title": "Image",
+          "nodes": [
+            {
+              "id": "in",
+              "label": "Input image",
+              "detail": "Flickr8K photo."
+            }
+          ]
+        },
+        {
+          "id": "enc",
+          "title": "Encode",
+          "nodes": [
+            {
+              "id": "inc",
+              "label": "InceptionV3",
+              "detail": "ImageNet-pretrained CNN features."
+            }
+          ]
+        },
+        {
+          "id": "att",
+          "title": "Attend",
+          "nodes": [
+            {
+              "id": "bah",
+              "label": "Bahdanau attention",
+              "detail": "Weights image regions per word."
+            }
+          ]
+        },
+        {
+          "id": "dec",
+          "title": "Decode",
+          "nodes": [
+            {
+              "id": "gru",
+              "label": "GRU decoder",
+              "detail": "Generates the caption word by word (greedy search)."
+            }
+          ]
+        },
+        {
+          "id": "eval",
+          "title": "Evaluate",
+          "nodes": [
+            {
+              "id": "bleu",
+              "label": "BLEU score",
+              "detail": "Compares generated and reference captions."
+            }
+          ]
+        }
+      ]
+    },
+    "media": [
+      {
+        "src": "/images/projects/eye-for-the-blind-loss.webp",
+        "alt": "Training loss falling steadily over 15 epochs",
+        "caption": "Training loss across epochs (from the project notebook).",
+        "width": 388,
+        "height": 279
+      },
+      {
+        "src": "/images/projects/eye-for-the-blind-vocab.webp",
+        "alt": "Bar chart of the 30 most frequent caption words",
+        "caption": "Most frequent words in the caption vocabulary.",
+        "width": 397,
+        "height": 265
+      }
+    ],
+    "links": {
+      "repo": "https://github.com/chandankit/Deep-Learning-Capston-Project--Eye-for-the-Blind",
+      "repoVisibility": "public"
+    }
+  },
+  {
+    "slug": "telecom-churn",
+    "title": "Telecom Churn Prediction",
+    "tagline": "Predicting which high-value customers will leave — with imbalance handling, PCA and tuned tree models.",
+    "categories": [
+      "Machine Learning",
+      "Data Science"
+    ],
+    "featured": false,
+    "order": 10,
+    "period": "PG Diploma case study",
+    "year": 2020,
+    "context": "Coursework",
+    "role": "Group case study",
+    "summary": "Predicts month-9 churn among high-value telecom customers from their behaviour in earlier months, and identifies the strongest churn indicators.",
+    "problem": "Telecom operators lose a significant share of customers every year, and retaining a high-value customer is far cheaper than acquiring a new one.",
+    "objective": "Flag high-value customers at risk of churning early enough to act.",
+    "stack": [
+      "Python",
+      "scikit-learn",
+      "imbalanced-learn (SMOTE)",
+      "fancyimpute",
+      "Pandas",
+      "Seaborn"
+    ],
+    "approach": [
+      "Engineered features and filtered to high-value customers.",
+      "Imputed missing values with an iterative imputer.",
+      "Balanced classes with SMOTE and scaled features.",
+      "Compared logistic regression with RFE, PCA (30 components) plus logistic regression, and decision tree and random forest models tuned with GridSearchCV."
+    ],
+    "features": [
+      "Class-imbalance handling",
+      "Dimensionality reduction with PCA",
+      "Interpretable churn drivers from feature importance"
+    ],
+    "media": [
+      {
+        "src": "/images/projects/telecom-churn-pca.webp",
+        "alt": "Cumulative explained variance curve for PCA components",
+        "caption": "Cumulative variance explained by PCA components.",
+        "width": 813,
+        "height": 498
+      },
+      {
+        "src": "/images/projects/telecom-churn-roc.webp",
+        "alt": "ROC curves for the tuned classifiers",
+        "caption": "ROC curves for the tuned models.",
+        "width": 1189,
+        "height": 520
+      }
+    ],
+    "links": {
+      "repo": "https://github.com/chandankit/Telecom-Churn-Case-study",
+      "repoVisibility": "public"
+    },
+    "credit": "Group case study, completed with a fellow learner."
+  },
+  {
+    "slug": "gesture-recognition",
+    "title": "Gesture Recognition for Smart TVs",
+    "tagline": "Classifying five webcam gestures from video with Conv3D and MobileNet + LSTM models.",
+    "categories": [
+      "Deep Learning"
+    ],
+    "featured": false,
+    "order": 11,
+    "period": "PG Diploma project",
+    "year": 2020,
+    "context": "Coursework",
+    "role": "Project",
+    "summary": "Recognises five hand gestures — thumbs up, thumbs down, left swipe, right swipe and stop — from short webcam videos so a smart TV can be controlled without a remote.",
+    "problem": "Gesture control needs a model that understands motion across frames, not just single images.",
+    "objective": "Classify each video clip into one of five gestures accurately.",
+    "stack": [
+      "Python",
+      "TensorFlow / Keras",
+      "Conv3D",
+      "MobileNet",
+      "LSTM",
+      "scikit-image"
+    ],
+    "approach": [
+      "Wrote a custom generator that loads and preprocesses video frames in batches.",
+      "Trained a Conv3D model on frame sequences.",
+      "Trained a transfer-learning model: MobileNet features per frame (TimeDistributed) feeding an LSTM.",
+      "Compared training and validation curves to choose a model."
+    ],
+    "features": [
+      "Video (spatio-temporal) classification",
+      "Two architectures compared",
+      "Transfer learning"
+    ],
+    "metrics": [
+      {
+        "value": "87%",
+        "label": "best reported accuracy",
+        "source": "Project notebook"
+      }
+    ],
+    "media": [
+      {
+        "src": "/images/projects/gesture-recognition-training.webp",
+        "alt": "Training and validation loss and accuracy curves",
+        "caption": "Loss and accuracy curves during training.",
+        "width": 864,
+        "height": 262
+      }
+    ],
+    "links": {
+      "repo": "https://github.com/chandankit/Deep-Learning-Project-Gesture-Recognition",
+      "repoVisibility": "public"
+    }
+  },
+  {
+    "slug": "lead-scoring",
+    "title": "Lead Scoring for an Online Education Company",
+    "tagline": "A 0–100 lead score so the sales team calls the hottest leads first.",
+    "categories": [
+      "Machine Learning",
+      "Data Science"
+    ],
+    "featured": false,
+    "order": 12,
+    "period": "PG Diploma case study",
+    "year": 2020,
+    "context": "Coursework",
+    "role": "Case study",
+    "summary": "Builds an explainable logistic-regression model that assigns every lead a score between 0 and 100, helping an online education company focus its sales effort on the leads most likely to convert.",
+    "problem": "The company receives many leads but converts few; calling everyone wastes the sales team's time.",
+    "objective": "Score leads so that hot leads can be prioritised.",
+    "stack": [
+      "Python",
+      "statsmodels",
+      "scikit-learn",
+      "Pandas",
+      "Seaborn"
+    ],
+    "approach": [
+      "Cleaned and explored lead data, including source, activity and occupation.",
+      "Selected features with RFE and checked multicollinearity with VIF.",
+      "Fitted logistic regression (statsmodels GLM and scikit-learn).",
+      "Chose the probability cut-off from the accuracy–sensitivity–specificity trade-off and evaluated on a held-out test set."
+    ],
+    "features": [
+      "Explainable model",
+      "Business-tuned cut-off",
+      "Summary report for stakeholders"
+    ],
+    "metrics": [
+      {
+        "value": "89%",
+        "label": "test sensitivity",
+        "source": "Project notebook"
+      },
+      {
+        "value": "0.95",
+        "label": "ROC AUC",
+        "source": "Project notebook"
+      }
+    ],
+    "media": [
+      {
+        "src": "/images/projects/lead-scoring-roc.webp",
+        "alt": "ROC curve with area 0.95",
+        "caption": "ROC curve of the final model.",
+        "width": 444,
+        "height": 366
+      },
+      {
+        "src": "/images/projects/lead-scoring-cutoff.webp",
+        "alt": "Accuracy, sensitivity and specificity across probability cut-offs",
+        "caption": "Choosing the cut-off from the accuracy–sensitivity–specificity trade-off.",
+        "width": 979,
+        "height": 520
+      }
+    ],
+    "links": {
+      "repo": "https://github.com/chandankit/Online-Education-sells-Case-study",
+      "repoVisibility": "public"
+    }
+  },
+  {
+    "slug": "windy-day-power-prediction",
+    "title": "A Fine Windy Day — Wind Power Prediction",
+    "tagline": "Predicting windmill power output from sensor data with a blend of regressors.",
+    "categories": [
+      "Machine Learning"
+    ],
+    "featured": false,
+    "order": 13,
+    "period": "HackerEarth challenge",
+    "year": 2021,
+    "context": "Competition",
+    "role": "Participant",
+    "summary": "A HackerEarth machine-learning challenge: predict the power generated by windmills (kW/h) from sensor readings such as wind speed, temperatures and blade angle.",
+    "problem": "Wind farms need accurate power forecasts from sensor data to plan supply.",
+    "objective": "Minimise prediction error on held-out windmill readings.",
+    "stack": [
+      "Python",
+      "scikit-learn",
+      "XGBoost",
+      "LightGBM",
+      "Seaborn"
+    ],
+    "approach": [
+      "Explored distributions and skewness across sensor features.",
+      "Compared linear, Ridge, Lasso and ElasticNet regression.",
+      "Compared ExtraTrees, Random Forest, Gradient Boosting, XGBoost and LightGBM regressors.",
+      "Blended three models for the final submission."
+    ],
+    "features": [
+      "Broad model comparison",
+      "Ensemble blending",
+      "Thorough sensor EDA"
+    ],
+    "media": [
+      {
+        "src": "/images/projects/windy-day-heatmap.webp",
+        "alt": "Correlation heatmap of windmill sensor features",
+        "caption": "Correlation heatmap across sensor features.",
+        "width": 1320,
+        "height": 868
+      }
+    ],
+    "links": {
+      "repo": "https://github.com/chandankit/A-Fine-Windy-Day-HackerEarth-Machine-Learning-challenge",
+      "repoVisibility": "public"
+    }
+  },
+  {
+    "slug": "housing-price-regression",
+    "title": "House Price Prediction with Regularised Regression",
+    "tagline": "Ridge and Lasso models that explain which features drive house prices.",
+    "categories": [
+      "Machine Learning"
+    ],
+    "featured": false,
+    "order": 14,
+    "period": "PG Diploma case study",
+    "year": 2020,
+    "context": "Coursework",
+    "role": "Case study",
+    "summary": "Predicts house prices for a housing company entering a new market, using regularised regression to identify the variables that matter and how well they explain price.",
+    "problem": "A company buying houses below market value needs to know which features drive price.",
+    "objective": "Model house prices and identify the significant predictors.",
+    "stack": [
+      "Python",
+      "scikit-learn",
+      "statsmodels",
+      "Pandas"
+    ],
+    "approach": [
+      "Selected features with RFE and checked multicollinearity with VIF.",
+      "Fitted OLS as a baseline.",
+      "Tuned Ridge and Lasso regularisation strength with GridSearchCV."
+    ],
+    "features": [
+      "Regularisation tuning",
+      "Feature significance analysis"
+    ],
+    "metrics": [
+      {
+        "value": "0.84",
+        "label": "test R² (Ridge)",
+        "source": "Project notebook"
+      }
+    ],
+    "media": [
+      {
+        "src": "/images/projects/housing-ridge-alpha.webp",
+        "alt": "Train and test error against regularisation strength",
+        "caption": "Train vs test error across regularisation strength (alpha).",
+        "width": 1004,
+        "height": 388
+      }
+    ],
+    "links": {
+      "repo": "https://github.com/chandankit/Housing-company-price-prediction",
+      "repoVisibility": "public"
+    }
+  },
+  {
+    "slug": "credit-eda",
+    "title": "Credit Risk Exploratory Analysis",
+    "tagline": "Finding the patterns behind loan default — so good applicants aren't turned away.",
+    "categories": [
+      "Data Science"
+    ],
+    "featured": false,
+    "order": 15,
+    "period": "PG Diploma case study",
+    "year": 2020,
+    "context": "Coursework",
+    "role": "Case study",
+    "summary": "Exploratory data analysis of loan applications to understand which applicant and loan attributes are associated with default.",
+    "problem": "Lenders reject applicants with thin credit histories, and some of them could have repaid.",
+    "objective": "Identify the drivers of default to support fairer, better-informed lending decisions.",
+    "stack": [
+      "Python",
+      "Pandas",
+      "Seaborn",
+      "SciPy"
+    ],
+    "approach": [
+      "Cleaned the data, imputed missing values and handled outliers.",
+      "Ran univariate and bivariate analysis across applicant attributes.",
+      "Studied correlations separately for defaulters and non-defaulters."
+    ],
+    "features": [
+      "Data cleaning at scale",
+      "Business-oriented insights",
+      "Rich visual storytelling"
+    ],
+    "media": [
+      {
+        "src": "/images/projects/credit-eda-occupation.webp",
+        "alt": "Bar chart of applicants by occupation split by default",
+        "caption": "Applicants by occupation type, split by default status.",
+        "width": 813,
+        "height": 480
+      }
+    ],
+    "links": {
+      "repo": "https://github.com/chandankit/Credit-EDA-Case-Study",
+      "repoVisibility": "public"
+    }
+  },
+  {
+    "slug": "country-clustering",
+    "title": "Country Clustering for Aid Allocation",
+    "tagline": "Grouping countries by socio-economic and health indicators to direct an NGO's funds.",
+    "categories": [
+      "Machine Learning",
+      "Data Science"
+    ],
+    "featured": false,
+    "order": 16,
+    "period": "PG Diploma case study",
+    "year": 2020,
+    "context": "Coursework",
+    "role": "Case study",
+    "summary": "Clusters countries on socio-economic and health indicators to recommend where an NGO's aid is most needed.",
+    "problem": "An NGO with limited funds must decide which countries need help most.",
+    "objective": "Segment countries and shortlist those in greatest need.",
+    "stack": [
+      "Python",
+      "scikit-learn",
+      "SciPy",
+      "Pandas",
+      "Seaborn"
+    ],
+    "approach": [
+      "Checked cluster tendency with the Hopkins statistic.",
+      "Scaled features and capped outliers.",
+      "Compared K-Means (with silhouette analysis) and hierarchical clustering."
+    ],
+    "features": [
+      "Two clustering methods compared",
+      "Actionable country shortlist"
+    ],
+    "media": [
+      {
+        "src": "/images/projects/clustering-heatmap.webp",
+        "alt": "Correlation heatmap of country indicators",
+        "caption": "Correlation between socio-economic indicators.",
+        "width": 926,
+        "height": 489
+      }
+    ],
+    "links": {
+      "repo": "https://github.com/chandankit/Clustering-Assignment",
+      "repoVisibility": "public"
+    }
+  },
+  {
+    "slug": "neural-network-from-scratch",
+    "title": "Neural Network from Scratch in NumPy",
+    "tagline": "Feedforward, loss, backpropagation and weight updates — written by hand.",
+    "categories": [
+      "Deep Learning"
+    ],
+    "featured": false,
+    "order": 17,
+    "period": "PG Diploma assignment",
+    "year": 2020,
+    "context": "Coursework",
+    "role": "Assignment",
+    "summary": "A complete neural network built with NumPy only, implementing every step of training — the forward pass, the loss, backpropagation and the weight update.",
+    "problem": "Frameworks hide the mechanics of training; implementing them by hand builds real intuition.",
+    "objective": "Implement and train a neural network without a deep-learning framework.",
+    "stack": [
+      "Python",
+      "NumPy"
+    ],
+    "approach": [
+      "Implemented feedforward and loss computation.",
+      "Derived and implemented backpropagation.",
+      "Trained with gradient-descent weight updates and evaluated on test data."
+    ],
+    "features": [
+      "No framework — pure NumPy",
+      "Every training step implemented by hand"
+    ],
+    "metrics": [
+      {
+        "value": "~87%",
+        "label": "test accuracy",
+        "source": "Project notebook"
+      }
+    ],
+    "links": {
+      "repo": "https://github.com/chandankit/Introduction-to-Neural-Networks--Assignment",
+      "repoVisibility": "public"
+    }
+  }
+]
