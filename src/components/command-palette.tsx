@@ -20,6 +20,21 @@ const groupIcon: Record<SearchEntry["group"], typeof Search> = {
 };
 const groupOrder: SearchEntry["group"][] = ["Pages", "Projects", "Experience", "Skills", "Certifications", "Education", "Notes"];
 
+/**
+ * Whole-term matching instead of cmdk's default fuzzy subsequence scoring,
+ * which matched "autogen" against unrelated items whose letters merely appear
+ * in order. Every search term must appear; title hits rank above keyword hits.
+ */
+function scoreEntry(value: string, search: string, keywords?: string[]) {
+  const terms = search.toLowerCase().split(/\s+/).filter(Boolean);
+  if (!terms.length) return 1;
+  const title = (keywords?.[0] ?? "").toLowerCase();
+  const hay = value.toLowerCase();
+  if (!terms.every((t) => hay.includes(t))) return 0;
+  if (terms.every((t) => title.includes(t))) return title.startsWith(terms[0]) ? 1 : 0.9;
+  return 0.5;
+}
+
 export function CommandPaletteProvider({ index, children }: { index: SearchEntry[]; children: ReactNode }) {
   const [isOpen, setOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -82,7 +97,7 @@ export function CommandPaletteProvider({ index, children }: { index: SearchEntry
         className="m-auto mt-[12vh] w-[min(640px,calc(100vw-2rem))] overflow-hidden rounded-2xl border border-line-strong bg-elev p-0 text-fg shadow-2xl backdrop:bg-black/60"
       >
         {isOpen && (
-          <Command label="Search the portfolio" loop className="flex max-h-[70vh] flex-col">
+          <Command label="Search the portfolio" loop filter={scoreEntry} className="flex max-h-[70vh] flex-col">
             <div className="flex items-center gap-3 border-b border-line px-4">
               <Search className="size-4 shrink-0 text-subtle" aria-hidden />
               <Command.Input
@@ -104,6 +119,7 @@ export function CommandPaletteProvider({ index, children }: { index: SearchEntry
                       <Command.Item
                         key={`${group}-${item.href}-${item.title}`}
                         value={`${item.title} ${item.subtitle} ${item.keywords} ${group}`}
+                        keywords={[item.title]}
                         onSelect={() => go(item.href)}
                         className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm"
                       >
