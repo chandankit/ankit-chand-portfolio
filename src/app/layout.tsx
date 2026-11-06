@@ -10,6 +10,10 @@ import { Footer } from "@/components/footer";
 import { Backdrop } from "@/components/backdrop";
 import { BackToTop } from "@/components/chrome";
 import { JsonLd } from "@/components/json-ld";
+import { ModeProvider } from "@/components/modes";
+import { MODE_BOOT_SCRIPT } from "@/lib/modes";
+import { AssistantProvider } from "@/components/assistant/assistant-provider";
+import { AssistantPanel } from "@/components/assistant/assistant-panel";
 
 const sora = Sora({ subsets: ["latin"], variable: "--font-sora", display: "swap" });
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -50,7 +54,7 @@ const personLd = {
   "@type": "Person",
   name: profile.name,
   url: siteUrl,
-  image: `${siteUrl}${profile.photo.src}`,
+  ...(profile.photo.src ? { image: `${siteUrl}${profile.photo.src}` } : {}),
   jobTitle: profile.roles.join(", "),
   description: profile.intro,
   email: `mailto:${profile.email}`,
@@ -66,13 +70,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`dark ${sora.variable} ${inter.variable} ${jetbrains.variable}`} suppressHydrationWarning>
       <head>
         {/* Enables scroll-reveal start states only when JavaScript runs (progressive enhancement). */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add('js');${MODE_BOOT_SCRIPT}` }} />
       </head>
       <body className="min-h-dvh">
         <a href="#main" className="sr-only z-[100] rounded-full bg-fg px-4 py-2 text-bg focus:not-sr-only focus:fixed focus:left-4 focus:top-4">
           Skip to content
         </a>
         <Providers>
+          <ModeProvider>
+          <AssistantProvider>
           <CommandPaletteProvider>
             <Backdrop />
             <Navbar name={profile.name} github={profile.socials.github} linkedin={profile.socials.linkedin} />
@@ -81,7 +87,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </main>
             <Footer />
             <BackToTop />
+            <AssistantPanel />
           </CommandPaletteProvider>
+          </AssistantProvider>
+          </ModeProvider>
         </Providers>
         <JsonLd data={personLd} />
       </body>

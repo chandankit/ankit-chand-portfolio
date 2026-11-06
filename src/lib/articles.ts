@@ -7,6 +7,8 @@ import { ArticleFrontmatterSchema, type ArticleFrontmatter } from "./schema";
 export type Article = ArticleFrontmatter & {
   slug: string;
   html: string;
+  /** Raw Markdown body (used to build the assistant knowledge base). */
+  markdown: string;
   readingMinutes: number;
   headings: { id: string; text: string }[];
 };
@@ -58,7 +60,7 @@ export function getArticles(): Article[] {
       }
       const { html, headings } = render(content);
       const words = content.split(/\s+/).filter(Boolean).length;
-      return { ...parsed.data, slug: file.replace(/\.md$/, ""), html, headings, readingMinutes: Math.max(1, Math.round(words / 220)) };
+      return { ...parsed.data, slug: file.replace(/\.md$/, ""), html, headings, markdown: content, readingMinutes: Math.max(1, Math.round(words / 220)) };
     })
     .filter((a) => !a.draft)
     .sort((a, b) => b.date.localeCompare(a.date));

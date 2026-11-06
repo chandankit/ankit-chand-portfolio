@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "Ankit Chand — Data Scientist, Generative AI & Agentic AI Engineer. Personal portfolio (Next.js, TypeScript, Tailwind CSS).",
-  "engines": { "node": ">=20.9.0" },
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -15,6 +17,7 @@
     "qa": "node scripts/qa-browser.mjs"
   },
   "dependencies": {
+    "@mlc-ai/web-llm": "0.2.87",
     "cmdk": "1.1.1",
     "gray-matter": "4.0.3",
     "lucide-react": "1.70.0",

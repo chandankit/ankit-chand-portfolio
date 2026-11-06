@@ -1,0 +1,2012 @@
+{
+  "runAt": "2026-11-06T11:52:17.449Z",
+  "results": [
+    {
+      "summary": {
+        "model": "Qwen2.5-0.5B-Instruct",
+        "key": "qwen2.5-0.5b",
+        "params": "0.5B",
+        "quant": "Q4_K_M (GGUF)",
+        "license": "Apache-2.0",
+        "webllmId": "Qwen2.5-0.5B-Instruct-q4f16_1-MLC",
+        "fileMB": 469,
+        "ramMB": 526,
+        "hardware": "Intel Core i7-8665U (4C/8T), 16 GB RAM, CPU only",
+        "cases": 35,
+        "errors": 0,
+        "passRate": 0.9428571428571428,
+        "validatorAcceptRate": 0.9393939393939394,
+        "replacedByValidator": 2,
+        "keywordCoverage": 0.59375,
+        "unknownDeclined": "2/3",
+        "avgSecondsPerAnswer": 12.7116,
+        "avgGenerationSeconds": 13.45758064516129,
+        "tokensPerSecond": 18.6
+      },
+      "rows": [
+        {
+          "id": "who",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 12346,
+          "genMs": 12251,
+          "text": "Ankit Chand is a Data Scientist, Generative AI Engineer, Agentic AI Developer and AI/ML Engineer based in India. He has nearly three years of industry data science experience, specializing in entity extraction for e-commerce search, product-trend analytics, and GCP model pipelines. Since mid-2024, he has built multi-agent LLM systems using Python, FastAPI, Microsoft AutoGen, and Azure OpenAI. He is also a data scientist who moved into generative AI and agentic systems."
+        },
+        {
+          "id": "background",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 12276,
+          "genMs": 12252,
+          "text": "Ankit's professional background includes:\n\n- A Data Science Intern working on time-series forecasting and NLP and information extraction.\n- A Post Graduate Program in Data Science with Generative AI.\n- A Data Scientist who moved into generative AI and agentic systems.\n- A Bachelor of Technology (B.Tech) from Lovely Professional University, Punjab, with a focus on mechanical engineering.\n- Specialising in LLM systems, including retrieval-augmented question answering and Microsoft AutoGen agent teams.\n- Designing two multi-agent platforms end to end: NexusAI and IntelliHub, which route each request to one of eight tool-using specialist agents behind guardrails and PII redaction, and turn one question into a single sourced briefing by running collector agents concurrently."
+        },
+        {
+          "id": "years",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 11568,
+          "genMs": 11545,
+          "text": "Ankit has about 2 years 8 months of full-time industry data-science experience (nearly three years)."
+        },
+        {
+          "id": "orgs",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 6699,
+          "genMs": 6666,
+          "text": "Ankit has worked with the following organizations:\n\n- Unified Mentor Private Limited\n- Retisio India Pvt. Ltd.\n- AIE Software India Pvt. Ltd."
+        },
+        {
+          "id": "specialization",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 6432,
+          "genMs": 6413,
+          "text": "Ankit's current technical specialization is Data Science & ML (Forecasting, entity extraction, classification and regression — from feature engineering to evaluated models)."
+        },
+        {
+          "id": "current",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported name \"October\"",
+            "no citations"
+          ],
+          "ms": 7938,
+          "genMs": 7916,
+          "text": "Right now Ankit is working as a Data Science Intern (Unified Mentor · time-series forecasting) and pursuing pg program (Data Science with Generative AI · Great Learning). [1]\n\n- Data Science Intern at Unified Mentor Private Limited (Internship, Oct 2026 – present). [2]\n- Oct 2026 – now — Forecasting internship, continued study. [3]\n- Today I'm a Data Science Intern working on time-series forecasting, and I'm pursuing Great Learning's Post Graduate Program in Data Science with Generative AI. [4]"
+        },
+        {
+          "id": "ml-algos",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 17928,
+          "genMs": 17906,
+          "text": "Ankit has worked with various machine learning algorithms, including:\n\n1. Regression & Classification: [1] Ankit has used Regression & Classification (Data Science & Machine Learning) in House Price Prediction, Lead Scoring for an Online Education Company, and Telecom Churn Prediction.\n2. Data Science & Machine Learning: [2] Ankit has used Data Science & Machine Learning skills: Python, Pandas, NumPy, Scikit-learn, Statistical Analysis, Feature Engineering, Model Evaluation, Regression & Classification, Random Forest, XGBoost & LightGBM, Time-Series Forecasting (SARIMA, ETS), NER with CRF, Clustering, Deep Learning (CNN, RNN, attention), TensorFlow / Keras, PySpark, SQL. Turning raw data into evaluated models — from EDA and feature engineering to forecasting and classification.\n3. Random Forest: [3] Ankit has used Random Forest (Data Science & Machine Learning) in Telecom Churn Prediction, UAC Care Load & Placement Forecasting, and A Fine Windy Day — Wind Power Prediction.\n4. Model Evaluation: [4] Ankit has used Model Evaluation (Data Science & Machine Learning) in Lead Scoring for an Online Education Company, Telecom Churn Prediction, and UAC Care"
+        },
+        {
+          "id": "xgboost",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 6670,
+          "genMs": 6654,
+          "text": "Yes, Ankit has experience with XGBoost. He has used XGBoost and LightGBM in the A Fine Windy Day — Wind Power Prediction project."
+        },
+        {
+          "id": "feature-eng",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 11200,
+          "genMs": 11183,
+          "text": "Ankit has used Feature Engineering (Data Science & Machine Learning) in Search Intelligence Tool (SIT), Telecom Churn Prediction and UAC Care Load & Placement Forecasting. He has applied this skill by building CRF named-entity recognition models in Python that extract entities from user search queries, sharpening query understanding and result relevance."
+        },
+        {
+          "id": "model-eval",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 13061,
+          "genMs": 13044,
+          "text": "Ankit has used Model Evaluation (Data Science & Machine Learning) in Lead Scoring for an Online Education Company, Telecom Churn Prediction and UAC Care Load & Placement Forecasting. He has implemented UAC Care Load & Placement Forecasting by preparing historical series for time-series modelling, fitting classical models (SARIMA, ETS) and tree-based models (Random Forest, Gradient Boosting), comparing every model's 4-week-ahead error against the baseline, and selecting the approach that halved the 4-week error relative to the baseline."
+        },
+        {
+          "id": "forecast",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 21872,
+          "genMs": 21848,
+          "text": "Ankit has used Time-Series Forecasting (SARIMA, ETS) (Data Science & Machine Learning) in UAC Care Load & Placement Forecasting and Recommendations Engine (RXE). He has applied these techniques to forecast the care load and placement of data science interns. The code is not public, but he has provided a walkthrough on request. His role is Data Science Intern. Ankit's approach involves preparing historical series for statistical and ML models, fitting classical models (SARIMA, ETS) and tree-based models (Random Forest, Gradient Boosting), and evaluating the 4-week-ahead error against the baseline. He selects the approach that halved the 4-week error relative to the baseline."
+        },
+        {
+          "id": "genai-projects",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 24009,
+          "genMs": 23983,
+          "text": "[1] Ankit has implemented the following Generative AI projects:\n\n1. Teachable AI for Structured Metadata Extraction - a Flask web service that extracts metadata fields from e-commerce and retail text, persisting what the agent is taught in a local SQLite store, and validating the extracted fields and asking for missing details.\n\n2. IntelliHub - a deterministic intent classifier that scores queries, picks agents, a strategy, a confidence, and a time window, and a planner that builds the execution plan. Collector agents run concurrently with asyncio.gather, the health pipeline runs afterwards, in a fixed order, and each domain agent wraps an AutoGen AssistantAgent whose tools are AutoGen FunctionTools. Full tool results go to a side collector, the LLM writes prose only, and every schema-bearing section is computed in Python, so figures.\n\n3. Autonomous Code Generation & Execution - defines two conversable AutoGen agents with distinct roles and system messages. The Code Writer Agent (GPT-4o) proposes code for the user's task. The Code Executor Agent runs it in an isolated virtual environment and returns output or errors. The agents iterate until the task succeeds or a turn limit is reached.\n\n4. Access to private project code: The source code for NexusAI, IntelliHub, and the"
+        },
+        {
+          "id": "rag",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 13169,
+          "genMs": 13155,
+          "text": "Yes, Ankit has experience with RAG. He has used RAG-Powered QA for Medical Research, a pipeline that uses Retrieval-Augmented Generation (RAG) to generate answers or summaries from the extracted passages."
+        },
+        {
+          "id": "llms",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 10988,
+          "genMs": 10971,
+          "text": "Ankit has extensively used Generative AI models and frameworks, including Large Language Models (GPT-4o, GPT-4), Prompt Engineering, Retrieval-Augmented Generation (RAG), Embeddings, Vector Databases (FAISS, ChromaDB), LangChain, Azure OpenAI, OpenAI API, Structured Outputs (JSON, Pydantic), LLM Testing with Mock Clients, Claude & Claude Code, Hugging Face, Mistral. He has also used LLM applications grounded, structured, and testable."
+        },
+        {
+          "id": "embeddings",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 21702,
+          "genMs": 21685,
+          "text": "[1] Generative AI: Generative AI skills: Large Language Models (GPT-4o, GPT-4), Prompt Engineering, Retrieval-Augmented Generation (RAG), Embeddings, Vector Databases (FAISS, ChromaDB), LangChain, Azure OpenAI, OpenAI API, Structured Outputs (JSON, Pydantic), LLM Testing with Mock Clients, Claude & Claude Code, Hugging Face, Mistral. LLM applications that are grounded, structured and testable.\n[2] RAG-Powered QA for Medical Research — architecture: RAG-Powered QA for Medical Research architecture (Retrieval-augmented generation pipeline): 1. Source: PDFs in AWS S3 — Research papers fetched with boto3. 2. Extract: PyPDF2 — Text extraction from each PDF. 3. Embed & index: OpenAI embeddings — Each passage becomes a vector. FAISS index — Vectors stored for similarity search. 4. Retrieve: Similarity search — Most relevant passages for the user's question. 5. Generate: GPT-4 via LangChain — Answers or summarises from the retrieved passages. 6. Serve: REST API — Question-answering and summarisation endpoints.\n[3"
+        },
+        {
+          "id": "multiagent",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 19023,
+          "genMs": 18959,
+          "text": "The visitor is a developer of an autonomous code generation and execution system. The architecture of the system is composed of three main components: the code writer agent, the code executor agent, and the feedback loop. The code writer agent generates the code based on the user's input, while the code executor agent runs the generated code in an isolated virtual environment. The feedback loop allows the agent to refine its output based on the user's input and errors. The system also includes a memory and validation mechanism to ensure that the agent has been taught and that the output is consistent."
+        },
+        {
+          "id": "autogen",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 13285,
+          "genMs": 13267,
+          "text": "Ankit has used Microsoft AutoGen (Agentic AI) in IntelliHub, Teachable AI for Structured Metadata Extraction, and Autonomous Code Generation & Execution."
+        },
+        {
+          "id": "orchestrate",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 17406,
+          "genMs": 17392,
+          "text": "[1] Ankit has used Agent Orchestration (Agentic AI) in NexusAI and IntelliHub. This skill allows him to orchestrate multiple AI agents, which is a key component of his work in generative AI and multi-agent systems."
+        },
+        {
+          "id": "testing",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 24761,
+          "genMs": 24741,
+          "text": "The agent testing without API keys follows a deterministic stand-in for the model pattern. It implements the real client interface, which is the same as the AutoGen client used by IntelliHub. The mock implements the same interface AutoGen expects from a model client, so the real agent and tool loop runs. It also injects the real LLM, which is a deterministic stand-in for the model. The factory returns either the live client or the mock based on configuration, so production code paths are unchanged."
+        },
+        {
+          "id": "nexusai",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 19647,
+          "genMs": 19628,
+          "text": "NexusAI is an independent chat assistant designed by Ankit Chand, focusing on AI automation and multi-agent systems. It uses Python, asyncio, Azure OpenAI (GPT-4o), Pydantic, FastAPI, Server-Sent Events, Streamlit, SQLite, httpx, pytest, Kotlin / Jetpack Compose (Android client). The code is not public, but Ankit's role is to design and develop the assistant."
+        },
+        {
+          "id": "nexus-follow",
+          "kind": "followup",
+          "pass": true,
+          "keywords": 0,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported number \"2026\"",
+            "no citations"
+          ],
+          "ms": 16405,
+          "genMs": 12366,
+          "text": "; All network calls go through one seam, so a single fixture can cut the network and exercise every tool's fallback path.. [1]\n\n- Ankit has used LLM Testing with Mock Clients (Generative AI) in NexusAI and IntelliHub. [2]\n- Ankit has used pytest & Test-Driven Development (Backend & Engineering) in NexusAI and IntelliHub. [3]\n- ; If one agent crashes it returns an error result instead of failing the whole batch.. [4]"
+        },
+        {
+          "id": "interesting",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 15992,
+          "genMs": 15972,
+          "text": "Ankit's most interesting AI projects include:\n\n1. **Teachable AI for Structured Metadata Extraction**: This project is key features of the code, which is public on GitHub. It allows users to extract structured JSON data from user teaching, detect missing fields, and ask for them. The code is also designed to learn from user teaching across sessions, making it suitable for structured metadata extraction.\n\n2. **Autonomous Code Generation & Execution**: This project is also public on GitHub, where it uses Python, TensorFlow / Keras, Conv3D, MobileNet, LSTM, scikit-image. It is designed to allow for role-specialised agent collaboration, automatic execution feedback loop, and an isolated execution environment.\n\n3. **Gesture Recognition for Smart TVs**: This project is public on GitHub, where it uses Python, TensorFlow / Keras, Conv3D, MobileNet, LSTM, scikit-image. It is designed to recognize and respond to gestures, making it suitable for smart TVs."
+        },
+        {
+          "id": "architecture",
+          "kind": "answer",
+          "pass": false,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "model declined although evidence was found"
+          ],
+          "ms": 8850,
+          "genMs": 8832,
+          "text": "I don't have verified information about that in Ankit's portfolio."
+        },
+        {
+          "id": "github",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 20111,
+          "genMs": 20094,
+          "text": "Ankit's GitHub projects include:\n\n1. [1] NexusAI: A project that uses Python, TensorFlow / Keras, Conv3D, MobileNet, LSTM, scikit-image, and is public on GitHub.\n2. [2] Eye for the Blind: A project that uses Python, TensorFlow / Keras, InceptionV3, Attention, GRU, NLTK (BLEU), and is public on GitHub.\n3. [3] Autonomous Code Generation & Execution: A project that uses Python, Microsoft AutoGen, OpenAI GPT-4o, Python virtual environment, and is not public; a walkthrough is available on request.\n4. [4] IntelliHub: A project that uses Python, asyncio, Microsoft AutoGen, Azure OpenAI (GPT-4o), Pydantic, SQLAlchemy / SQLite, ChromaDB (optional), PyMuPDF, Tesseract OCR, Streamlit, Plotly, pytest, Docker, and is not public; a walkthrough is available on request.\n5. [5] IntelliHub: A project that uses Python, asyncio, Microsoft AutoGen, Azure OpenAI (GPT-4o), Pydantic, SQLAlchemy / SQLite, ChromaDB (optional), PyMuPDF, Tesseract OCR, Stream"
+        },
+        {
+          "id": "content-ai",
+          "kind": "unknown",
+          "pass": true,
+          "keywords": null,
+          "mode": "retrieval",
+          "replaced": false,
+          "issues": [],
+          "ms": 20,
+          "genMs": null,
+          "text": "I don't have verified information about “Content AI” in Ankit's portfolio, so I won't guess. The closest related information is:\n\nTeachable AI for Structured Metadata Extraction architecture (Extraction loop): 1. Input: Flask endpoint — Receives free-text e-commerce or retail content. [1]\n\n- Generative AI & Agentic AI — Independent Projects at Independent Projects & Specialization (Independent, Jun 2024 – Oct 2026). [2]\n- Teachable AI for Structured Metadata Extraction (Independent, 2024 – 2025) — A teachable agent that turns e-commerce and retail text into structured JSON — and asks for what's missing. [3]\n- RAG-Powered QA for Medical Research (Independent, 2024 – 2025) — Ask questions of a library of research PDFs and get grounded answers and summaries. [4]"
+        },
+        {
+          "id": "video-agent",
+          "kind": "unknown",
+          "pass": false,
+          "keywords": null,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 11531,
+          "genMs": 8910,
+          "text": "The video editing agent is used in the context of the gesture recognition for smart TVs project. It is a custom generator that loads and preprocesses video frames in batches. The goal is to train a Conv3D model on frame sequences and a transfer-learning model using MobileNet features per frame (TimeDistributed) feeding an LSTM. The objective is to compare training and validation curves to choose a model."
+        },
+        {
+          "id": "kubernetes",
+          "kind": "unknown",
+          "pass": true,
+          "keywords": null,
+          "mode": "retrieval",
+          "replaced": false,
+          "issues": [],
+          "ms": 20,
+          "genMs": null,
+          "text": "I don't have verified information about “Kubernetes” in Ankit's portfolio, so I won't guess. The closest related information is:\n\nHow Search Intelligence Tool (SIT) was built: Built a data-preparation pipeline with feature engineering, noise reduction and spell-checking. Developed and implemented a Conditional Random Field model for named-entity recognition in user queries. [1]\n\n- Challenges in IntelliHub: Challenge: No API budget for development and demos. [2]\n- Data Scientist at Retisio India Pvt. [3]\n- I'm a data scientist who moved into generative AI and agentic systems. [4]"
+        },
+        {
+          "id": "certs",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 12614,
+          "genMs": 12596,
+          "text": "Ankit has completed 4 courses: Claude Code in Action (Anthropic Academy), Introduction to Agent Skills (Anthropic Academy), Claude with Amazon Bedrock (Anthropic Academy) and AI Agents: Building Teams of LLM Agents that Work For You (Udemy)."
+        },
+        {
+          "id": "pg",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 4709,
+          "genMs": 4690,
+          "text": "Ankit has pursued the Post Graduate Program in Data Science with Generative AI."
+        },
+        {
+          "id": "education",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 9072,
+          "genMs": 9057,
+          "text": "Ankit's education includes a Post Graduate Program in Data Science with Generative AI — Great Learning (in progress), Post Graduate Diploma in Data Science — IIIT Bangalore (Completed March 2020), and Bachelor of Technology (B.Tech) — Lovely Professional University, Punjab (Completed)."
+        },
+        {
+          "id": "available",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 14361,
+          "genMs": 14342,
+          "text": "Ankit is open to full-time Data Scientist, Generative AI Engineer, and Agentic AI roles, and to collaboration or freelance projects. The quickest way to reach him is the contact page or LinkedIn."
+        },
+        {
+          "id": "roles",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 8478,
+          "genMs": 8442,
+          "text": "Ankit has experience in Data Science, Generative AI, and Agentic AI roles."
+        },
+        {
+          "id": "contact",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 11283,
+          "genMs": 11265,
+          "text": "You can contact Ankit by email at chand07ankit@gmail.com, on LinkedIn (https://www.linkedin.com/in/ankitchand007/) or through the contact form on this site. His code is on GitHub at https://github.com/chandankit. He is based in India."
+        },
+        {
+          "id": "resume",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 5784,
+          "genMs": 5768,
+          "text": "Yes, you can download Ankit's resume. It can be previewed on the Resume page and downloaded as a PDF."
+        },
+        {
+          "id": "freelance",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 13696,
+          "genMs": 13674,
+          "text": "Yes, we can discuss a consulting or freelance opportunity. Ankit can help with LLM applications, retrieval-augmented generation, multi-agent prototypes, and machine-learning models. He is open to full-time Data Scientist, Generative AI Engineer, and Agentic AI roles, and to collaboration or freelance projects. The quickest way to reach him is the contact page or LinkedIn. His code is on GitHub at https://github.com/chandankit. He is based in India."
+        }
+      ]
+    },
+    {
+      "summary": {
+        "model": "Gemma-3-1B-it",
+        "key": "gemma3-1b",
+        "params": "1B",
+        "quant": "Q4_K_M (GGUF)",
+        "license": "Gemma Terms",
+        "webllmId": "gemma3-1b-it-q4f16_1-MLC",
+        "fileMB": 769,
+        "ramMB": 980,
+        "hardware": "Intel Core i7-8665U (4C/8T), 16 GB RAM, CPU only",
+        "cases": 35,
+        "errors": 0,
+        "passRate": 0.9428571428571428,
+        "validatorAcceptRate": 0.6060606060606061,
+        "replacedByValidator": 13,
+        "keywordCoverage": 0.828125,
+        "unknownDeclined": "2/3",
+        "avgSecondsPerAnswer": 40.62054285714286,
+        "avgGenerationSeconds": 42.34935,
+        "tokensPerSecond": 9.4
+      },
+      "rows": [
+        {
+          "id": "who",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported number \"2024.\"",
+            "no citations"
+          ],
+          "ms": 29170,
+          "genMs": 29151,
+          "text": "Ankit Chand is a Data Scientist, Generative AI Engineer, Agentic AI Developer and AI/ML Engineer based in India. Data Scientist turned Generative AI engineer. [1]\n\n- Introduction to Agent Skills from Anthropic Academy (Completed). [5]"
+        },
+        {
+          "id": "background",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported number \"2024.\""
+          ],
+          "ms": 31302,
+          "genMs": 31287,
+          "text": "Technical interests: Multi-agent orchestration, Retrieval-augmented generation, LLM reliability and testing, Time-series forecasting and NLP and information extraction. Professional goal: Join a team shipping production GenAI — as a Data Scientist, GenAI Engineer or Agentic AI Engineer — where reliability matters as much as capability. [1]\n\n- Today I'm a Data Science Intern working on time-series forecasting, and I'm pursuing Great Learning's Post Graduate Program in Data Science with Generative AI. [2]\n- Tech) (Mechanical Engineering) at Lovely Professional University, Punjab — Completed. [4]"
+        },
+        {
+          "id": "years",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported quantity \"approximately 2\""
+          ],
+          "ms": 34887,
+          "genMs": 34869,
+          "text": "Ankit has about 2 years 8 months of full-time industry data-science experience (nearly three years): Data Scientist at Retisio India Pvt. Ltd. [1]\n\n- pdf, updated Nov 2026). [2]\n- I'm a data scientist who moved into generative AI and agentic systems. [3]"
+        },
+        {
+          "id": "orgs",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0.5,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported number \"2022.\"",
+            "unsupported name \"September\""
+          ],
+          "ms": 34542,
+          "genMs": 34485,
+          "text": "Ankit has about 2 years 8 months of full-time industry data-science experience (nearly three years): Data Scientist at Retisio India Pvt. Ltd. [1]\n\n- AI Agents: Building Teams of LLM Agents that Work For You from Udemy (Completed). [2]\n- For freelance or consulting work, Ankit can help with LLM applications, retrieval-augmented generation, multi-agent prototypes and machine-learning models — the same kinds of systems shown in his projects. [3]\n- Today I'm a Data Science Intern working on time-series forecasting, and I'm pursuing Great Learning's Post Graduate Program in Data Science with Generative AI. [4]"
+        },
+        {
+          "id": "specialization",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 24713,
+          "genMs": 24694,
+          "text": "Here's a brief response to your question:\n\nAnkit’s current technical specialization is generative AI and multi-agent systems, with a focus on multi-agent orchestration, LLM reliability, and time-series forecasting. He’s currently working on independent projects centered around generative AI and agentic AI systems."
+        },
+        {
+          "id": "current",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported name \"Postgraduate\"",
+            "no citations"
+          ],
+          "ms": 26509,
+          "genMs": 26490,
+          "text": "Right now Ankit is working as a Data Science Intern (Unified Mentor · time-series forecasting) and pursuing pg program (Data Science with Generative AI · Great Learning). [1]\n\n- Data Science Intern at Unified Mentor Private Limited (Internship, Oct 2026 – present). [2]\n- Oct 2026 – now — Forecasting internship, continued study. [3]\n- Today I'm a Data Science Intern working on time-series forecasting, and I'm pursuing Great Learning's Post Graduate Program in Data Science with Generative AI. [4]"
+        },
+        {
+          "id": "ml-algos",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported employer \"Telecom Churn Prediction\"",
+            "no citations"
+          ],
+          "ms": 33289,
+          "genMs": 33271,
+          "text": "Ankit has used Regression & Classification (Data Science & Machine Learning) in House Price Prediction with Regularised Regression, Lead Scoring for an Online Education Company and Telecom Churn Prediction. [1]\n\n- Data Science & Machine Learning skills: Python, Pandas, NumPy, Scikit-learn, Statistical Analysis, Feature Engineering, Model Evaluation, Regression & Classification, Random Forest, XGBoost & LightGBM, Time-Series Forecasting (SARIMA, ETS), NER with CRF, Clustering, Deep Learning (CNN, RNN, attention), TensorFlow / Keras,… [2]\n- Ankit has used Random Forest (Data Science & Machine Learning) in Telecom Churn Prediction, UAC Care Load & Placement Forecasting and A Fine Windy Day — Wind Power Prediction. [3]\n- Ankit has used Model Evaluation (Data Science & Machine Learning) in Lead Scoring for an Online Education Company, Telecom Churn Prediction and UAC Care Load & Placement Forecasting. [4]"
+        },
+        {
+          "id": "xgboost",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported name \"Employed\"",
+            "unsupported name \"Utilized\""
+          ],
+          "ms": 72229,
+          "genMs": 72211,
+          "text": "Ankit has used XGBoost & LightGBM (Data Science & Machine Learning) in A Fine Windy Day — Wind Power Prediction. [1]\n\n- Ankit has about 2 years 8 months of full-time industry data-science experience (nearly three years): Data Scientist at Retisio India Pvt. [2]\n- How A Fine Windy Day — Wind Power Prediction was built: Explored distributions and skewness across sensor features. [3]\n- A Fine Windy Day — Wind Power Prediction uses Python, scikit-learn, XGBoost, LightGBM, Seaborn. [4]"
+        },
+        {
+          "id": "feature-eng",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 30701,
+          "genMs": 30682,
+          "text": "Ankit Chand’s experience with feature engineering is evident in his work on the SIT project, utilizing Python, Pandas, NumPy, Scikit-learn, and statistical analysis to build a Conditional Random Field (CRF) named-entity recognition model. This model enhanced query understanding and result relevance, as demonstrated by the work on the entity-identification module and supporting data-preparation pipeline. [1]\n\nHe also utilized Prompt Engineering in NexusAI, IntelliHub, and Teachable AI, specifically for structured metadata extraction, showcasing his ability to leverage generative AI for data processing. [5]"
+        },
+        {
+          "id": "model-eval",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 27478,
+          "genMs": 27464,
+          "text": "Ankit utilizes a multifaceted approach to model evaluation, employing a combination of offline and online testing. He utilizes Model Evaluation (Data Science & Machine Learning) in Lead Scoring for an Online Education Company, Telecom Churn Prediction and UAC Care Load & Placement Forecasting. He builds UAC Care Load & Placement Forecasting using SARIMA, ETS, and Random Forest models, comparing their 4-week-ahead error against a baseline. He then utilizes a rigorous evaluation process, including a 4-week error comparison, to select the model that halves the error relative to the baseline.  He also incorporates testing multi-agent systems without an API key, demonstrating robust routing decisions, guardrail behaviour, PII redaction, tool argument handling, fallbacks, status reporting, and memory writes."
+        },
+        {
+          "id": "forecast",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 27729,
+          "genMs": 27712,
+          "text": "Here’s an explanation of Ankit’s forecasting work, based on the provided evidence:\n\nAnkit utilizes Time-Series Forecasting (SARIMA, ETS) within the UAC Care Load & Placement Forecasting engine, employing Python, Pandas, and various machine learning models like Random Forest and Gradient Boosting. He uses these techniques to predict care load and placements over time, aiming to halve the 4-week error against a baseline. [1]"
+        },
+        {
+          "id": "genai-projects",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 39792,
+          "genMs": 39765,
+          "text": "Here’s a breakdown of the Generative AI projects Ankit Chand has implemented, based on the provided evidence:\n\n*   **Teachable AI for Structured Metadata Extraction:** This project utilizes Teachable AI for structured metadata extraction, leveraging Azure OpenAI to extract data from e-commerce and retail text.\n*   **IntelliHub:** This project involves a deterministic intent classifier, concurrent agents, and a planner for automated execution.\n*   **Autonomous Code Generation & Execution:** This project utilizes two AutoGen agents with distinct roles to generate and execute code.\n*   **NexusAI, IntelliHub, and 2024–25 generative-AI builds:** The source code for these projects is available in private repositories.\n*   **RAG-Powered QA for Medical Research:** This project employs RAG-powered QA for medical research, utilizing cloud storage (AWS S3), PyPDF2 for PDF extraction, and OpenAI API for embeddings and question answering."
+        },
+        {
+          "id": "rag",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported employer \"Medical Research\"",
+            "no citations"
+          ],
+          "ms": 29730,
+          "genMs": 29714,
+          "text": "Ankit has used Retrieval-Augmented Generation (RAG) (Generative AI) in RAG-Powered QA for Medical Research. [1]\n\n- RAG-Powered QA for Medical Research architecture (Retrieval-augmented generation pipeline): 1. [2]\n- Generative AI skills: Large Language Models (GPT-4o, GPT-4), Prompt Engineering, Retrieval-Augmented Generation (RAG), Embeddings, Vector Databases (FAISS, ChromaDB), LangChain, Azure OpenAI, OpenAI API, Structured Outputs (JSON, Pydantic), LLM Testing with Mock Clients, Claude & Claude Code, Hugging Face, Mistral. [3]\n- RAG-Powered QA for Medical Research uses Python, LangChain, OpenAI embeddings, GPT-4, FAISS, PyPDF2, AWS S3 (boto3), REST API. [4]"
+        },
+        {
+          "id": "llms",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 27523,
+          "genMs": 27506,
+          "text": "Ankit Chand demonstrates proficiency in various LLM models and frameworks, including GPT-4o, GPT-4, and Claude & Claude Code. He has utilized RAG-Powered QA for Medical Research and Autonomous Code Generation & Execution within NexusAI, leveraging LangChain and Azure OpenAI. He has also tested with mock clients, demonstrating a strong understanding of LLM testing methodologies. Furthermore, he has utilized Mistral models for various applications, including model evaluation within Lead Scoring for an Online Education Company."
+        },
+        {
+          "id": "embeddings",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 27143,
+          "genMs": 27124,
+          "text": "Ankit utilizes Vector Databases (FAISS and ChromaDB) to implement embeddings and vector search within RAG-Powered QA for Medical Research. He first loads research PDFs from AWS S3 using boto3, then extracts text using PyPDF2 and generates embeddings with the OpenAI API. These embeddings are stored in FAISS for efficient similarity search, enabling retrieval of the most relevant passages.  Finally, LangChain is used to retrieve the most relevant passages and feed them to GPT-4 via a REST API, generating answers or summaries.  He employs this approach to ground the LLM’s responses within the retrieved context."
+        },
+        {
+          "id": "multiagent",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 36406,
+          "genMs": 36389,
+          "text": "Here’s an explanation of Ankit’s multi-agent architecture, based on the provided evidence:\n\nThe system utilizes Autonomous Code Generation & Execution, Teachable AI for Structured Metadata Extraction, NexusAI, Recommendations Engine (RXE), and Search Intelligence Tool (SIT) – each operating as a distinct agent with its own role. [1] and [2] detail the agent’s specific tasks and how they interact. [3] showcases orchestration, routing, and tool calling, while [4] highlights the use of guardrails and memory for safety and consistency. The architecture is built upon a seven-stage pipeline, with each agent contributing to the overall process. [3] emphasizes the importance of feedback loops and the use of a local SQLite store for memory."
+        },
+        {
+          "id": "autogen",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 42212,
+          "genMs": 42196,
+          "text": "Here’s an explanation of Ankit’s experience with Microsoft AutoGen, based on the provided evidence:\n\nAnkit has utilized Microsoft AutoGen in IntelliHub, Teachable AI for Structured Metadata Extraction, and Autonomous Code Generation & Execution, demonstrating proficiency in Agentic AI and Multi-Agent Systems. He’s utilized Autonomous Code Generation & Execution, specifically with Microsoft AutoGen, to automate code generation and execution, utilizing Python, OpenAI GPT-4o, and a Python virtual environment. [1]\n\n*   **Microsoft AutoGen:** He’s used Microsoft AutoGen for Agentic AI, Multi-Agent Systems, and AI Automation.\n*   **Teachable AI for Structured Metadata Extraction:** He’s used Teachable AI for Structured Metadata Extraction.\n*   **Autonomous Code Generation & Execution:** He’s employed Autonomous Code Generation & Execution, utilizing Python, Microsoft AutoGen, OpenAI GPT-4o, and a Python virtual environment.\n*   **Independent Generative-AI and Agentic-AI Projects:** He has worked on independent generative-AI and agentic-AI projects."
+        },
+        {
+          "id": "orchestrate",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 45591,
+          "genMs": 45561,
+          "text": "Ankit utilizes Agent Orchestration (Agentic AI) within NexusAI and IntelliHub, employing a multi-agent system with routing, guardrails, and memory management. He utilizes ReAct tool calling, intent routing with clarification, and a single-writer memory commit to manage the interactions between agents. The system’s architecture is built upon a MasterOrchestrator, a custom Python orchestration engine, which orchestrates a seven-stage pipeline, including input guardrails, routing, clarification, concurrent fan-out, aggregation, output rails, and a single-writer memory commit. The system also utilizes a four-stage hybrid router, a GPT-4o JSON classifier, and a fallback mechanism to ensure consistent and reliable results. [1]"
+        },
+        {
+          "id": "testing",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported name \"Factory-Based\"",
+            "unsupported name \"Mocking\"",
+            "no citations"
+          ],
+          "ms": 49073,
+          "genMs": 49056,
+          "text": "; If one agent crashes it returns an error result instead of failing the whole batch.. [1]\n\n- How IntelliHub was built: A deterministic intent classifier scores the query, picks the agents, a strategy (concurrent or sequential), a confidence and a time window — then a planner builds the execution plan. [2]\n- ; All network calls go through one seam, so a single fixture can cut the network and exercise every tool's fallback path.. [3]\n- - Implement the real client interface. [4]"
+        },
+        {
+          "id": "nexusai",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 95123,
+          "genMs": 95093,
+          "text": "NexusAI is an independent chat box with eight specialist agents, routed cheaply, grounded in tools, and guarded on the way in and out. It uses a multi-agent system where each specialist runs a ReAct tool-calling loop over 31 tools, and the answer streams as typed events to a Streamlit UI and to an Android app through a FastAPI/SSE gateway. The problem is that people ask about unrelated things in one conversation, and NexusAI should not have to handle those requests. The system is built with Python, asyncio, Azure OpenAI (GPT-4o), Pydantic, FastAPI, Server-Sent Events, Streamlit, SQLite, httpx, pytest, Kotlin / Jetpack Compose (Android client), and a custom Python orchestration engine. NexusAI results and quality are 8 specialist agents, 31 tools in 9 modules, 7 pipeline stages per turn, 214 offline tests passing, and 214 automated tests pass fully offline. It uses a fake LLM client to run the entire suite without spending tokens."
+        },
+        {
+          "id": "nexus-follow",
+          "kind": "followup",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 94221,
+          "genMs": 74858,
+          "text": "Here’s a response to your question, based on the provided evidence:\n\nNexusAI’s testing is a rigorous process involving multiple stages and techniques:\n\n*   **Offline Tests:** 214 offline tests are conducted between NexusAI and IntelliHub, against deterministic mock LLM clients.\n*   **Pipeline Stages:** The system utilizes a seven-stage per-turn pipeline.\n*   **Guardrails:** Guardrails are implemented to ensure the quality of the output.\n*   **Streaming APIs:** A streaming API is used to deliver the results.\n*   **Network Routing:** A unique network routing system is employed, ensuring that every tool can cut through the network.\n*   **Automated Tests:** 571 automated tests pass fully offline."
+        },
+        {
+          "id": "interesting",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 42839,
+          "genMs": 42798,
+          "text": "Ankit Chand is actively involved in several projects, demonstrating his expertise in AI. He’s developing NexusAI, IntelliHub, and generative-AI builds, utilizing a variety of machine learning techniques.  He’s also exploring opportunities for Data Scientist, Generative AI Engineer, and Agentic AI roles, and welcomes collaborations.  The project page [https://github.com/chandankit/Deep-Learning-Project-Gesture-Recognition](https://github.com/chandankit/Deep-Learning-Project-Gesture-Recognition) showcases his autonomous code generation and execution capabilities.  He’s open to sharing his work and is accessible via the contact page [https://www.ankitchand.com/](https://www.ankitchand.com/) for further discussion."
+        },
+        {
+          "id": "architecture",
+          "kind": "answer",
+          "pass": false,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations",
+            "model declined although evidence was found"
+          ],
+          "ms": 36843,
+          "genMs": 36807,
+          "text": "I don't have verified information about that in Ankit's portfolio. However, IntelliHub architecture includes interfaces, a CLI, a dashboard, a plan, and a collector. It utilizes a ReAct-style planner, Python, asyncio, Microsoft AutoGen, Azure OpenAI, Pydantic, SQLAlchemy/SQLite, ChromaDB, PyMuPDF, Tesseract OCR, Streamlit, Plotly, pytest, Docker, and a multi-agent intelligence platform. The code is not publicly available, and a walkthrough is available upon request."
+        },
+        {
+          "id": "github",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported name \"Deep-Learning-Capston-Project-Eye-for-the-Blind\"",
+            "no citations"
+          ],
+          "ms": 33408,
+          "genMs": 33386,
+          "text": "The source code for NexusAI, IntelliHub and the 2024–25 generative-AI builds is in private repositories. Ankit is happy to walk through the code or run a live demo on a call — request one from the project page or the contact page. Nine machine-learning case studies are public on GitHub. [1]\n\n- Gesture Recognition for Smart TVs uses Python, TensorFlow / Keras, Conv3D, MobileNet, LSTM, scikit-image. [2]\n- Eye for the Blind — Image Captioning uses Python, TensorFlow / Keras, InceptionV3, Attention, GRU, NLTK (BLEU). [3]\n- Autonomous Code Generation & Execution uses Python, Microsoft AutoGen, OpenAI GPT-4o, Python virtual environment. [4]"
+        },
+        {
+          "id": "content-ai",
+          "kind": "unknown",
+          "pass": true,
+          "keywords": null,
+          "mode": "retrieval",
+          "replaced": false,
+          "issues": [],
+          "ms": 15,
+          "genMs": null,
+          "text": "I don't have verified information about “Content AI” in Ankit's portfolio, so I won't guess. The closest related information is:\n\nTeachable AI for Structured Metadata Extraction architecture (Extraction loop): 1. Input: Flask endpoint — Receives free-text e-commerce or retail content. [1]\n\n- Generative AI & Agentic AI — Independent Projects at Independent Projects & Specialization (Independent, Jun 2024 – Oct 2026). [2]\n- Teachable AI for Structured Metadata Extraction (Independent, 2024 – 2025) — A teachable agent that turns e-commerce and retail text into structured JSON — and asks for what's missing. [3]\n- RAG-Powered QA for Medical Research (Independent, 2024 – 2025) — Ask questions of a library of research PDFs and get grounded answers and summaries. [4]"
+        },
+        {
+          "id": "video-agent",
+          "kind": "unknown",
+          "pass": false,
+          "keywords": null,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 33396,
+          "genMs": 24044,
+          "text": "The purpose of the video editing agent in Ankit’s portfolio is to build a custom generator that loads and preprocesses video frames in batches, then trains a Conv3D model to classify five hand gestures from short webcam videos accurately. [1]\n\nHere’s a breakdown of the skills Ankit possesses:\n\n*   Microsoft AutoGen agent teams\n*   Multi-agent conversations\n*   LLM agent teams\n*   Agent Orchestration (Agentic AI)\n*   Agent Skills\n*   Reusable agent instructions\n*   Agent design"
+        },
+        {
+          "id": "kubernetes",
+          "kind": "unknown",
+          "pass": true,
+          "keywords": null,
+          "mode": "retrieval",
+          "replaced": false,
+          "issues": [],
+          "ms": 18,
+          "genMs": null,
+          "text": "I don't have verified information about “Kubernetes” in Ankit's portfolio, so I won't guess. The closest related information is:\n\nHow Search Intelligence Tool (SIT) was built: Built a data-preparation pipeline with feature engineering, noise reduction and spell-checking. Developed and implemented a Conditional Random Field model for named-entity recognition in user queries. [1]\n\n- Challenges in IntelliHub: Challenge: No API budget for development and demos. [2]\n- Data Scientist at Retisio India Pvt. [3]\n- I'm a data scientist who moved into generative AI and agentic systems. [4]"
+        },
+        {
+          "id": "certs",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported number \"2020.\"",
+            "unsupported quantity \"four courses\""
+          ],
+          "ms": 98540,
+          "genMs": 98526,
+          "text": "Ankit has completed 4 courses: Claude Code in Action (Anthropic Academy), Introduction to Agent Skills (Anthropic Academy), Claude with Amazon Bedrock (Anthropic Academy) and AI Agents: Building Teams of LLM Agents that Work For You (Udemy). In progress: Post Graduate Program in Data Science with Generative AI (Great Learning). [1]\n\n- pdf, updated Nov 2026). [2]\n- 2025 – 2026 (Learning) — Completed three Anthropic Academy courses. [3]\n- Tech) — Lovely Professional University, Punjab (Completed). [4]"
+        },
+        {
+          "id": "pg",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported number \"2020.\"",
+            "no citations"
+          ],
+          "ms": 31835,
+          "genMs": 31819,
+          "text": "Post Graduate Program in Data Science with Generative AI (Data Science · Generative AI) at Great Learning — in progress. Structured program spanning data science and generative AI, pursued alongside independent multi-agent builds. [1]\n\n- Post Graduate Program in Data Science with Generative AI from Great Learning (In progress). [2]\n- Tech) — Lovely Professional University, Punjab (Completed). [3]\n- Today I'm a Data Science Intern working on time-series forecasting, and I'm pursuing Great Learning's Post Graduate Program in Data Science with Generative AI. [4]"
+        },
+        {
+          "id": "education",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported number \"2020.\""
+          ],
+          "ms": 41038,
+          "genMs": 40973,
+          "text": "Tech) — Lovely Professional University, Punjab (Completed). [1]\n\n- pdf, updated Nov 2026). [2]\n- Ankit has completed 4 courses: Claude Code in Action (Anthropic Academy), Introduction to Agent Skills (Anthropic Academy), Claude with Amazon Bedrock (Anthropic Academy) and AI Agents: Building Teams of LLM Agents that Work For You (Udemy). [3]\n- Mar 2020 (Education) — Post Graduate Diploma in Data Science — IIIT Bangalore. [4]"
+        },
+        {
+          "id": "available",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 36274,
+          "genMs": 36249,
+          "text": "Ankit is currently open to full-time opportunities in Data Scientist, Generative AI Engineer, and Agentic AI roles, as well as freelance or consulting projects. He’s currently focused on developing skills through a pg program in Data Science with Generative AI at Great Learning.  He’s actively seeking freelance work, assisting with LLM applications, retrieval-augmented generation, and machine-learning models.  You can find more details and contact information on the contact page or LinkedIn profile. [2]"
+        },
+        {
+          "id": "roles",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 117400,
+          "genMs": 117363,
+          "text": "Here’s a summary of Ankit’s experience and potential roles:\n\n*   Ankit possesses a strong foundation in Data Science and Machine Learning, gained through roles at Retisio India and AIE Software.\n*   He has experience with Generative AI and Agentic AI projects, including independent work on multi-agent orchestration and LLM reliability.\n*   His background includes experience with Retrieval-Augmented Generation (RAG) and LLM applications.\n*   He’s currently seeking opportunities as a Data Scientist, GenAI Engineer, or Agentic AI Engineer, and can be reached through the contact page or LinkedIn.\n\nYou can view his full resume and contact details at (/resume/Ankit_Chand_Resume.pdf)."
+        },
+        {
+          "id": "contact",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 31594,
+          "genMs": 31559,
+          "text": "Here’s a concise summary of how to connect with Ankit Chand:\n\n*   You can reach Ankit through email at chand07ankit@gmail.com or via the contact form on the site.\n*   He’s active on LinkedIn at https://www.linkedin.com/in/ankitchand007/.\n*   Ankit is open to full-time roles, as well as freelance or consulting opportunities.\n*   For freelance work, utilize the contact form and select “Freelance / project” as the inquiry type.\n*   You can access private project code through the project page or contact form.\n*   Nine machine-learning case studies are publicly available on GitHub."
+        },
+        {
+          "id": "resume",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 27286,
+          "genMs": 27267,
+          "text": "Ankit Chand’s resume is available on the Resume page at (/resume/Ankit_Chand_Resume.pdf) and can be downloaded as a PDF. [1] This document provides a comprehensive overview of his experience, including key projects, skills, and education. [2] He’s also accessible via email at chand07ankit@gmail.com, LinkedIn (https://www.linkedin.com/in/ankitchand007/), and the contact form on this site. [3] Ankit’s code is available on GitHub at https://github.com/chandankit. [4] He is based in India."
+        },
+        {
+          "id": "freelance",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 31870,
+          "genMs": 31856,
+          "text": "Ankit is currently available for freelance and consulting work, focusing on LLM applications, retrieval-augmented generation, and multi-agent prototypes. He offers expertise in machine-learning models and is open to full-time roles and collaboration.  He welcomes inquiries through the contact page or LinkedIn ([https://www.linkedin.com/in/ankitchand007/](https://www.linkedin.com/in/ankitchand007/)) .  He’s based in India and has access to private project code through GitHub ([https://github.com/chandankit](https://github.com/chandankit)).  Nine machine-learning case studies are publicly available on GitHub."
+        }
+      ]
+    },
+    {
+      "summary": {
+        "model": "Llama-3.2-1B-Instruct",
+        "key": "llama3.2-1b",
+        "params": "1.2B",
+        "quant": "Q4_K_M (GGUF)",
+        "license": "Llama 3.2 Community",
+        "webllmId": "Llama-3.2-1B-Instruct-q4f16_1-MLC",
+        "fileMB": 770,
+        "ramMB": 1425,
+        "hardware": "Intel Core i7-8665U (4C/8T), 16 GB RAM, CPU only",
+        "cases": 35,
+        "errors": 0,
+        "passRate": 0.9142857142857143,
+        "validatorAcceptRate": 0.7272727272727273,
+        "replacedByValidator": 9,
+        "keywordCoverage": 0.828125,
+        "unknownDeclined": "3/3",
+        "avgSecondsPerAnswer": 23.098885714285714,
+        "avgGenerationSeconds": 23.26054166666667,
+        "tokensPerSecond": 13.2
+      },
+      "rows": [
+        {
+          "id": "who",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported number \"2024.\""
+          ],
+          "ms": 26285,
+          "genMs": 26234,
+          "text": "Ankit Chand is a Data Scientist, Generative AI Engineer, Agentic AI Developer and AI/ML Engineer based in India. Data Scientist turned Generative AI engineer. [1]\n\n- Introduction to Agent Skills from Anthropic Academy (Completed). [5]"
+        },
+        {
+          "id": "background",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 32518,
+          "genMs": 32504,
+          "text": "Ankit's professional background is as follows:\n• He is a Data Science Intern working on time-series forecasting.\n• He is pursuing a Post Graduate Program in Data Science with Generative AI at Great Learning.\n• He has a Bachelor of Technology (B.Tech) in Mechanical Engineering from Lovely Professional University, Punjab.\n• He has completed his Bachelor of Technology (B.Tech) in Mechanical Engineering at Lovely Professional University, Punjab.\n• He has a Bachelor of Technology (B.Tech) in Information Technology from Lovely Professional University, Punjab.\n• He has completed his Bachelor of Technology (B.Tech) in Information Technology at Lovely Professional University, Punjab.\n• He has completed his Bachelor of Technology (B.Tech) in Mechanical Engineering at Lovely Professional University, Punjab.\n• He has completed his Bachelor of Technology (B.Tech) in Mechanical Engineering at Lovely Professional University, Punjab.\n• He has completed his Bachelor of Technology (B.Tech) in Information Technology at Lovely Professional University, Punjab.\n• He has completed his Bachelor of Technology (B.Tech) in Information Technology at Lovely Professional University, Punjab.\n• He has completed his Bachelor of Technology (B.Tech) in Mechanical Engineering at Lovely Professional University, Punjab.\n• He has completed his Bachelor of Technology (B.Tech) in"
+        },
+        {
+          "id": "years",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "citation [6] does not match any source",
+            "citation [7] does not match any source",
+            "citation [8] does not match any source"
+          ],
+          "ms": 33932,
+          "genMs": 33900,
+          "text": "Ankit has about 2 years 8 months of full-time industry data-science experience (nearly three years): Data Scientist at Retisio India Pvt. Ltd. [1]\n\n- pdf, updated Nov 2026). [2]\n- I'm a data scientist who moved into generative AI and agentic systems. [3]"
+        },
+        {
+          "id": "orgs",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 19406,
+          "genMs": 19392,
+          "text": "[1] Ankit has worked with three organizations: \n• Unified Mentor Private Limited \n• Retisio India Pvt. Ltd. \n• AIE Software India Pvt. Ltd.\n\n[2] Ankit has also worked with Udemy, where he completed a course on AI Agents: Building Teams of LLM Agents that Work For You.\n\n[3] Ankit has also worked with Microsoft AutoGen, a framework for designing teams of collaborating LLM agents.\n\n[4] Ankit is open to opportunities with various organizations, including full-time Data Scientist, Generative AI Engineer, and Agentic AI roles, as well as collaboration or freelance projects.\n\n[5] Ankit is available for opportunities and can be reached through the contact page or LinkedIn."
+        },
+        {
+          "id": "specialization",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 8239,
+          "genMs": 8213,
+          "text": "Ankit's current technical specialization is multi-agent orchestration, retrieval-augmented generation, LLM reliability and testing, and time-series forecasting."
+        },
+        {
+          "id": "current",
+          "kind": "answer",
+          "pass": false,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations",
+            "model declined although evidence was found"
+          ],
+          "ms": 14885,
+          "genMs": 14870,
+          "text": "Ankit is currently working as a Data Science Intern (Unified Mentor · time-series forecasting) and pursuing a PG program (Data Science with Generative AI · Great Learning).\n\n• He is working as a Data Science Intern at Unified Mentor Private Limited.\n• He is currently pursuing a PG program in Data Science with Generative AI.\n• He is focusing on time-series forecasting and building care-load and placement forecasts.\n\nI don't have verified information about Ankit's current role or employer."
+        },
+        {
+          "id": "ml-algos",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 30755,
+          "genMs": 30733,
+          "text": "Ankit has worked with the following machine learning algorithms:\n\n• Random Forest: used in Telecom Churn Prediction, UAC Care Load & Placement Forecasting, and A Fine Windy Day — Wind Power Prediction.\n• Deep Learning (CNN, RNN, attention): used in House Price Prediction with Regularised Regression and Lead Scoring for an Online Education Company.\n• Clustering: used in Telecom Churn Prediction and UAC Care Load & Placement Forecasting.\n• Time-Series Forecasting (SARIMA, ETS): used in House Price Prediction with Regularised Regression.\n• NER with CRF: used in Credit Risk Exploratory Analysis.\n• Clustering: used in Telecom Churn Prediction and UAC Care Load & Placement Forecasting.\n• Statistical Analysis: used in Credit Risk Exploratory Analysis, House Price Prediction with Regularised Regression, and Lead Scoring for an Online Education Company.\n• Model Evaluation: used in Lead Scoring for an Online Education Company, Telecom Churn Prediction, and UAC Care Load & Placement Forecasting."
+        },
+        {
+          "id": "xgboost",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 17467,
+          "genMs": 17444,
+          "text": "Ankit has used XGBoost in A Fine Windy Day — Wind Power Prediction, [1]. This experience is about 2 years 8 months of full-time industry data-science experience, which is verified in Ankit's portfolio."
+        },
+        {
+          "id": "feature-eng",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 30365,
+          "genMs": 30300,
+          "text": "Ankit has applied feature engineering in various projects, including Search Intelligence Tool (SIT), Telecom Churn Prediction, and UAC Care Load & Placement Forecasting. \n\n• In Search Intelligence Tool (SIT), Ankit used feature engineering to extract relevant features from user search queries, sharpening query understanding and result relevance. \n• For Telecom Churn Prediction, Ankit applied feature engineering to time-series data, extracting features such as daily usage patterns and device information.\n• In UAC Care Load & Placement Forecasting, Ankit used feature engineering to analyze customer data, including demographic information and usage patterns."
+        },
+        {
+          "id": "model-eval",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported name \"MSE\"",
+            "unsupported name \"MAE\"",
+            "unsupported name \"RMSE\""
+          ],
+          "ms": 37603,
+          "genMs": 37589,
+          "text": "Ankit has used Model Evaluation (Data Science & Machine Learning) in Lead Scoring for an Online Education Company, Telecom Churn Prediction and UAC Care Load & Placement Forecasting. [1]\n\n- How UAC Care Load & Placement Forecasting was built: Prepare the historical series for time-series modelling. [2]\n- UAC Care Load & Placement Forecasting architecture (Forecasting workflow): 1. [3]\n- Data Science & Machine Learning skills: Python, Pandas, NumPy, Scikit-learn, Statistical Analysis, Feature Engineering, Model Evaluation, Regression & Classification, Random Forest, XGBoost & LightGBM, Time-Series Forecasting (SARIMA, ETS), NER with CRF, Clustering, Deep Learning (CNN, RNN, attention), TensorFlow / Keras,… [4]"
+        },
+        {
+          "id": "forecast",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 28476,
+          "genMs": 28463,
+          "text": "Ankit's Time-Series Forecasting work in UAC Care Load & Placement Forecasting involves using techniques such as SARIMA (Seasonal ARIMA) and ETS (Exponential Smoothing) to predict care load and placement. \n\n• Ankit applied SARIMA (SARIMA, ETS) to prepare historical series for statistical and machine learning models, achieving a 4-week error halved against the baseline.\n• He also used Random Forest and Gradient Boosting to build tree ensemble models on time-series features, outperforming classical models (SARIMA, ETS) and achieving a 4-week error halved against the baseline.\n• Ankit's implementation involved preparing historical series, fitting classical models, and comparing every model's 4-week-ahead error against the baseline.\n• His work aimed to produce 4-week-ahead forecasts that beat the baseline by a clear margin, addressing the capacity planning challenge of naive forecasts."
+        },
+        {
+          "id": "genai-projects",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 37577,
+          "genMs": 37562,
+          "text": "[1] Teachable AI for Structured Metadata Extraction — implementation: Teachable AI for Structured Metadata Extraction was built by wrapping a teachable AutoGen agent in a Flask web service. The agent was implemented using Azure OpenAI to extract metadata fields from e-commerce and retail text. The agent persisted what it was taught in a local SQLite store, improving across sessions. Validation and user input were implemented to return results as JSON for downstream systems.\n\n[2] IntelliHub — implementation: IntelliHub was built by a deterministic intent classifier, a strategy (concurrent or sequential), a confidence, and a time window. The planner then built the execution plan. Collector agents ran concurrently with asyncio.gather, and the health pipeline ran afterwards. Each domain agent used AutoGen AssistantAgent and AutoGen FunctionTools. Full tool results were sent to a side collector, and the model saw only a short status line. The LLM wrote prose only.\n\n[3] Autonomous Code Generation & Execution — implementation: Autonomous Code Generation & Execution was built by defining two conversable AutoGen agents. The Code Writer Agent (GPT-4o) proposed code, and the Code Executor Agent ran it in an isolated virtual environment. The agents iterated until the task succeeded or a turn limit was reached.\n\n[4]"
+        },
+        {
+          "id": "rag",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 20990,
+          "genMs": 20975,
+          "text": "Ankit has experience with Retrieval-Augmented Generation (RAG) in RAG-Powered QA for Medical Research, where he used Retrieval-augmented generation pipeline to retrieve relevant passages from PDFs, and then applied RAG-Powered QA for Medical Research architecture to generate answers or summarizations from the retrieved passages."
+        },
+        {
+          "id": "llms",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 23943,
+          "genMs": 23908,
+          "text": "Ankit has used the following LLM models and frameworks:\n\n* GPT-4o and GPT-4 (Generative AI) in projects such as:\n  * NexusAI\n  * RAG-Powered QA for Medical Research and Autonomous Code Generation & Execution\n* LLM Testing with Mock Clients (Generative AI) in projects such as:\n  * NexusAI\n  * IntelliHub\n* FAISS and ChromaDB (Vector Databases) for large-scale LLM applications\n* LangChain (Large Language Models) for structured LLM outputs\n* Azure OpenAI and OpenAI API for LLM testing and evaluation\n* Structured Outputs (JSON and Pydantic) for data serialization and deserialization\n* Claude & Claude Code for LLM testing and evaluation\n* Mistral for LLM testing and evaluation"
+        },
+        {
+          "id": "embeddings",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported name \"Word2Vec\"",
+            "unsupported name \"GloVe\"",
+            "unsupported name \"Faster\""
+          ],
+          "ms": 20145,
+          "genMs": 20127,
+          "text": "Generative AI skills: Large Language Models (GPT-4o, GPT-4), Prompt Engineering, Retrieval-Augmented Generation (RAG), Embeddings, Vector Databases (FAISS, ChromaDB), LangChain, Azure OpenAI, OpenAI API, Structured Outputs (JSON, Pydantic), LLM Testing with Mock Clients, Claude & Claude Code, Hugging Face, Mistral. LLM applications that are grounded, structured and testable. [1]\n\n- RAG-Powered QA for Medical Research architecture (Retrieval-augmented generation pipeline): 1. [2]\n- Ankit has used Vector Databases (FAISS, ChromaDB) (Generative AI) in RAG-Powered QA for Medical Research and IntelliHub. [3]\n- How RAG-Powered QA for Medical Research was built: Load research PDFs from cloud storage (AWS S3) with boto3. [4]"
+        },
+        {
+          "id": "multiagent",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 45974,
+          "genMs": 45955,
+          "text": "[1] The multi-agent architecture of Ankit Chand's portfolio is based on a seven-stage pipeline, with each stage involving a specific agent. The agents are:\n\n* Teachable AutoGen: a code writer agent that drafts the code\n* Azure OpenAI: a teachable AI for structured metadata extraction agent\n* Local SQLite store: a memory agent that keeps the agent's knowledge\n* Missing-field check: a validation agent that ensures required details are provided\n* Structured JSON: an output agent that produces consistent fields for downstream systems\n* FastAPI + SSE: a gateway agent that streams typed events to clients\n* Streamlit web UI: a client agent that provides a chat interface and analytics tabs\n* Android app: a client agent that consumes the same typed event stream\n* Jetpack Compose: a client agent that uses the same typed event stream\n* CRF NER: a feature agent that tags each token with its entity type\n* GCP Composer + App Engine: a model agent that schedules workflows and serves\n\n[2] The multi-agent architecture is designed to orchestrate the different agents and tools, with each agent responsible for a specific task. The agents are called in a sequence, with feedback loops to ensure the task is completed successfully.\n\n[3] The"
+        },
+        {
+          "id": "autogen",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported number \"2026.\"",
+            "unsupported name \"June\"",
+            "unsupported name \"October\""
+          ],
+          "ms": 19133,
+          "genMs": 19103,
+          "text": "Ankit has used Microsoft AutoGen (Agentic AI) in IntelliHub, Teachable AI for Structured Metadata Extraction and Autonomous Code Generation & Execution. [1]\n\n- Ankit has about 2 years 8 months of full-time industry data-science experience (nearly three years): Data Scientist at Retisio India Pvt. [2]\n- Autonomous Code Generation & Execution uses Python, Microsoft AutoGen, OpenAI GPT-4o, Python virtual environment. [3]\n- Autonomous Code Generation & Execution (Independent, 2024 – 2025) — Two AutoGen agents — one writes code, one runs it — iterating until the task works. [4]"
+        },
+        {
+          "id": "orchestrate",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 40369,
+          "genMs": 40346,
+          "text": "Ankit uses a multi-agent system orchestration approach, where he employs Agent Orchestration to manage and coordinate multiple AI agents. This involves defining a playbook, prompt, guardrail overlays, and a tool list for each agent, which are then run by an agent factory. This approach enables Ankit to orchestrate multiple AI agents, including those from Microsoft AutoGen, with routing, guardrails, and memory management.\n\nHere are four bullet points summarizing Ankit's orchestration approach:\n\n• Ankit defines a playbook for each agent, including the prompt, guardrails, and tool list.\n• The playbook is then run by an agent factory, which orchestrates the agent's execution.\n• Ankit uses Agent Orchestration to manage the agent's workflow, including routing, guardrails, and memory management.\n• The orchestration approach enables Ankit to manage multiple AI agents, including those from Microsoft AutoGen, with a focus on context, state, and memory management."
+        },
+        {
+          "id": "testing",
+          "kind": "answer",
+          "pass": false,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations",
+            "model declined although evidence was found"
+          ],
+          "ms": 23636,
+          "genMs": 23612,
+          "text": "I don't have verified information about that in Ankit's portfolio. However, it appears that IntelliHub and NexusAI use deterministic mock LLM clients to test agents without API keys. These mock clients simulate the real LLM interface, allowing tests to run offline without requiring an API key.\n\nHere are some key points about how these systems test agents without API keys:\n\n*   IntelliHub's mock LLM client is deterministic, meaning it always returns the same results, and it doesn't require an API key.\n*   NexusAI's mock LLM client also has a deterministic interface, and it doesn't require an API key.\n*   The mock LLM clients are injected into the testing environment, rather than patched, which means they can be used in production code paths.\n*   The mock LLM clients force offline mode in tests, ensuring that no test can reach the network."
+        },
+        {
+          "id": "nexusai",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0.5,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported number \"2026.\""
+          ],
+          "ms": 34637,
+          "genMs": 34624,
+          "text": "NexusAI (Independent, 2026) — One chat box, eight specialist agents — routed cheaply, grounded in tools, guarded on the way in and out. A multi-agent assistant where a MasterOrchestrator sends each turn to one or more of eight GPT-4o specialist agents. [1]\n\n- NexusAI uses Python, asyncio, Azure OpenAI (GPT-4o), Pydantic, FastAPI, Server-Sent Events, Streamlit, SQLite, httpx, pytest, Kotlin / Jetpack Compose (Android client). [2]\n- Key features of NexusAI: Answers that combine several specialists in one turn; Asks a clarifying question when routing confidence is low; Offline fallbacks for network tools, clearly labelled as sample data; PII redaction: Luhn-checked card numbers, email, SSN, Aadhaar, PAN… [3]\n- ; All network calls go through one seam, so a single fixture can cut the network and exercise every tool's fallback path.. [4]"
+        },
+        {
+          "id": "nexus-follow",
+          "kind": "followup",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 27656,
+          "genMs": 22975,
+          "text": "[1] NexusAI is tested using offline tests, which involve running the chat box against deterministic mock LLM clients. [2] This approach ensures that the chat box can function without internet connectivity. [3] The tests also verify that the chat box can handle a large number of specialist agents, with 214 offline tests passing. [4] Additionally, NexusAI has been tested with a fake LLM client, which allows the chat box to run without spending tokens. [5] Ankit has used LLM Testing with Mock Clients (Generative AI) in NexusAI and IntelliHub, which enables the chat box to test its functionality with mock LLM clients."
+        },
+        {
+          "id": "interesting",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "citation [6] does not match any source",
+            "citation [7] does not match any source",
+            "citation [8] does not match any source"
+          ],
+          "ms": 33180,
+          "genMs": 33163,
+          "text": "The source code for NexusAI, IntelliHub and the 2024–25 generative-AI builds is in private repositories. Ankit is happy to walk through the code or run a live demo on a call — request one from the project page or the contact page. Nine machine-learning case studies are public on GitHub. [1]\n\n- Key features of Teachable AI for Structured Metadata Extraction: Structured JSON output; Learns from user teaching across sessions; Detects missing fields and asks for them; Simple HTTP interface. [2]\n- Ankit is open to full-time Data Scientist, Generative AI Engineer and Agentic AI roles, and to collaboration or freelance projects. [3]\n- Key features of Autonomous Code Generation & Execution: Role-specialised agent collaboration; Automatic execution feedback loop; Isolated execution environment. [4]"
+        },
+        {
+          "id": "architecture",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 50514,
+          "genMs": 50456,
+          "text": "[1] IntelliHub architecture: IntelliHub architecture (From one question to one briefing): 1. Interface: Streamlit / CLI — Chat, optional file upload (lab reports) and a dashboard; a CLI for scripted runs. 2. Understand: Intent classifier — Deterministic keyword scoring picks agents, strategy, confidence and time window. Follow-up continuity — Keeps context across turns so follow-ups route correctly. 3. Plan: ReAct-style planner — Plain-Python orchestrator that builds the plan; the health step depends on all collectors.\n\n[2] IntelliHub architecture: IntelliHub (Independent, 2026) — One question in, one sourced briefing out — news, markets, jobs and lab reports, with every figure computed in Python. A multi-agent intelligence platform. A plain-Python ReAct-style planner decides which domain agents to run, executes them concurrently, and merges their results into one briefing with sources, a status and token cost.\n\n[3] IntelliHub architecture: IntelliHub uses Python, asyncio, Microsoft AutoGen, Azure OpenAI (GPT-4o), Pydantic, SQLAlchemy / SQLite, ChromaDB (optional), PyMuPDF, Tesseract OCR, Streamlit, Plotly, pytest, Docker.\n\n[4] IntelliHub architecture"
+        },
+        {
+          "id": "github",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported name \"Autonomous-Code-Generation--Execution\""
+          ],
+          "ms": 25870,
+          "genMs": 25837,
+          "text": "The source code for NexusAI, IntelliHub and the 2024–25 generative-AI builds is in private repositories. Ankit is happy to walk through the code or run a live demo on a call — request one from the project page or the contact page. Nine machine-learning case studies are public on GitHub. [1]\n\n- Gesture Recognition for Smart TVs uses Python, TensorFlow / Keras, Conv3D, MobileNet, LSTM, scikit-image. [2]\n- Eye for the Blind — Image Captioning uses Python, TensorFlow / Keras, InceptionV3, Attention, GRU, NLTK (BLEU). [3]\n- Autonomous Code Generation & Execution uses Python, Microsoft AutoGen, OpenAI GPT-4o, Python virtual environment. [4]"
+        },
+        {
+          "id": "content-ai",
+          "kind": "unknown",
+          "pass": true,
+          "keywords": null,
+          "mode": "retrieval",
+          "replaced": false,
+          "issues": [],
+          "ms": 39,
+          "genMs": null,
+          "text": "I don't have verified information about “Content AI” in Ankit's portfolio, so I won't guess. The closest related information is:\n\nTeachable AI for Structured Metadata Extraction architecture (Extraction loop): 1. Input: Flask endpoint — Receives free-text e-commerce or retail content. [1]\n\n- Generative AI & Agentic AI — Independent Projects at Independent Projects & Specialization (Independent, Jun 2024 – Oct 2026). [2]\n- Teachable AI for Structured Metadata Extraction (Independent, 2024 – 2025) — A teachable agent that turns e-commerce and retail text into structured JSON — and asks for what's missing. [3]\n- RAG-Powered QA for Medical Research (Independent, 2024 – 2025) — Ask questions of a library of research PDFs and get grounded answers and summaries. [4]"
+        },
+        {
+          "id": "video-agent",
+          "kind": "unknown",
+          "pass": true,
+          "keywords": null,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 14499,
+          "genMs": 11185,
+          "text": "I don't have verified information about the purpose of the video editing agent in Ankit's portfolio. [1]"
+        },
+        {
+          "id": "kubernetes",
+          "kind": "unknown",
+          "pass": true,
+          "keywords": null,
+          "mode": "retrieval",
+          "replaced": false,
+          "issues": [],
+          "ms": 28,
+          "genMs": null,
+          "text": "I don't have verified information about “Kubernetes” in Ankit's portfolio, so I won't guess. The closest related information is:\n\nHow Search Intelligence Tool (SIT) was built: Built a data-preparation pipeline with feature engineering, noise reduction and spell-checking. Developed and implemented a Conditional Random Field model for named-entity recognition in user queries. [1]\n\n- Challenges in IntelliHub: Challenge: No API budget for development and demos. [2]\n- Data Scientist at Retisio India Pvt. [3]\n- I'm a data scientist who moved into generative AI and agentic systems. [4]"
+        },
+        {
+          "id": "certs",
+          "kind": "answer",
+          "pass": false,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "model declined although evidence was found"
+          ],
+          "ms": 16647,
+          "genMs": 16627,
+          "text": "I don't have verified information about Ankit's certifications in Ankit's portfolio. [1] According to [2], Ankit has completed 4 courses: Claude Code in Action (Anthropic Academy), Introduction to Agent Skills (Anthropic Academy), Claude with Amazon Bedrock (Anthropic Academy) and AI Agents: Building Teams of LLM Agents that Work For You (Udemy)."
+        },
+        {
+          "id": "pg",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 9334,
+          "genMs": 9317,
+          "text": "Ankit has pursued the following postgraduate programs:\n\n• Post Graduate Program in Data Science with Generative AI — Great Learning (in progress)\n• Post Graduate Diploma in Data Science — IIIT Bangalore (Completed March 2020)\n• Bachelor of Technology (B.Tech) — Lovely Professional University, Punjab (Completed)"
+        },
+        {
+          "id": "education",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported number \"2020.\""
+          ],
+          "ms": 10870,
+          "genMs": 10854,
+          "text": "Tech) — Lovely Professional University, Punjab (Completed). [1]\n\n- pdf, updated Nov 2026). [2]\n- Ankit has completed 4 courses: Claude Code in Action (Anthropic Academy), Introduction to Agent Skills (Anthropic Academy), Claude with Amazon Bedrock (Anthropic Academy) and AI Agents: Building Teams of LLM Agents that Work For You (Udemy). [3]\n- Mar 2020 (Education) — Post Graduate Diploma in Data Science — IIIT Bangalore. [4]"
+        },
+        {
+          "id": "available",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 12163,
+          "genMs": 12150,
+          "text": "Ankit is available for opportunities, including full-time Data Scientist, Generative AI Engineer, and Agentic AI roles, as well as freelance and consulting projects. He is also open to collaboration or freelance work. To reach him, visit the contact page or LinkedIn."
+        },
+        {
+          "id": "roles",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 24973,
+          "genMs": 24959,
+          "text": "Based on Ankit Chand's experience and expertise, the following roles align with his experience:\n\n• Data Scientist: Given his experience in data science roles, particularly in data science and machine learning (ML) areas, data science roles, and data science internships, data science roles seem to be a strong fit.\n• Generative AI Engineer: His experience in generative AI and agentic AI projects, as well as his expertise in areas like multi-agent orchestration and retrieval-augmented generation, make generative AI engineer roles a suitable match.\n• Agentic AI Engineer: Ankit's experience in agentic AI projects, particularly in multi-agent orchestration and intent routing, makes agentic AI engineer roles a strong alignment with his experience.\n\nThese roles align with his experience in data science, ML, generative AI, and agentic AI, and his expertise in areas like multi-agent orchestration, retrieval-augmented generation, and LLM reliability and testing."
+        },
+        {
+          "id": "contact",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 15835,
+          "genMs": 15822,
+          "text": "To contact Ankit Chand, you can try the following options:\n\n* Email: chand07ankit@gmail.com\n* LinkedIn: https://www.linkedin.com/in/ankitchand007/\n* Contact form: https://github.com/chandankit\n* Quick message: Contact Ankit through the contact page or LinkedIn.\n\nNote: Ankit is open to opportunities in various roles, including freelance and consulting work."
+        },
+        {
+          "id": "resume",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 5907,
+          "genMs": 5892,
+          "text": "You can download Ankit's resume as a PDF from the Resume page."
+        },
+        {
+          "id": "freelance",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 14611,
+          "genMs": 14593,
+          "text": "You can discuss a consulting or freelance opportunity with Ankit Chand, a freelance and consulting AI expert with experience in LLM applications, retrieval-augmented generation, multi-agent prototypes, and machine-learning models. He is available for opportunities in various roles, including Data Scientist, Generative AI Engineer, and Agentic AI. You can reach him through the contact form on his website, LinkedIn, or via email at chand07ankit@gmail.com."
+        }
+      ]
+    },
+    {
+      "summary": {
+        "model": "Qwen2.5-1.5B-Instruct",
+        "key": "qwen2.5-1.5b",
+        "params": "1.5B",
+        "quant": "Q4_K_M (GGUF)",
+        "license": "Apache-2.0",
+        "webllmId": "Qwen2.5-1.5B-Instruct-q4f16_1-MLC",
+        "fileMB": 1066,
+        "ramMB": 1723,
+        "hardware": "Intel Core i7-8665U (4C/8T), 16 GB RAM, CPU only",
+        "cases": 35,
+        "errors": 0,
+        "passRate": 0.9428571428571428,
+        "validatorAcceptRate": 0.7878787878787878,
+        "replacedByValidator": 7,
+        "keywordCoverage": 0.734375,
+        "unknownDeclined": "3/3",
+        "avgSecondsPerAnswer": 39.20885714285715,
+        "avgGenerationSeconds": 38.50953846153846,
+        "tokensPerSecond": 1.9
+      },
+      "rows": [
+        {
+          "id": "who",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 24969,
+          "genMs": 24952,
+          "text": "Ankit Chand is a Data Scientist, Generative AI Engineer, Agentic AI Developer, and AI/ML Engineer based in India. He has nearly three years of industry experience in data science, including entity extraction for e-commerce search, product-trend analytics, and GCP model pipelines. Since mid-2024, he has focused on designing multi-agent LLM systems with Python, FastAPI, Microsoft AutoGen, and Azure OpenAI. His work emphasizes predictability, with systems that are deterministic where it matters, observable, tested, and honest about failure."
+        },
+        {
+          "id": "background",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 22759,
+          "genMs": 22745,
+          "text": "Ankit's professional background includes working as a Data Science Intern on time-series forecasting. He is pursuing a Post Graduate Program in Data Science with Generative AI through Great Learning. For nearly three years, he has built machine learning in industry, most recently at Retisio, where he developed a Conditional Random Field model that extracts entities from e-commerce search queries and ran model workflows on Google Cloud (Cloud Composer/Airflow, App Engine) in an Agile team. Ankit has a Bachelor of Technology (B.Tech) in Mechanical Engineering from Lovely Professional University, Punjab, with a strong foundation in mathematics, mechanics, and analytical problem solving. His recent work has focused on LLM systems, starting with retrieval-augmented question answering and Microsoft AutoGen agent teams, then designing multi-agent platforms such as NexusAI and IntelliHub."
+        },
+        {
+          "id": "years",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 16430,
+          "genMs": 16413,
+          "text": "Ankit has nearly three years of full-time industry data-science experience. [1]"
+        },
+        {
+          "id": "orgs",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 10958,
+          "genMs": 10943,
+          "text": "Ankit has worked with the following organizations:\n\n1. Unified Mentor Private Limited\n2. Retisio India Pvt. Ltd.\n3. AIE Software India Pvt. Ltd."
+        },
+        {
+          "id": "specialization",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 15183,
+          "genMs": 15168,
+          "text": "Ankit's current technical specialization is Data Science & ML (Forecasting, entity extraction, classification and regression — from feature engineering to evaluated models) and Generative AI & RAG (LLM applications grounded in documents: retrieval, embeddings, prompt design and structured outputs)."
+        },
+        {
+          "id": "current",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 15037,
+          "genMs": 15008,
+          "text": "Ankit is currently working as a Data Science Intern at Unified Mentor Private Limited, focusing on time-series forecasting. He has also started pursuing a Post Graduate Program in Data Science with Generative AI through Great Learning."
+        },
+        {
+          "id": "ml-algos",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 40170,
+          "genMs": 40024,
+          "text": "Ankit has worked with several machine learning algorithms, including:\n\n- **Regression**: Used in House Price Prediction with Regularised Regression, Lead Scoring for an Online Education Company, and Telecom Churn Prediction.\n- **Classification**: Used in Telecom Churn Prediction, UAC Care Load & Placement Forecasting, and A Fine Windy Day — Wind Power Prediction.\n- **Random Forest**: Used in Telecom Churn Prediction, UAC Care Load & Placement Forecasting, and A Fine Windy Day — Wind Power Prediction.\n- **Model Evaluation**: Used in Lead Scoring for an Online Education Company, Telecom Churn Prediction, and UAC Care Load & Placement Forecasting.\n- **Statistical Analysis**: Used in Credit Risk Exploratory Analysis, House Price Prediction with Regularised Regression, and Lead Scoring for an Online Education Company.\n\nThese skills and projects demonstrate his proficiency in various machine learning techniques and his ability to apply them effectively in different contexts."
+        },
+        {
+          "id": "xgboost",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 20082,
+          "genMs": 20067,
+          "text": "Yes, Ankit has experience with XGBoost. He used it in the project \"A Fine Windy Day — Wind Power Prediction,\" where he explored distributions and skewness across sensor features, compared various regression models including XGBoost, and blended three models for the final submission."
+        },
+        {
+          "id": "feature-eng",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 39637,
+          "genMs": 39611,
+          "text": "Ankit has applied feature engineering in multiple projects, including the Search Intelligence Tool (SIT), Telecom Churn Prediction, and UAC Care Load & Placement Forecasting. In the Search Intelligence Tool (SIT), he developed a Conditional Random Field (CRF) named-entity recognition model in Python to extract entities from user search queries, enhancing query understanding and result relevance. He also engineered features, reduced noise, and performed spell-checking as part of the supporting data-preparation pipeline. In the Telecom Churn Prediction project, he utilized feature engineering to create a model that predicts customer churn based on historical data. In the UAC Care Load & Placement Forecasting project, he engineered features to forecast call volumes and placement needs, improving the accuracy of resource allocation."
+        },
+        {
+          "id": "model-eval",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 50805,
+          "genMs": 50774,
+          "text": "Ankit evaluates models using a systematic approach that includes comparing multiple models (classical and tree-based) against a baseline to identify the one that performs the best. He uses 4-week-ahead error as the metric to compare the performance of different models. [1] He also compares the 4-week error of the selected model against the baseline to determine if it has halved the error, indicating a significant improvement. [2] The architecture of UAC Care Load & Placement Forecasting involves preparing historical series for time-series modeling, fitting classical models and tree-based models, and then evaluating the models to select the one with the lowest 4-week error. [3] The architecture includes steps for data preparation, model fitting, and model evaluation. [4] Turning raw data into evaluated models involves using Python, Pandas, NumPy, Scikit-learn, and other tools for data science and machine learning. [5] The offline tests prove the plumbing of the system, including routing decisions, guardrail behavior, PII redaction, tool argument handling, fallbacks, status reporting, and memory writes, making refactoring safe. However, these tests do not prove the quality of the model's predictions."
+        },
+        {
+          "id": "forecast",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported name \"October\"",
+            "no citations"
+          ],
+          "ms": 25687,
+          "genMs": 25675,
+          "text": "Ankit has used Time-Series Forecasting (SARIMA, ETS) (Data Science & Machine Learning) in UAC Care Load & Placement Forecasting and Recommendations Engine (RXE). [1]\n\n- UAC Care Load & Placement Forecasting uses Python, Pandas, SARIMA, ETS, Random Forest, Gradient Boosting. [2]\n- UAC Care Load & Placement Forecasting architecture (Forecasting workflow): 1. [3]\n- How UAC Care Load & Placement Forecasting was built: Prepare the historical series for time-series modelling. [4]"
+        },
+        {
+          "id": "genai-projects",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported name \"AssistantAgents\"",
+            "no citations"
+          ],
+          "ms": 65527,
+          "genMs": 65511,
+          "text": "How Teachable AI for Structured Metadata Extraction was built: Wrap a teachable AutoGen agent in a Flask web service. Use Azure OpenAI to extract metadata fields from e-commerce and retail text. [1]\n\n- How IntelliHub was built: A deterministic intent classifier scores the query, picks the agents, a strategy (concurrent or sequential), a confidence and a time window — then a planner builds the execution plan. [2]\n- How Autonomous Code Generation & Execution was built: Define two conversable AutoGen agents with distinct roles and system messages. [3]\n- The source code for NexusAI, IntelliHub and the 2024–25 generative-AI builds is in private repositories. [4]"
+        },
+        {
+          "id": "rag",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 31342,
+          "genMs": 31329,
+          "text": "Yes, Ankit has experience with Retrieval-Augmented Generation (RAG). He has used RAG in RAG-Powered QA for Medical Research, which involves a pipeline that includes source extraction, embedding and indexing, similarity search, generation, and serving. The tech stack includes Python, LangChain, OpenAI embeddings, GPT-4, FAISS, PyPDF2, AWS S3 (boto3), and REST API. This project demonstrates his expertise in applying RAG to generate answers or summaries from retrieved passages."
+        },
+        {
+          "id": "llms",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported name \"LLMs\"",
+            "no citations"
+          ],
+          "ms": 26926,
+          "genMs": 26882,
+          "text": "Generative AI skills: Large Language Models (GPT-4o, GPT-4), Prompt Engineering, Retrieval-Augmented Generation (RAG), Embeddings, Vector Databases (FAISS, ChromaDB), LangChain, Azure OpenAI, OpenAI API, Structured Outputs (JSON, Pydantic), LLM Testing with Mock Clients, Claude & Claude Code, Hugging Face, Mistral. LLM applications that are grounded, structured and testable. [1]\n\n- Ankit has used Large Language Models (GPT-4o, GPT-4) (Generative AI) in NexusAI, RAG-Powered QA for Medical Research and Autonomous Code Generation & Execution. [2]\n- Ankit has used LLM Testing with Mock Clients (Generative AI) in NexusAI and IntelliHub. [3]\n- The narrative can only be as rich as the context it is given, so section builders must expose the right facts. [4]"
+        },
+        {
+          "id": "embeddings",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 22960,
+          "genMs": 22827,
+          "text": "Ankit implements embeddings and vector search by using OpenAI embeddings to extract vectors from each PDF document. These vectors are then stored in FAISS for fast similarity search. When a user asks a question, the system retrieves the most relevant passages from the stored vectors, passes them to GPT-4 through LangChain to generate an answer or summary, and exposes the question answering and summarization through a REST API. This approach allows for efficient and structured retrieval of relevant information, making the system grounded and testable."
+        },
+        {
+          "id": "multiagent",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 56605,
+          "genMs": 56589,
+          "text": "Ankit's architecture is based on a multi-agent system, where each agent performs specific tasks to achieve the overall goal. The architecture is designed to be flexible and scalable, allowing for the addition of new agents as needed. Here's a breakdown of the key components:\n\n1. **Task: Natural-language task** - The user describes what the code should do. This task is handled by the **Code Writer Agent** (GPT-4o), which drafts the code.\n\n2. **Write: Code Writer Agent** - This agent drafts the code based on the user's description. The code is then executed in an isolated virtual environment by the **Code Executor Agent**.\n\n3. **Execute: Code Executor Agent** - The Code Executor Agent runs the code, which is drafted by the Code Writer Agent. The output of this process is then refined through a **Feedback loop**.\n\n4. **Refine: Feedback loop** - The output and errors from the execution are fed back to the Code Writer Agent, and the process repeats until the task is successful.\n\nThis architecture is designed to be efficient and effective, as it allows for continuous refinement and improvement of the code based on user feedback. The feedback loop ensures that the code is tailored to the user's needs, making it a powerful tool for"
+        },
+        {
+          "id": "autogen",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 40848,
+          "genMs": 40835,
+          "text": "Ankit has used Microsoft AutoGen in two projects: IntelliHub and Teachable AI for Structured Metadata Extraction. In IntelliHub, he applied AutoGen for Autonomous Code Generation & Execution, which involved writing and executing code iteratively until the task was successful. This project utilized Python, AutoGen, and OpenAI GPT-4o, with a multi-agent system built with AutoGen that automated code generation and execution. In Teachable AI, AutoGen was used for generating structured metadata, which involved writing and executing code iteratively until the task was successful. This project also utilized Python, Flask, AutoGen, Azure OpenAI, and SQLite, with a walkthrough available on request."
+        },
+        {
+          "id": "orchestrate",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 36208,
+          "genMs": 36183,
+          "text": "Ankit orchestrates multiple AI agents through a custom Python orchestration engine that runs a seven-stage pipeline on every turn. This pipeline includes input guardrails, routing, clarification, concurrent fan-out, aggregation, output rails, and a single-writer memory commit. The pipeline is designed to handle complex workflows and ensure that each stage is executed correctly. Additionally, Ankit uses a four-stage hybrid router that validates the classifier's output and turns uncertain turns into clarifying questions. This approach allows for flexible and robust execution of AI workflows."
+        },
+        {
+          "id": "testing",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 41240,
+          "genMs": 41220,
+          "text": "IntelliHub tests agents without API keys by using a deterministic intent classifier to score queries, select agents, and build execution plans. The system orchestrates concurrent or sequential execution, ensuring each agent runs independently. The collector agents run concurrently with asyncio.gather, while the health pipeline runs in a fixed order. Full tool results are collected and sent to a side collector, which the model sees only as a short status line. The LLM writes prose only. Every schema-bearing section is computed in Python, ensuring deterministic results. The system also uses offline tests to force every test to run in offline mode, ensuring results are deterministic."
+        },
+        {
+          "id": "nexusai",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0.5,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported name \"Personally\"",
+            "unsupported name \"Identifiable\"",
+            "no citations"
+          ],
+          "ms": 52450,
+          "genMs": 52435,
+          "text": "NexusAI (Independent, 2026) — One chat box, eight specialist agents — routed cheaply, grounded in tools, guarded on the way in and out. A multi-agent assistant where a MasterOrchestrator sends each turn to one or more of eight GPT-4o specialist agents. [1]\n\n- NexusAI uses Python, asyncio, Azure OpenAI (GPT-4o), Pydantic, FastAPI, Server-Sent Events, Streamlit, SQLite, httpx, pytest, Kotlin / Jetpack Compose (Android client). [2]\n- Key features of NexusAI: Answers that combine several specialists in one turn; Asks a clarifying question when routing confidence is low; Offline fallbacks for network tools, clearly labelled as sample data; PII redaction: Luhn-checked card numbers, email, SSN, Aadhaar, PAN… [3]\n- ; All network calls go through one seam, so a single fixture can cut the network and exercise every tool's fallback path.. [4]"
+        },
+        {
+          "id": "nexus-follow",
+          "kind": "followup",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 33017,
+          "genMs": 25132,
+          "text": "NexusAI is tested through a suite of 214 offline and automated tests that pass. The testing includes 8 specialist agents, 31 tools in 9 modules, and 7 pipeline stages per turn. All network calls go through one seam, allowing a single fixture to cut the network and exercise every tool's fallback path. The testing results are 8 specialist agents and 214 tests passing."
+        },
+        {
+          "id": "interesting",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 25438,
+          "genMs": 25425,
+          "text": "Ankit's most interesting AI projects include Teachable AI for Structured Metadata Extraction, Autonomous Code Generation & Execution, and Gesture Recognition for Smart TVs. These projects showcase his expertise in machine learning, AI, and deep learning. The Teachable AI project demonstrates structured JSON output and the ability to learn from user teaching sessions. Autonomous Code Generation & Execution highlights role-specialised agent collaboration and an automatic execution feedback loop. Gesture Recognition for Smart TVs showcases deep learning techniques such as Conv3D, MobileNet, LSTM, and scikit-image, and is available on GitHub. Each project is a testament to Ankit's ability to tackle complex AI challenges and develop innovative solutions."
+        },
+        {
+          "id": "architecture",
+          "kind": "answer",
+          "pass": false,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "model declined although evidence was found"
+          ],
+          "ms": 21709,
+          "genMs": 21693,
+          "text": "I don't have verified information about that in Ankit's portfolio. However, the architecture is described in detail in Evidence [1]. It outlines the interface, understanding, planning, and collecting components of the IntelliHub platform."
+        },
+        {
+          "id": "github",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 60552,
+          "genMs": 60535,
+          "text": "Ankit's GitHub projects include:\n\n- **Gesture Recognition for Smart TVs**: Uses Python, TensorFlow/Keras, Conv3D, MobileNet, LSTM, scikit-image. Categories: Deep Learning. The code is public on GitHub: [Gesture Recognition for Smart TVs](https://github.com/chandankit/Deep-Learning-Project-Gesture-Recognition).\n- **Eye for the Blind — Image Captioning**: Uses Python, TensorFlow/Keras, InceptionV3, Attention, GRU, NLTK (BLEU). Categories: Deep Learning, NLP. The code is public on GitHub: [Eye for the Blind — Image Captioning](https://github.com/chandankit/Deep-Learning-Capston-Project--Eye-for-the-Blind).\n- **Autonomous Code Generation & Execution**: Uses Python, Microsoft AutoGen, OpenAI GPT-4o, Python virtual environment. Categories: Agentic AI, Multi-Agent Systems, AI Automation. The code is not public; a walkthrough is available on request.\n- **IntelliHub**: Uses Python, asyncio, Microsoft AutoGen, Azure OpenAI (GPT-4o), Pydantic, SQLAlchemy/SQLite, ChromaDB (optional), PyMuPDF, Tesseract OCR, Streamlit"
+        },
+        {
+          "id": "content-ai",
+          "kind": "unknown",
+          "pass": true,
+          "keywords": null,
+          "mode": "retrieval",
+          "replaced": false,
+          "issues": [],
+          "ms": 22,
+          "genMs": null,
+          "text": "I don't have verified information about “Content AI” in Ankit's portfolio, so I won't guess. The closest related information is:\n\nTeachable AI for Structured Metadata Extraction architecture (Extraction loop): 1. Input: Flask endpoint — Receives free-text e-commerce or retail content. [1]\n\n- Generative AI & Agentic AI — Independent Projects at Independent Projects & Specialization (Independent, Jun 2024 – Oct 2026). [2]\n- Teachable AI for Structured Metadata Extraction (Independent, 2024 – 2025) — A teachable agent that turns e-commerce and retail text into structured JSON — and asks for what's missing. [3]\n- RAG-Powered QA for Medical Research (Independent, 2024 – 2025) — Ask questions of a library of research PDFs and get grounded answers and summaries. [4]"
+        },
+        {
+          "id": "video-agent",
+          "kind": "unknown",
+          "pass": true,
+          "keywords": null,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 62008,
+          "genMs": 55316,
+          "text": "I don't have verified information about that in Ankit's portfolio. However, based on the evidence provided, the video editing agent is likely designed to process and classify video frames in batches, which is a key feature of the Gesture Recognition for Smart TVs project."
+        },
+        {
+          "id": "kubernetes",
+          "kind": "unknown",
+          "pass": true,
+          "keywords": null,
+          "mode": "retrieval",
+          "replaced": false,
+          "issues": [],
+          "ms": 37,
+          "genMs": null,
+          "text": "I don't have verified information about “Kubernetes” in Ankit's portfolio, so I won't guess. The closest related information is:\n\nHow Search Intelligence Tool (SIT) was built: Built a data-preparation pipeline with feature engineering, noise reduction and spell-checking. Developed and implemented a Conditional Random Field model for named-entity recognition in user queries. [1]\n\n- Challenges in IntelliHub: Challenge: No API budget for development and demos. [2]\n- Data Scientist at Retisio India Pvt. [3]\n- I'm a data scientist who moved into generative AI and agentic systems. [4]"
+        },
+        {
+          "id": "certs",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported number \"2026.\"",
+            "no citations"
+          ],
+          "ms": 101813,
+          "genMs": 101762,
+          "text": "Ankit has completed 4 courses: Claude Code in Action (Anthropic Academy), Introduction to Agent Skills (Anthropic Academy), Claude with Amazon Bedrock (Anthropic Academy) and AI Agents: Building Teams of LLM Agents that Work For You (Udemy). In progress: Post Graduate Program in Data Science with Generative AI (Great Learning). [1]\n\n- pdf, updated Nov 2026). [2]\n- 2025 – 2026 (Learning) — Completed three Anthropic Academy courses. [3]\n- Tech) — Lovely Professional University, Punjab (Completed). [4]"
+        },
+        {
+          "id": "pg",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 20582,
+          "genMs": 20520,
+          "text": "Ankit has pursued the Post Graduate Program in Data Science with Generative AI at Great Learning."
+        },
+        {
+          "id": "education",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 0,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported number \"2020.\"",
+            "unsupported number \"2017.\"",
+            "no citations"
+          ],
+          "ms": 41474,
+          "genMs": 41440,
+          "text": "Tech) — Lovely Professional University, Punjab (Completed). [1]\n\n- pdf, updated Nov 2026). [2]\n- Ankit has completed 4 courses: Claude Code in Action (Anthropic Academy), Introduction to Agent Skills (Anthropic Academy), Claude with Amazon Bedrock (Anthropic Academy) and AI Agents: Building Teams of LLM Agents that Work For You (Udemy). [3]\n- Mar 2020 (Education) — Post Graduate Diploma in Data Science — IIIT Bangalore. [4]"
+        },
+        {
+          "id": "available",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [],
+          "ms": 68605,
+          "genMs": 68524,
+          "text": "Ankit is open to full-time Data Scientist, Generative AI Engineer, and Agentic AI roles, as well as collaboration or freelance projects. The quickest way to reach him is through the contact page or LinkedIn. [1]"
+        },
+        {
+          "id": "roles",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 109699,
+          "genMs": 109481,
+          "text": "Ankit's experience aligns with roles such as Data Scientist, Generative AI Engineer, and Agentic AI Engineer. His full-time industry experience at Retisio India Pvt. Ltd. and AIE Software India Pvt. Ltd. for nearly three years, along with his current role as a Data Science Intern at Unified Mentor Private Limited, indicates a strong foundation in data science and AI. His recent projects on independent generative-AI and agentic-AI demonstrate his expertise in developing AI solutions and managing multi-agent systems."
+        },
+        {
+          "id": "contact",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations"
+          ],
+          "ms": 77839,
+          "genMs": 77739,
+          "text": "You can contact Ankit by email at chand07ankit@gmail.com, on LinkedIn (https://www.linkedin.com/in/ankitchand007/), or through the contact form on this site. His code is on GitHub at https://github.com/chandankit. He is based in India."
+        },
+        {
+          "id": "resume",
+          "kind": "answer",
+          "pass": true,
+          "keywords": 1,
+          "mode": "retrieval",
+          "replaced": true,
+          "issues": [
+            "unsupported name \"URL\""
+          ],
+          "ms": 41460,
+          "genMs": 41397,
+          "text": "Ankit's resume can be previewed on the Resume page and downloaded as a PDF (/resume/Ankit_Chand_Resume.pdf, updated Nov 2026). It summarises his experience, key projects, skills, education and certifications. [1]\n\n- com/in/ankitchand007/) or through the contact form on this site. [2]\n- For freelance or consulting work, Ankit can help with LLM applications, retrieval-augmented generation, multi-agent prototypes and machine-learning models — the same kinds of systems shown in his projects. [3]\n- 2024 – 2025 — Retraining toward Generative AI. [4]"
+        },
+        {
+          "id": "freelance",
+          "kind": "answer",
+          "pass": false,
+          "keywords": 1,
+          "mode": "llm",
+          "replaced": false,
+          "issues": [
+            "no citations",
+            "model declined although evidence was found"
+          ],
+          "ms": 52232,
+          "genMs": 52195,
+          "text": "I don't have verified information about that in Ankit's portfolio. However, Ankit is open to full-time Data Scientist, Generative AI Engineer, and Agentic AI roles, as well as collaboration or freelance projects. The quickest way to reach him is through the contact page or LinkedIn."
+        }
+      ]
+    }
+  ]
+}

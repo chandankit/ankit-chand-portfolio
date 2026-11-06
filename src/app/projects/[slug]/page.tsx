@@ -10,6 +10,10 @@ import { RepoStatus } from "@/components/project-card";
 import { Badge, ButtonLink, Container, TechTag } from "@/components/ui";
 import { GitHubIcon } from "@/components/icons";
 import { JsonLd } from "@/components/json-ld";
+import { ProjectView } from "@/components/project-view";
+import { AskButton } from "@/components/assistant/assistant-panel";
+import { buttonClass } from "@/components/ui";
+import { Sparkles } from "lucide-react";
 
 type Params = { slug: string };
 
@@ -123,6 +127,9 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                 <ExternalLink className="size-4" aria-hidden /> Live demo
               </ButtonLink>
             )}
+            <AskButton question={`Tell me about ${p.title}`} className={buttonClass("ghost")}>
+              <Sparkles className="size-4" aria-hidden /> Ask about this project
+            </AskButton>
             {isPrivate && p.context !== "Industry" && (
               <ButtonLink href={`/contact?subject=${encodeURIComponent(`Walkthrough request: ${p.title}`)}`} variant="gradient">
                 <MessageSquare className="size-4" aria-hidden /> Request a walkthrough
@@ -144,7 +151,8 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
       </header>
 
       <Container className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_300px]">
-        <article className="min-w-0 space-y-14">
+        <article className="min-w-0">
+          <ProjectView>
           <Section id="overview" title="Overview">
             <p className="leading-relaxed text-muted">{p.summary}</p>
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -160,12 +168,15 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
           </Section>
 
           {p.architecture && (
+            <div data-detail>
             <Section id="architecture" title="Architecture">
               <ArchitectureDiagram architecture={p.architecture} />
             </Section>
+            </div>
           )}
 
           {p.agents && (
+            <div data-detail>
             <Section id="agents" title="Agents & tools">
               <div className="grid gap-3 sm:grid-cols-2">
                 {p.agents.map((a) => (
@@ -186,11 +197,14 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                 ))}
               </div>
             </Section>
+            </div>
           )}
 
+          <div data-detail>
           <Section id="approach" title="Implementation approach">
             <BulletList items={p.approach} />
           </Section>
+          </div>
 
           <Section id="features" title="Key features">
             <div className="grid gap-3 sm:grid-cols-2">
@@ -204,6 +218,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
           </Section>
 
           {p.challenges && (
+            <div data-detail>
             <Section id="challenges" title="Challenges & solutions">
               <div className="space-y-3">
                 {p.challenges.map((c, i) => (
@@ -218,9 +233,11 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                 ))}
               </div>
             </Section>
+            </div>
           )}
 
           {p.quality && (
+            <div data-detail>
             <Section id="quality" title="Testing & quality">
               <div className="card p-5">
                 <TestTube className="size-5 text-teal" aria-hidden />
@@ -229,6 +246,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                 </div>
               </div>
             </Section>
+            </div>
           )}
 
           {p.media && p.media.length > 0 && (
@@ -242,6 +260,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
               <Info className="mt-0.5 size-4 shrink-0" aria-hidden /> {p.credit}
             </p>
           )}
+          </ProjectView>
         </article>
 
         <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">

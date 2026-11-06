@@ -7,7 +7,9 @@ import { AgentOrbit } from "@/components/agent-orbit";
 import { RotatingRole } from "@/components/rotating-role";
 import { ProjectCard } from "@/components/project-card";
 import { Reveal } from "@/components/reveal";
-import { ButtonLink, Container, Eyebrow, SectionHeading } from "@/components/ui";
+import { ButtonLink, Container, Eyebrow, SectionHeading, buttonClass } from "@/components/ui";
+import { AskButton } from "@/components/assistant/assistant-panel";
+import { AllProjects, ArchitectureSpotlight, AskTeaser, ConversationSection, LearningPath, RecruiterBrief } from "@/components/home-modes";
 import { GitHubIcon, LinkedInIcon, iconMap } from "@/components/icons";
 
 export default function HomePage() {
@@ -29,9 +31,9 @@ export default function HomePage() {
   ];
 
   return (
-    <>
+    <div className="home-sections flex flex-col">
       {/* ---------------- Hero ---------------- */}
-      <section className="relative overflow-hidden pb-16 pt-28 sm:pt-36 lg:pb-24" aria-labelledby="hero-title">
+      <section data-section="hero" className="relative overflow-hidden pb-16 pt-28 sm:pt-36 lg:pb-24" aria-labelledby="hero-title">
         <Container className="grid items-center gap-14 lg:grid-cols-[1.15fr_1fr]">
           <div>
             <div className="fade-up" style={{ "--d": "0s" } as React.CSSProperties}>
@@ -65,9 +67,17 @@ export default function HomePage() {
                 <ButtonLink href="/projects" variant="gradient">
                   Explore my work <ArrowRight className="size-4" aria-hidden />
                 </ButtonLink>
+                <AskButton className={buttonClass("ghost")}>
+                  <Sparkles className="size-4" aria-hidden /> Ask about Ankit
+                </AskButton>
                 <ButtonLink href="/resume" variant="ghost">
                   <FileText className="size-4" aria-hidden /> View resume
                 </ButtonLink>
+                <div data-mode-only="recruiter">
+                  <ButtonLink href={profile.resume.file} variant="primary" download={profile.resume.fileName}>
+                    <Download className="size-4" aria-hidden /> Download resume
+                  </ButtonLink>
+                </div>
                 <ButtonLink href="/contact" variant="ghost">
                   <Mail className="size-4" aria-hidden /> Let&apos;s connect
                 </ButtonLink>
@@ -88,8 +98,15 @@ export default function HomePage() {
         </Container>
       </section>
 
+      <ConversationSection />
+      <RecruiterBrief />
+      <ArchitectureSpotlight />
+      <LearningPath />
+      <AllProjects />
+      <AskTeaser />
+
       {/* ---------------- Highlights ---------------- */}
-      <section aria-label="Highlights" className="pb-16">
+      <section data-section="highlights" aria-label="Highlights" className="pb-16">
         <Container>
           <div className="card ring-gradient grid divide-y divide-line overflow-hidden sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
             {profile.highlights.map((h, i) => (
@@ -104,7 +121,7 @@ export default function HomePage() {
       </section>
 
       {/* ---------------- Expertise ---------------- */}
-      <section className="py-16" aria-labelledby="expertise-title">
+      <section data-section="expertise" className="py-16" aria-labelledby="expertise-title">
         <Container>
           <SectionHeading id="expertise-title" eyebrow="What I do" title="Four areas of expertise" description="I work across the stack of an AI product — from the data and the model to the agents and the service around them." />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -139,7 +156,7 @@ export default function HomePage() {
       </section>
 
       {/* ---------------- Featured projects ---------------- */}
-      <section className="py-16" aria-labelledby="featured-title">
+      <section data-section="featured" data-mode-hide="explorer" className="py-16" aria-labelledby="featured-title">
         <Container>
           <SectionHeading
             id="featured-title"
@@ -163,7 +180,7 @@ export default function HomePage() {
       </section>
 
       {/* ---------------- Explore dashboard ---------------- */}
-      <section className="py-16" aria-labelledby="explore-title">
+      <section data-section="explore" className="py-16" aria-labelledby="explore-title">
         <Container>
           <SectionHeading id="explore-title" eyebrow="Explore" title="Everything in one place" description="Jump straight to what you need — or press Ctrl / ⌘ K to search the whole portfolio." />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -185,7 +202,7 @@ export default function HomePage() {
       </section>
 
       {/* ---------------- CTA ---------------- */}
-      <section className="py-16" aria-labelledby="cta-title">
+      <section data-section="cta" className="py-16" aria-labelledby="cta-title">
         <Container>
           <Reveal>
             <div className="card ring-gradient relative overflow-hidden p-8 sm:p-12">
@@ -207,6 +224,6 @@ export default function HomePage() {
           </Reveal>
         </Container>
       </section>
-    </>
+    </div>
   );
 }

@@ -4,9 +4,10 @@ import path from "node:path";
 export const ogSize = { width: 1200, height: 630 };
 
 let photoCache: string | null = null;
-export async function photoDataUrl() {
+export async function photoDataUrl(src: string | null = "/images/ankit-chand.jpg"): Promise<string | undefined> {
+  if (!src) return undefined;
   if (photoCache) return photoCache;
-  const buf = await readFile(path.join(process.cwd(), "public", "images", "ankit-chand.jpg"));
+  const buf = await readFile(path.join(process.cwd(), "public", ...src.replace(/^\//, "").split("/")));
   photoCache = `data:image/jpeg;base64,${buf.toString("base64")}`;
   return photoCache;
 }

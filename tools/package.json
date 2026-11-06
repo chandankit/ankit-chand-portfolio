@@ -1,0 +1,15 @@
+{
+  "name": "ankit-portfolio-tools",
+  "private": true,
+  "type": "module",
+  "description": "Offline tooling: knowledge-base embeddings and open-model benchmarks. Not installed on Vercel.",
+  "scripts": {
+    "kb:embed": "node --no-warnings kb/embed.ts",
+    "test": "node --no-warnings --test \"tests/**/*.test.ts\"",
+    "eval": "node --no-warnings bench/retrieval.ts",
+    "bench": "node --no-warnings bench/run.ts"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "4.3.2"
+  }
+}

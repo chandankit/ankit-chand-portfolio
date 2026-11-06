@@ -426,3 +426,61 @@ dialog::backdrop {
     background: #ffffff !important;
   }
 }
+
+/* ---- visitor modes --------------------------------------------------------
+   <html data-mode> is set before first paint. Sections are re-ordered and
+   revealed with CSS only, so switching modes never shifts the layout or
+   re-fetches anything. */
+[data-mode-only] {
+  display: none !important;
+}
+html[data-mode="overview"] [data-mode-only~="overview"],
+html[data-mode="recruiter"] [data-mode-only~="recruiter"],
+html[data-mode="technical"] [data-mode-only~="technical"],
+html[data-mode="student"] [data-mode-only~="student"],
+html[data-mode="explorer"] [data-mode-only~="explorer"],
+html[data-mode="conversation"] [data-mode-only~="conversation"] {
+  display: revert !important;
+}
+html[data-mode="overview"] [data-mode-hide~="overview"],
+html[data-mode="recruiter"] [data-mode-hide~="recruiter"],
+html[data-mode="technical"] [data-mode-hide~="technical"],
+html[data-mode="student"] [data-mode-hide~="student"],
+html[data-mode="explorer"] [data-mode-hide~="explorer"],
+html[data-mode="conversation"] [data-mode-hide~="conversation"] {
+  display: none !important;
+}
+
+/* default order (overview) */
+.home-sections > [data-section="hero"] { order: 0; }
+.home-sections > [data-section="chat"] { order: 1; }
+.home-sections > [data-section="recruiter"],
+.home-sections > [data-section="architecture"],
+.home-sections > [data-section="learning"],
+.home-sections > [data-section="all-projects"] { order: 2; }
+.home-sections > [data-section="highlights"] { order: 10; }
+.home-sections > [data-section="ask"] { order: 20; }
+.home-sections > [data-section="expertise"] { order: 30; }
+.home-sections > [data-section="featured"] { order: 40; }
+.home-sections > [data-section="explore"] { order: 50; }
+.home-sections > [data-section="cta"] { order: 60; }
+
+/* recruiter: brief → highlights → navigation → projects */
+html[data-mode="recruiter"] .home-sections > [data-section="explore"] { order: 11; }
+html[data-mode="recruiter"] .home-sections > [data-section="featured"] { order: 12; }
+html[data-mode="recruiter"] .home-sections > [data-section="expertise"] { order: 45; }
+/* technical: architecture → featured systems → expertise */
+html[data-mode="technical"] .home-sections > [data-section="featured"] { order: 3; }
+html[data-mode="technical"] .home-sections > [data-section="expertise"] { order: 4; }
+/* student: learning path → assistant → expertise */
+html[data-mode="student"] .home-sections > [data-section="ask"] { order: 3; }
+html[data-mode="student"] .home-sections > [data-section="expertise"] { order: 4; }
+/* explorer: all projects → navigation */
+html[data-mode="explorer"] .home-sections > [data-section="explore"] { order: 3; }
+/* conversation: chat right after the hero */
+html[data-mode="conversation"] .home-sections > [data-section="highlights"] { order: 15; }
+
+/* project pages: summary vs detailed view */
+[data-view="summary"] [data-detail] {
+  display: none !important;
+}

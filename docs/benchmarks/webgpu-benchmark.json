@@ -1,0 +1,24 @@
+{
+  "base": "http://localhost:3000",
+  "browser": "msedge.exe",
+  "runAt": "2026-11-06T11:42:34.314Z",
+  "raw": [
+    {
+      "modelId": "Qwen2.5-0.5B-Instruct-q4f16_1-MLC",
+      "runs": [],
+      "loadMs": 27342,
+      "error": "generation hung (no completion within 120 s)",
+      "adapter": null
+    },
+    {
+      "modelId": "Qwen2.5-0.5B-Instruct-q4f32_1-MLC",
+      "runs": [],
+      "loadMs": 32805,
+      "error": "generation hung (no completion within 120 s)",
+      "adapter": null
+    }
+  ],
+  "app": null,
+  "browserVersion": "Edg/156.0.4314.58",
+  "consoleErrors": []
+}

@@ -24,7 +24,8 @@ export const ProfileSchema = z.object({
   location: z.string(),
   availability: z.string(),
   currently: z.array(z.object({ label: z.string(), detail: z.string(), href: sitePath })),
-  photo: z.object({ src: sitePath, alt: z.string().min(1) }),
+  /** src: null shows the placeholder until a photo is approved in the Photo Studio. */
+  photo: z.object({ src: sitePath.nullable(), alt: z.string().min(1) }),
   email: z.email(),
   socials: z.object({ github: z.url(), linkedin: z.url() }),
   resume: z.object({ file: urlOrPath, fileName: z.string(), updated: yearMonth }),

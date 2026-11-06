@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { ProfilePhoto } from "@/components/profile-photo";
 import { ArrowRight, Compass, Languages, MapPin, Target } from "lucide-react";
 import { profile } from "@/lib/content";
 import { Reveal } from "@/components/reveal";
@@ -29,7 +29,7 @@ export default function AboutPage() {
         <Reveal>
           <div className="card overflow-hidden lg:sticky lg:top-24">
             <div className="relative aspect-square bg-elev">
-              <Image src={profile.photo.src} alt={profile.photo.alt} fill sizes="(max-width: 1024px) 100vw, 320px" className="scale-[1.04] object-cover" />
+              <ProfilePhoto src={profile.photo.src} alt={profile.photo.alt} initials="AC" sizes="(max-width: 1024px) 100vw, 320px" />
             </div>
             <div className="space-y-3 p-5 text-sm">
               <p className="font-display text-lg font-semibold text-fg">{profile.name}</p>

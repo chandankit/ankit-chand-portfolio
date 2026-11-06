@@ -1,0 +1,125 @@
+{
+  "welcome": "Hi! Welcome to Ankit's AI-powered portfolio. I'm the portfolio assistant — ask me about Ankit's professional journey, data-science experience, generative-AI and agentic-AI projects, skills, certifications or career opportunities. Every answer is grounded in the portfolio and links to its source.",
+  "personas": [
+    {
+      "id": "recruiter",
+      "label": "Recruiter / Hiring manager",
+      "short": "Recruiter",
+      "icon": "briefcase",
+      "description": "Experience, fit and how to get in touch.",
+      "style": "Be concise and factual. Lead with experience and outcomes, then point to the resume or contact page.",
+      "agents": { "recruiter": 0.25, "profile": 0.15 },
+      "suggestions": ["Give me a quick professional summary", "How many years of experience does he have?", "Which roles fit his experience?", "Is Ankit available for opportunities?", "Can I download his resume?"]
+    },
+    {
+      "id": "data-science",
+      "label": "Data science enthusiast",
+      "short": "Data science",
+      "icon": "chart",
+      "description": "Analytics, forecasting and classic ML work.",
+      "style": "Explain the data-science approach clearly, naming the techniques used.",
+      "agents": { "technical": 0.15, "projects": 0.15 },
+      "suggestions": ["What data-science projects has he done?", "How did he approach the forecasting internship?", "What EDA and statistics work is in his portfolio?", "Which Python data libraries does he use?"]
+    },
+    {
+      "id": "ml",
+      "label": "Machine learning professional",
+      "short": "ML",
+      "icon": "brain",
+      "description": "Models, evaluation and feature engineering.",
+      "style": "Be technical: models, features, evaluation metrics and trade-offs.",
+      "agents": { "technical": 0.2, "projects": 0.1 },
+      "suggestions": ["Which ML algorithms has he worked with?", "Does he have experience with XGBoost?", "How does he handle feature engineering?", "What is his approach to model evaluation?"]
+    },
+    {
+      "id": "genai",
+      "label": "Generative AI engineer",
+      "short": "GenAI",
+      "icon": "sparkles",
+      "description": "LLMs, RAG, embeddings and prompting.",
+      "style": "Be technical about LLM application design, grounding and evaluation.",
+      "agents": { "technical": 0.15, "projects": 0.15 },
+      "suggestions": ["What generative-AI projects has he built?", "Does he have RAG experience?", "Which LLMs and frameworks has he used?", "How does he use embeddings and vector search?"]
+    },
+    {
+      "id": "agentic",
+      "label": "Agentic AI developer",
+      "short": "Agentic AI",
+      "icon": "network",
+      "description": "Multi-agent orchestration, tools and guardrails.",
+      "style": "Go deep on architecture: orchestration, routing, tool calling, guardrails, memory and testing.",
+      "agents": { "projects": 0.2, "technical": 0.1 },
+      "suggestions": ["Explain his multi-agent architecture", "What is his experience with Microsoft AutoGen?", "How does NexusAI route requests to agents?", "How does he test agents without API keys?"]
+    },
+    {
+      "id": "student",
+      "label": "Student / learner",
+      "short": "Student",
+      "icon": "graduation",
+      "description": "Learning path, concepts and career advice.",
+      "style": "Explain concepts simply, using Ankit's real projects as examples, and mention the courses behind them.",
+      "agents": { "technical": 0.1, "profile": 0.1 },
+      "suggestions": ["How did Ankit move into generative AI?", "Explain RAG using one of his projects", "What certifications has he completed?", "Which projects would you study first?"]
+    },
+    {
+      "id": "collaborator",
+      "label": "Technical collaborator",
+      "short": "Collaborator",
+      "icon": "code",
+      "description": "Capabilities and shared-interest areas.",
+      "style": "Focus on technical capabilities, relevant projects and how to start a collaboration.",
+      "agents": { "projects": 0.15, "recruiter": 0.05 },
+      "suggestions": ["What are his strongest technical areas?", "Which projects are closest to multi-agent systems?", "What open-source work can I look at?", "How can we collaborate?"]
+    },
+    {
+      "id": "freelance",
+      "label": "Freelance / consulting enquiry",
+      "short": "Freelance",
+      "icon": "rocket",
+      "description": "What he can build and how to engage.",
+      "style": "Explain what kinds of projects he can deliver, grounded in his past work, and point to the contact page.",
+      "agents": { "recruiter": 0.2, "projects": 0.1 },
+      "suggestions": ["What kinds of AI projects can he build?", "Can we discuss a consulting or freelance project?", "Has he built RAG or chatbot systems?", "How do I contact him?"]
+    },
+    {
+      "id": "explore",
+      "label": "Just exploring",
+      "short": "Explore",
+      "icon": "compass",
+      "description": "A guided tour of the portfolio.",
+      "style": "Be friendly and brief, and suggest where to look next.",
+      "agents": {},
+      "suggestions": ["Who is Ankit Chand?", "Show me his most interesting AI projects", "What certifications has he completed?", "How can I contact him?"]
+    }
+  ],
+  "facts": [
+    {
+      "id": "availability",
+      "title": "Availability for opportunities",
+      "text": "Ankit is open to full-time Data Scientist, Generative AI Engineer and Agentic AI roles, and to collaboration or freelance projects. The quickest way to reach him is the contact page or LinkedIn.",
+      "url": "/contact",
+      "tags": ["available", "hiring", "opportunity", "job", "role", "open to work", "freelance", "consulting"]
+    },
+    {
+      "id": "freelance",
+      "title": "Freelance and consulting",
+      "text": "For freelance or consulting work, Ankit can help with LLM applications, retrieval-augmented generation, multi-agent prototypes and machine-learning models — the same kinds of systems shown in his projects. Use the contact form and choose \"Freelance / project\" as the enquiry type.",
+      "url": "/contact",
+      "tags": ["freelance", "consulting", "contract", "project", "hire", "engagement"]
+    },
+    {
+      "id": "private-repos",
+      "title": "Access to private project code",
+      "text": "The source code for NexusAI, IntelliHub and the 2024–25 generative-AI builds is in private repositories. Ankit is happy to walk through the code or run a live demo on a call — request one from the project page or the contact page. Nine machine-learning case studies are public on GitHub.",
+      "url": "/projects",
+      "tags": ["github", "source code", "repository", "demo", "walkthrough", "private"]
+    },
+    {
+      "id": "assistant",
+      "title": "How this assistant works",
+      "text": "This assistant is a small multi-agent system built for the portfolio: an orchestrator routes each question to specialist agents (profile, technical, projects, recruitment, navigation), a hybrid keyword and embedding retriever finds evidence on this site, and a validator checks every answer against that evidence. It uses only open-source models — embeddings run in your browser, and optional answers come from an open-weight language model running on your own device. No paid AI API is used.",
+      "url": "/ask",
+      "tags": ["assistant", "chatbot", "how do you work", "model", "open source", "privacy"]
+    }
+  ]
+}

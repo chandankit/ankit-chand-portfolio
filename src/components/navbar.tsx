@@ -3,12 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, Menu, Search, X } from "lucide-react";
+import { ChevronDown, Menu, Search, Sparkles, X } from "lucide-react";
 import { credentialsNav, primaryNav } from "@/lib/site";
 import { cn } from "@/lib/format";
 import { ThemeToggle } from "./theme-toggle";
 import { usePalette } from "./command-palette";
 import { GitHubIcon, LinkedInIcon } from "./icons";
+import { ModeSwitcher } from "./modes";
+import { useAssistant } from "./assistant/assistant-provider";
 
 function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
@@ -17,6 +19,7 @@ function isActive(pathname: string, href: string) {
 export function Navbar({ name, github, linkedin }: { name: string; github: string; linkedin: string }) {
   const pathname = usePathname();
   const { open: openPalette } = usePalette();
+  const { setOpen: openAssistant } = useAssistant();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [credOpen, setCredOpen] = useState(false);
@@ -55,7 +58,7 @@ export function Navbar({ name, github, linkedin }: { name: string; github: strin
 
   const credActive = credentialsNav.some((n) => isActive(pathname, n.href));
   const linkCls = (active: boolean) =>
-    cn("rounded-full px-3 py-1.5 text-sm font-medium transition-colors", active ? "bg-surface-strong text-fg" : "text-muted hover:text-fg");
+    cn("whitespace-nowrap rounded-full px-2.5 py-1.5 text-sm font-medium transition-colors xl:px-3", active ? "bg-surface-strong text-fg" : "text-muted hover:text-fg");
 
   return (
     <header className="no-print fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-4">
@@ -70,7 +73,7 @@ export function Navbar({ name, github, linkedin }: { name: string; github: strin
       >
         <Link href="/" className="group flex items-center gap-2.5">
           <span aria-hidden className="grid size-8 place-items-center rounded-full bg-gradient-brand font-display text-sm font-bold text-[#0b1222]">AC</span>
-          <span className="font-display text-sm font-semibold tracking-tight text-fg max-sm:sr-only">{name}</span>
+          <span className="whitespace-nowrap font-display text-sm font-semibold tracking-tight text-fg max-sm:sr-only lg:max-xl:sr-only">{name}</span>
           <span className="sr-only"> — home</span>
         </Link>
 
@@ -118,12 +121,20 @@ export function Navbar({ name, github, linkedin }: { name: string; github: strin
             aria-label="Search the portfolio, Ctrl K" title="Search (Ctrl / ⌘ K)"
           >
             <Search className="size-4" aria-hidden />
-            <kbd className="hidden font-mono text-[0.65rem] xl:inline">Ctrl K</kbd>
           </button>
+          <ModeSwitcher className="hidden md:block" compact />
           <ThemeToggle />
+          <button
+            type="button"
+            onClick={() => openAssistant(true)}
+            className="hidden h-9 items-center gap-1.5 whitespace-nowrap rounded-full border border-indigo/40 bg-indigo/10 px-3 text-xs font-semibold text-indigo transition hover:bg-indigo/20 md:inline-flex lg:hidden"
+            aria-label="Ask about Ankit — open the AI assistant"
+          >
+            <Sparkles className="size-3.5" aria-hidden /> Ask AI
+          </button>
           <Link
             href="/contact"
-            className="hidden rounded-full bg-gradient-brand px-4 py-2 text-sm font-semibold text-white dark:text-[#0b1222] transition hover:brightness-110 sm:inline-flex"
+            className="hidden whitespace-nowrap rounded-full bg-gradient-brand px-4 py-2 text-sm font-semibold text-white dark:text-[#0b1222] transition hover:brightness-110 sm:inline-flex"
           >
             Let&apos;s connect
           </Link>
@@ -161,6 +172,10 @@ export function Navbar({ name, github, linkedin }: { name: string; github: strin
                 </li>
               ))}
             </ul>
+            <div className="mt-3 flex items-center justify-between gap-2 border-t border-line px-2 pt-3">
+              <span className="text-xs text-subtle">Presentation</span>
+              <ModeSwitcher />
+            </div>
             <div className="mt-3 flex items-center gap-2 border-t border-line px-2 pt-3">
               <a href={github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-full border border-line px-3 py-2 text-sm text-muted">
                 <GitHubIcon className="size-4" /> GitHub

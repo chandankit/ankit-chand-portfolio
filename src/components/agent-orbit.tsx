@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ProfilePhoto } from "./profile-photo";
 
 const NODES = [
   { label: "Routing", tone: "var(--indigo)" },
@@ -17,7 +17,7 @@ const NODES = [
  * nod to the multi-agent systems in the portfolio. Pure CSS animation; it
  * stops automatically for visitors who prefer reduced motion.
  */
-export function AgentOrbit({ src, alt }: { src: string; alt: string }) {
+export function AgentOrbit({ src, alt }: { src: string | null; alt: string }) {
   const R = 41; // orbit radius in % of the box
   return (
     <div className="relative mx-auto aspect-square w-full max-w-[min(440px,88vw)]">
@@ -69,7 +69,7 @@ export function AgentOrbit({ src, alt }: { src: string; alt: string }) {
       {/* the orchestrator */}
       <div className="absolute inset-[27%] rounded-full p-[3px] bg-gradient-brand shadow-[0_20px_60px_-20px_rgba(99,102,241,0.6)]">
         <div className="relative size-full overflow-hidden rounded-full bg-elev">
-          <Image src={src} alt={alt} fill priority sizes="(max-width: 640px) 50vw, 240px" className="scale-[1.04] object-cover" />
+          <ProfilePhoto src={src} alt={alt} initials="AC" priority sizes="(max-width: 640px) 50vw, 240px" />
         </div>
       </div>
     </div>
