@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Award, BookOpen, Briefcase, Download, FileText, GraduationCap, Layers, Mail, MapPin, Sparkles, Trophy } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Award, BookOpen, Bot, Briefcase, FlaskConical, MessageSquareText, Download, FileText, GraduationCap, Layers, Mail, MapPin, Sparkles, Trophy } from "lucide-react";
 import { certifications, education, experience, featuredProjects, milestones, profile, projects, skillCategories } from "@/lib/content";
 import { getArticles } from "@/lib/articles";
+import { agents } from "@/lib/agents";
 import { formatYearMonth } from "@/lib/format";
 import { AgentOrbit } from "@/components/agent-orbit";
 import { RotatingRole } from "@/components/rotating-role";
@@ -27,12 +28,16 @@ export default function HomePage() {
   const explore = [
     { href: "/experience", icon: Briefcase, title: "Experience", body: `${latest.role} · ${latest.company}`, meta: `${experience.length} roles since 2021` },
     { href: "/projects", icon: Layers, title: "Projects", body: `${projects.length} case studies — multi-agent platforms to deep learning`, meta: `${publicRepos} with public code` },
+    { href: "/agents", icon: Bot, title: "Agents", body: "Every agent built — live, tested and prototype — and how each works", meta: `${agents.length} agents · ${agents.filter((a) => a.system.status === "live").length} live here` },
     { href: "/skills", icon: Sparkles, title: "Skills", body: skillCategories.map((c) => c.title.split(" ")[0]).join(" · "), meta: `${skillCount} skills, each linked to evidence` },
     { href: "/certifications", icon: Award, title: "Certifications", body: "Anthropic Academy, Udemy and Great Learning", meta: `${completedCerts} completed${inProgressCerts ? ` · ${inProgressCerts} in progress` : ""}` },
     { href: "/education", icon: GraduationCap, title: "Education", body: education.map((e) => e.institution.split(",")[0]).join(" · "), meta: latestDegree ? `${latestDegree.qualification.replace("Post Graduate Diploma", "PG Diploma")} · ${latestDegree.period.replace(/^Completed\s+/, "")}` : `${education.length} qualifications` },
     { href: "/achievements", icon: Trophy, title: "Achievements", body: milestones[0]?.title ?? "", meta: `${milestones.length} milestones` },
     { href: "/knowledge", icon: BookOpen, title: "Knowledge", body: notes[0]?.title ?? "Engineering notes", meta: `${notes.length} engineering notes` },
+    { href: "/lab", icon: FlaskConical, title: "AI Lab", body: "Live retrieval inspector and measured open-model comparisons", meta: "Runs in your browser" },
+    { href: "/ask", icon: MessageSquareText, title: "Ask about Ankit", body: "Questions answered from this site, with sources", meta: "Open-source models only" },
     { href: "/resume", icon: FileText, title: "Resume", body: "Preview online or download the PDF", meta: `Updated ${formatYearMonth(profile.resume.updated)}` },
+    { href: "/contact", icon: Mail, title: "Contact", body: "Roles, freelance work or collaboration", meta: "Email · LinkedIn · form" },
   ];
 
   return (

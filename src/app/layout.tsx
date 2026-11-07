@@ -15,6 +15,7 @@ import { MODE_BOOT_SCRIPT } from "@/lib/modes";
 import { AssistantProvider } from "@/components/assistant/assistant-provider";
 import { AssistantPanel } from "@/components/assistant/assistant-panel";
 import { PointerEffects } from "@/components/pointer-effects";
+import { Toaster } from "@/components/toaster";
 
 const sora = Sora({ subsets: ["latin"], variable: "--font-sora", display: "swap" });
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -68,7 +69,7 @@ const personLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`dark ${sora.variable} ${inter.variable} ${jetbrains.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${sora.variable} ${inter.variable} ${jetbrains.variable}`} suppressHydrationWarning>
       <head>
         {/* Enables scroll-reveal start states only when JavaScript runs (progressive enhancement). */}
         <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add('js');${MODE_BOOT_SCRIPT}` }} />
@@ -91,6 +92,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Footer />
             <BackToTop />
             <AssistantPanel />
+            <Toaster />
           </CommandPaletteProvider>
           </AssistantProvider>
           </ModeProvider>

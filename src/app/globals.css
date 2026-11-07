@@ -1,14 +1,19 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
+/* Every theme with a dark colour scheme activates Tailwind's dark: variant (see src/lib/themes.ts). */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *, [data-theme=midnight], [data-theme=midnight] *, [data-theme=aurora], [data-theme=aurora] *, [data-theme=neon], [data-theme=neon] *, [data-theme=contrast], [data-theme=contrast] *));
 
 /* ---------------------------------------------------------------------------
-   Design tokens
+   Design tokens — one complete set per theme (src/lib/themes.ts lists them).
+   Applied through <html data-theme="…">, set before first paint by next-themes.
    Dark is the signature theme (deep navy); light is a warm paper theme.
    Cool accents (teal / sky / indigo) carry "AI & data"; the warm accent
    (amber) marks people-facing highlights and calls to action.
 --------------------------------------------------------------------------- */
-:root {
+:root,
+[data-theme="light"] {
+  --radius-card: 1.25rem;
+  --display-face: var(--font-sora);
   /* Single-series chart hue, validated (dataviz validator) against both surfaces. */
   --chart-1: #4f46e5;
   --bg: #f6f5f1;
@@ -37,7 +42,9 @@
   color-scheme: light;
 }
 
-.dark {
+[data-theme="dark"] {
+  --radius-card: 1.25rem;
+  --display-face: var(--font-sora);
   --chart-1: #7c83f5;
   --bg: #070b16;
   --bg-elev: #0c1222;
@@ -65,6 +72,134 @@
   color-scheme: dark;
 }
 
+/* Midnight — near-black, electric blue and violet, deeper glow. */
+[data-theme="midnight"] {
+  --radius-card: 1.25rem;
+  --display-face: var(--font-sora);
+  --chart-1: #5b7cf2;
+  --bg: #02040a;
+  --bg-elev: #070a14;
+  --surface: rgba(148, 163, 255, 0.045);
+  --surface-strong: rgba(148, 163, 255, 0.09);
+  --line: rgba(148, 163, 255, 0.13);
+  --line-strong: rgba(148, 163, 255, 0.24);
+  --fg: #eef2ff;
+  --muted: #aab4d6;
+  --subtle: #9099c0;
+  --teal: #67e8f9;
+  --sky: #93c5fd;
+  --indigo: #b4c0ff;
+  --amber: #fcd34d;
+  --rose: #f9a8d4;
+  --ring: #93c5fd;
+  --grad-a: #60a5fa;
+  --grad-b: #a78bfa;
+  --grad-c: #f0abfc;
+  --shadow: 0 1px 1px rgba(0, 0, 0, 0.45), 0 24px 48px -20px rgba(37, 99, 235, 0.38);
+  --orb-1: rgba(59, 130, 246, 0.24);
+  --orb-2: rgba(139, 92, 246, 0.2);
+  --orb-3: rgba(14, 165, 233, 0.08);
+  --grid: rgba(148, 163, 255, 0.05);
+  color-scheme: dark;
+}
+
+/* Aurora — deep teal night, northern-lights gradients, ambient colour, softer corners. */
+[data-theme="aurora"] {
+  --radius-card: 1.5rem;
+  --display-face: var(--font-sora);
+  --chart-1: #1fa97a;
+  --bg: #041318;
+  --bg-elev: #071d24;
+  --surface: rgba(167, 243, 208, 0.05);
+  --surface-strong: rgba(167, 243, 208, 0.095);
+  --line: rgba(167, 243, 208, 0.13);
+  --line-strong: rgba(167, 243, 208, 0.24);
+  --fg: #ecfdf5;
+  --muted: #a9c7bf;
+  --subtle: #90b2a9;
+  --teal: #34d399;
+  --sky: #67e8f9;
+  --indigo: #d8b4fe;
+  --amber: #fde68a;
+  --rose: #f9a8d4;
+  --ring: #67e8f9;
+  --grad-a: #34d399;
+  --grad-b: #22d3ee;
+  --grad-c: #e879f9;
+  --shadow: 0 1px 1px rgba(0, 0, 0, 0.35), 0 24px 50px -22px rgba(16, 185, 129, 0.36);
+  --orb-1: rgba(52, 211, 153, 0.26);
+  --orb-2: rgba(232, 121, 249, 0.2);
+  --orb-3: rgba(34, 211, 238, 0.18);
+  --grid: rgba(167, 243, 208, 0.045);
+  color-scheme: dark;
+}
+
+/* Cyber Neon — terminal display type, sharp edges, neon signal colours. */
+[data-theme="neon"] {
+  --radius-card: 0.5rem;
+  --display-face: var(--font-jetbrains);
+  --chart-1: #0ea2bd;
+  --bg: #07020f;
+  --bg-elev: #0e0620;
+  --surface: rgba(34, 229, 255, 0.045);
+  --surface-strong: rgba(34, 229, 255, 0.09);
+  --line: rgba(34, 229, 255, 0.2);
+  --line-strong: rgba(255, 79, 216, 0.42);
+  --fg: #f2f7ff;
+  --muted: #b9bce0;
+  --subtle: #a1a5cc;
+  --teal: #22e5ff;
+  --sky: #7df9ff;
+  --indigo: #ff8ae6;
+  --amber: #d4ff3b;
+  --rose: #ff4fd8;
+  --ring: #22e5ff;
+  --grad-a: #22e5ff;
+  --grad-b: #ff4fd8;
+  --grad-c: #d4ff3b;
+  --shadow: 0 0 0 1px rgba(34, 229, 255, 0.08), 0 18px 40px -18px rgba(255, 79, 216, 0.4);
+  --orb-1: rgba(255, 79, 216, 0.17);
+  --orb-2: rgba(34, 229, 255, 0.15);
+  --orb-3: rgba(212, 255, 59, 0.06);
+  --grid: rgba(34, 229, 255, 0.07);
+  color-scheme: dark;
+}
+
+/* High contrast — black, white and yellow; no ambient colour; thicker focus rings. */
+[data-theme="contrast"] {
+  --radius-card: 1rem;
+  --display-face: var(--font-sora);
+  /* Deliberately outside the palette lightness band: in high-contrast mode legibility wins. */
+  --chart-1: #ffd60a;
+  --bg: #000000;
+  --bg-elev: #0b0b0b;
+  --surface: rgba(255, 255, 255, 0.07);
+  --surface-strong: rgba(255, 255, 255, 0.14);
+  --line: rgba(255, 255, 255, 0.5);
+  --line-strong: rgba(255, 255, 255, 0.8);
+  --fg: #ffffff;
+  --muted: #f0f0f0;
+  --subtle: #dadada;
+  --teal: #5cffe0;
+  --sky: #9be3ff;
+  --indigo: #ffd60a;
+  --amber: #ffd60a;
+  --rose: #ffa6d2;
+  --ring: #ffd60a;
+  --grad-a: #ffffff;
+  --grad-b: #ffd60a;
+  --grad-c: #ffffff;
+  --shadow: none;
+  --orb-1: transparent;
+  --orb-2: transparent;
+  --orb-3: transparent;
+  --grid: transparent;
+  color-scheme: dark;
+}
+[data-theme="contrast"] :focus-visible {
+  outline-width: 3px;
+}
+
 @theme inline {
   --color-bg: var(--bg);
   --color-elev: var(--bg-elev);
@@ -81,7 +216,7 @@
   --color-amber: var(--amber);
   --color-rose: var(--rose);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-sora), var(--font-inter), ui-sans-serif, sans-serif;
+  --font-display: var(--display-face), var(--font-inter), ui-sans-serif, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
 }
 
@@ -137,7 +272,7 @@ body {
 @utility card {
   background: color-mix(in oklab, var(--bg-elev) 70%, transparent);
   border: 1px solid var(--line);
-  border-radius: 1.25rem;
+  border-radius: var(--radius-card);
   box-shadow: var(--shadow);
 }
 
@@ -318,7 +453,7 @@ body {
 .neural-field[data-ready] {
   opacity: 0.85;
 }
-html:not(.dark) .neural-field[data-ready] {
+[data-theme="light"] .neural-field[data-ready] {
   opacity: 0.5;
 }
 @media (max-width: 1023px) {
@@ -531,10 +666,14 @@ dialog::backdrop {
 /* Printing always uses the light palette on white paper, whatever the theme. */
 @media print {
   :root,
-  .dark {
+  [data-theme] {
     --bg: #ffffff;
     --bg-elev: #ffffff;
     --fg: #0b1222;
+    --muted: #4a5470;
+    --subtle: #5d6680;
+    --line: rgba(15, 23, 42, 0.1);
+    --display-face: var(--font-sora);
     color-scheme: light;
   }
   /* next-themes sets an inline color-scheme on <html>; override it so the
@@ -613,4 +752,23 @@ html[data-mode="conversation"] .home-sections > [data-section="highlights"] { or
 }
 .js [data-reveal]:not([data-revealed]) .evidence-bar {
   transform: scaleX(0);
+}
+
+/* ---- theme switch cross-fade (View Transitions API; theme-switcher.tsx) ---- */
+/* The new theme is revealed as a circle growing from where the visitor clicked. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  animation: theme-reveal 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0 at var(--vt-x, 100%) var(--vt-y, 0));
+  }
+  to {
+    clip-path: circle(150vmax at var(--vt-x, 100%) var(--vt-y, 0));
+  }
 }

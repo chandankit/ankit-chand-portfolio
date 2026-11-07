@@ -5,9 +5,9 @@
  * shared orchestrator.
  */
 import type { KnowledgePayload } from "../server-kb.ts";
-import type { Answer, AgentEvent, ChatTurn, LlmEngine, LlmRequest, LlmResult, Persona } from "../types.ts";
+import type { Answer, AgentEvent, ChatTurn, LlmEngine, LlmRequest, LlmResult, Persona, ScoredChunk } from "../types.ts";
 import { FlatDenseIndex, HybridRetriever, type EmbeddingFile } from "../retriever.ts";
-import { SemanticRouter } from "../router.ts";
+import { SemanticRouter, type RoutePlan } from "../router.ts";
 import { knownTerms } from "../kb.ts";
 import { answerQuestion } from "../orchestrator.ts";
 import { BrowserEmbedder } from "./embedder.ts";
@@ -17,6 +17,18 @@ export type AssistantRuntime = {
   payload: KnowledgePayload;
   embedder: BrowserEmbedder;
   ask(question: string, history: ChatTurn[], opts: { llm: LlmEngine | null; persona: Persona | null; onEvent?: (e: AgentEvent) => void; signal?: AbortSignal }): Promise<Answer>;
+  /** Retrieval internals for the AI Lab: the same retriever and router the assistant uses. */
+  inspect(query: string): Promise<RetrievalInspection>;
+};
+
+export type RetrievalInspection = {
+  hybrid: ScoredChunk[];
+  keyword: ScoredChunk[];
+  route: RoutePlan;
+  dense: boolean;
+  embedMs: number;
+  searchMs: number;
+  chunks: number;
 };
 
 let runtimePromise: Promise<AssistantRuntime> | null = null;
@@ -40,6 +52,20 @@ export function loadRuntime(): Promise<AssistantRuntime> {
     return {
       payload,
       embedder,
+      inspect: async (query) => {
+        const t0 = performance.now();
+        let qVec: Float32Array | null = null;
+        try {
+          qVec = await embedder.embed(query);
+        } catch {
+          qVec = null; // keyword retrieval still works
+        }
+        const t1 = performance.now();
+        const hybrid = retriever.retrieve(query, qVec, { k: 8 });
+        const keyword = retriever.retrieve(query, null, { k: 8 });
+        const route = router.route(query, qVec, hybrid, null);
+        return { hybrid, keyword, route, dense: !!qVec, embedMs: t1 - t0, searchMs: performance.now() - t1, chunks: payload.chunks.length };
+      },
       ask: (question, history, opts) =>
         answerQuestion(question, history, {
           retriever,

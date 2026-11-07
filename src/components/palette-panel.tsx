@@ -3,11 +3,15 @@
 import { Command } from "cmdk";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Award, BookOpen, Briefcase, CornerDownLeft, FileText, GraduationCap, Layers, Search, Sparkles } from "lucide-react";
+import { Award, BookOpen, Bot, Briefcase, CornerDownLeft, FileText, GraduationCap, Layers, Palette, Search, Sparkles } from "lucide-react";
+import { useTheme } from "next-themes";
+import { toast } from "./toaster";
 import type { SearchEntry } from "@/lib/search-index";
 
 const groupIcon: Record<SearchEntry["group"], typeof Search> = {
   Pages: FileText,
+  Agents: Bot,
+  Themes: Palette,
   Projects: Layers,
   Experience: Briefcase,
   Skills: Sparkles,
@@ -15,7 +19,7 @@ const groupIcon: Record<SearchEntry["group"], typeof Search> = {
   Education: GraduationCap,
   Notes: BookOpen,
 };
-const groupOrder: SearchEntry["group"][] = ["Pages", "Projects", "Experience", "Skills", "Certifications", "Education", "Notes"];
+const groupOrder: SearchEntry["group"][] = ["Pages", "Agents", "Projects", "Experience", "Skills", "Certifications", "Education", "Notes", "Themes"];
 
 /**
  * Whole-term matching instead of cmdk's default fuzzy subsequence scoring,
@@ -48,6 +52,7 @@ export function PalettePanel({ onClose }: { onClose: () => void }) {
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const { setTheme } = useTheme();
 
   useEffect(() => {
     let alive = true;
@@ -67,8 +72,13 @@ export function PalettePanel({ onClose }: { onClose: () => void }) {
     return groupOrder.filter((g) => m.has(g)).map((g) => [g, m.get(g)!] as const);
   }, [index]);
 
-  const go = (href: string) => {
+  const go = (href: string, title: string) => {
     onClose();
+    if (href.startsWith("theme:")) {
+      setTheme(href.slice(6));
+      toast(title);
+      return;
+    }
     router.push(href);
   };
 
@@ -81,7 +91,7 @@ export function PalettePanel({ onClose }: { onClose: () => void }) {
           autoFocus
           value={query}
           onValueChange={setQuery}
-          placeholder="Search projects, skills, certifications, notes…"
+          placeholder="Search agents, projects, skills, notes — or type “theme”…"
           className="h-14 w-full bg-transparent text-[0.95rem] text-fg outline-none placeholder:text-subtle"
         />
         <kbd className="hidden rounded border border-line px-1.5 py-0.5 font-mono text-[0.65rem] text-subtle sm:block">ESC</kbd>
@@ -103,7 +113,7 @@ export function PalettePanel({ onClose }: { onClose: () => void }) {
                   key={`${group}-${item.href}-${item.title}`}
                   value={`${item.title} ${item.subtitle} ${item.keywords} ${group}`}
                   keywords={[item.title]}
-                  onSelect={() => go(item.href)}
+                  onSelect={() => go(item.href, item.title)}
                   className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm"
                 >
                   <Icon className="size-4 shrink-0 text-indigo" aria-hidden />

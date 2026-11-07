@@ -1,0 +1,159 @@
+[
+  {
+    "id": "python",
+    "title": "Python",
+    "summary": "The working language of data and AI: data wrangling, modelling, services and agent orchestration.",
+    "evidence": [
+      { "label": "Python skill — 4 projects", "href": "/skills?q=Python" },
+      { "label": "NexusAI (asyncio orchestration)", "href": "/projects/nexusai" },
+      { "label": "UAC forecasting", "href": "/projects/uac-care-load-forecasting" }
+    ],
+    "resources": [{ "label": "The Python Tutorial (python.org)", "href": "https://docs.python.org/3/tutorial/" }]
+  },
+  {
+    "id": "statistics",
+    "title": "Statistics",
+    "summary": "Describing data, testing assumptions and quantifying uncertainty — the ground every model stands on.",
+    "evidence": [
+      { "label": "Statistical Analysis skill", "href": "/skills?q=Statistical%20Analysis" },
+      { "label": "Stationarity tests and walk-forward evaluation (UAC)", "href": "/projects/uac-care-load-forecasting" },
+      { "label": "Credit EDA case study", "href": "/projects/credit-eda" }
+    ],
+    "resources": [{ "label": "An Introduction to Statistical Learning (free book)", "href": "https://www.statlearning.com/" }]
+  },
+  {
+    "id": "machine-learning",
+    "title": "Machine Learning",
+    "summary": "Learning patterns from data — feature engineering, classical models and honest evaluation.",
+    "evidence": [
+      { "label": "Feature Engineering skill", "href": "/skills?q=Feature%20Engineering" },
+      { "label": "Telecom churn", "href": "/projects/telecom-churn" },
+      { "label": "Lead scoring", "href": "/projects/lead-scoring" },
+      { "label": "HackerEarth wind-power challenge", "href": "/projects/windy-day-power-prediction" }
+    ],
+    "resources": [{ "label": "scikit-learn user guide", "href": "https://scikit-learn.org/stable/user_guide.html" }]
+  },
+  {
+    "id": "deep-learning",
+    "title": "Deep Learning",
+    "summary": "Neural networks for images, sequences and language — from first principles to CNN/RNN architectures.",
+    "evidence": [
+      { "label": "Neural network from scratch (NumPy)", "href": "/projects/neural-network-from-scratch" },
+      { "label": "Eye for the Blind — image captioning", "href": "/projects/eye-for-the-blind" },
+      { "label": "Gesture recognition", "href": "/projects/gesture-recognition" }
+    ],
+    "resources": [
+      { "label": "Dive into Deep Learning (free book)", "href": "https://d2l.ai/" },
+      { "label": "PyTorch tutorials", "href": "https://pytorch.org/tutorials/" }
+    ]
+  },
+  {
+    "id": "nlp",
+    "title": "NLP",
+    "summary": "Turning text into structure and meaning — entity extraction, captioning, embeddings and retrieval.",
+    "evidence": [
+      { "label": "Search Intelligence Tool — entity extraction for e-commerce search", "href": "/projects/search-intelligence-tool" },
+      { "label": "Image captioning with attention", "href": "/projects/eye-for-the-blind" }
+    ],
+    "resources": [{ "label": "Speech and Language Processing (Jurafsky & Martin, draft)", "href": "https://web.stanford.edu/~jurafsky/slp3/" }]
+  },
+  {
+    "id": "generative-ai",
+    "title": "Generative AI",
+    "summary": "Applications built on generative models — grounded answers, structured extraction and code generation.",
+    "evidence": [
+      { "label": "RAG-Powered QA for Medical Research", "href": "/projects/rag-medical-research-qa" },
+      { "label": "Teachable metadata extractor", "href": "/projects/teachable-metadata-extractor" },
+      { "label": "Claude with Amazon Bedrock (course)", "href": "/certifications#anthropic-claude-with-bedrock" }
+    ],
+    "resources": [{ "label": "Hugging Face LLM course", "href": "https://huggingface.co/learn/llm-course" }]
+  },
+  {
+    "id": "llms",
+    "title": "LLMs",
+    "summary": "Choosing, prompting, measuring and serving large language models — including small open-weight ones.",
+    "evidence": [
+      { "label": "Open-weight models compared on one eval set (AI Lab)", "href": "/lab" },
+      { "label": "Large Language Models skill", "href": "/skills?q=Large%20Language%20Models" },
+      { "label": "IntelliHub (GPT-4o via AutoGen)", "href": "/projects/intellihub" }
+    ],
+    "resources": [{ "label": "llama.cpp — run open models locally", "href": "https://github.com/ggml-org/llama.cpp" }]
+  },
+  {
+    "id": "rag",
+    "title": "RAG",
+    "summary": "Retrieval-augmented generation: find the right evidence first, then let the model answer from it, with sources.",
+    "evidence": [
+      { "label": "Live retrieval inspector (hybrid BM25 + embeddings)", "href": "/lab" },
+      { "label": "Ask about Ankit — RAG over this site", "href": "/ask" },
+      { "label": "RAG-Powered QA for Medical Research (FAISS)", "href": "/projects/rag-medical-research-qa" }
+    ],
+    "resources": [
+      { "label": "LangChain RAG tutorial", "href": "https://python.langchain.com/docs/tutorials/rag/" },
+      { "label": "FAISS documentation", "href": "https://faiss.ai/" },
+      { "label": "Sentence-Transformers (embeddings)", "href": "https://www.sbert.net/" }
+    ]
+  },
+  {
+    "id": "agentic-ai",
+    "title": "Agentic AI",
+    "summary": "Systems where models plan, call tools and hand off to each other — made reliable with routing, caps, guardrails and tests.",
+    "evidence": [
+      { "label": "Agents directory — 29 agents", "href": "/agents" },
+      { "label": "Note: Routing before reasoning", "href": "/knowledge/routing-before-reasoning" },
+      { "label": "AutoGen agent teams (course)", "href": "/certifications#udemy-ai-agents-teams" }
+    ],
+    "resources": [
+      { "label": "Building effective agents (Anthropic)", "href": "https://www.anthropic.com/engineering/building-effective-agents" },
+      { "label": "Microsoft AutoGen documentation", "href": "https://microsoft.github.io/autogen/" }
+    ]
+  },
+  {
+    "id": "prompt-engineering",
+    "title": "Prompt Engineering",
+    "summary": "Writing instructions models follow reliably — and measuring whether they do.",
+    "evidence": [
+      { "label": "Prompt Engineering skill", "href": "/skills?q=Prompt%20Engineering" },
+      { "label": "Claude with Amazon Bedrock — prompt engineering & evaluation (course)", "href": "/certifications#anthropic-claude-with-bedrock" }
+    ],
+    "resources": [{ "label": "Prompt engineering overview (Anthropic docs)", "href": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" }]
+  },
+  {
+    "id": "fine-tuning",
+    "title": "Model Fine-Tuning",
+    "summary": "Adapting a pretrained model's weights to a task — full fine-tuning or parameter-efficient methods such as LoRA.",
+    "gap": "Not part of my project work yet — listed for completeness, with where I would start.",
+    "evidence": [],
+    "resources": [
+      { "label": "Hugging Face PEFT (LoRA and friends)", "href": "https://huggingface.co/docs/peft" },
+      { "label": "Fine-tuning with Transformers", "href": "https://huggingface.co/docs/transformers/training" }
+    ]
+  },
+  {
+    "id": "ai-infrastructure",
+    "title": "AI Infrastructure",
+    "summary": "Serving models and agents: APIs, streaming, containers and self-hosted inference.",
+    "evidence": [
+      { "label": "FastAPI + Server-Sent Events gateway (NexusAI)", "href": "/projects/nexusai" },
+      { "label": "Docker (IntelliHub)", "href": "/skills?q=Docker" },
+      { "label": "GCP model pipelines (Retisio)", "href": "/experience#retisio" }
+    ],
+    "resources": [
+      { "label": "FastAPI documentation", "href": "https://fastapi.tiangolo.com/" },
+      { "label": "transformers.js — models in the browser", "href": "https://huggingface.co/docs/transformers.js" }
+    ]
+  },
+  {
+    "id": "mlops-llmops",
+    "title": "MLOps & LLMOps",
+    "summary": "Keeping models and LLM systems correct over time: tests that run offline, evaluation sets and benchmarks.",
+    "evidence": [
+      { "label": "Note: Testing multi-agent systems without an API key", "href": "/knowledge/testing-multi-agent-systems-offline" },
+      { "label": "Model benchmarks and error analysis (AI Lab)", "href": "/lab" }
+    ],
+    "resources": [
+      { "label": "ml-ops.org", "href": "https://ml-ops.org/" },
+      { "label": "Your AI product needs evals (Hamel Husain)", "href": "https://hamel.dev/blog/posts/evals/" }
+    ]
+  }
+]

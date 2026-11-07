@@ -1,0 +1,330 @@
+{
+  "statuses": [
+    { "id": "live", "label": "Live", "description": "Running on this website now — you can try it." },
+    { "id": "complete", "label": "Complete · tested", "description": "Built end to end with an automated test suite that runs offline. Code is private; walkthrough on request." },
+    { "id": "prototype", "label": "Prototype", "description": "Earlier build (2024–25) from the specialization period — a working proof of concept. Code is private." }
+  ],
+  "categories": [
+    { "id": "product", "label": "Product", "description": "Deployed and used by real visitors." },
+    { "id": "personal", "label": "Personal", "description": "Independent multi-agent platforms, built and tested end to end." },
+    { "id": "learning", "label": "Learning & experimental", "description": "Earlier builds from the 2024–25 specialization that established the patterns used later." }
+  ],
+  "systems": [
+    {
+      "id": "ask-about-ankit",
+      "name": "Ask about Ankit",
+      "category": "product",
+      "status": "live",
+      "period": "2026",
+      "project": null,
+      "where": "This website — the assistant panel on every page and the full page at /ask.",
+      "problem": "Recruiters, engineers and students want specific answers about Ankit's work without reading every page — and must never be given an invented one.",
+      "framework": ["Custom TypeScript orchestrator", "transformers.js (in-browser embeddings)", "WebLLM (optional)", "llama.cpp server (optional, self-hosted)"],
+      "models": ["bge-small-en-v1.5 (embeddings)", "Qwen2.5-0.5B-Instruct (optional, open-weight)"],
+      "evidence": "Runs in your browser now. Every agent was exercised with real Qwen2.5-0.5B inference (21/22 scenarios passed) and is covered by automated tests — see the audit report in the repository.",
+      "code": { "visibility": "public", "url": "https://github.com/chandankit/ankit-chand-portfolio/tree/main/src/lib/assistant" },
+      "workflow": ["Deterministic guardrails refuse prompt injection, private-data requests and over-long input before anything else runs.", "The asking sentence is separated from context, and follow-ups inherit the entity being discussed.", "Hybrid retrieval: BM25 keyword search fused with bge-small embeddings over 209 chunks of this site's content.", "Hybrid routing (embedding similarity + keyword overlap + evidence type + the visitor's mode) picks one or two specialists; an optional model only breaks near-ties.", "Each specialist gathers evidence from its own scope.", "Instant mode composes a cited answer from the evidence; with a model enabled, one grounded generation writes it.", "The Response Validation Agent checks the draft and replaces it with the verified answer if anything is unsupported."],
+      "agents": [
+        {
+          "slug": "conversation-orchestrator",
+          "name": "Conversation Orchestrator",
+          "purpose": "Runs every turn: guardrails, question focus, follow-up resolution, routing, merging evidence and every fallback.",
+          "input": "The visitor's question, the last few turns and the selected interaction mode.",
+          "output": "A cited answer with source links, project/certification cards, actions and follow-up suggestions.",
+          "tags": ["orchestration"],
+          "tools": ["checkInput guardrails", "HybridRetriever", "SemanticRouter", "extractive composer"],
+          "guardrails": ["Injection and private-data refusals happen before retrieval", "Unknown named topics are declined, never improvised"],
+          "try": "Who is Ankit Chand?"
+        },
+        {
+          "slug": "professional-profile-agent",
+          "name": "Professional Profile Agent",
+          "purpose": "Background, employment history, education, certifications and milestones.",
+          "input": "Questions about roles, employers, dates, education and credentials.",
+          "output": "Facts quoted from the profile, experience, education and certification content, with sources.",
+          "tags": ["retrieval", "career"],
+          "try": "Which companies has he worked for?"
+        },
+        {
+          "slug": "technical-expertise-agent",
+          "name": "Technical Expertise Agent",
+          "purpose": "Skills, tools, ML/GenAI/agentic concepts and how he applies them.",
+          "input": "Questions about technologies, methods and where each skill was used.",
+          "output": "Skills with the projects that evidence them.",
+          "tags": ["retrieval"],
+          "try": "What are his strongest technical skills?"
+        },
+        {
+          "slug": "project-intelligence-agent",
+          "name": "Project Intelligence Agent",
+          "purpose": "Project objectives, architecture, agents, stack, results and links.",
+          "input": "Questions about projects; breadth-first (one source per project) when no project is named.",
+          "output": "Project summaries with stack, architecture links and whether the code is public.",
+          "tags": ["retrieval", "research"],
+          "try": "What multi-agent projects has he developed?"
+        },
+        {
+          "slug": "recruitment-assistant-agent",
+          "name": "Recruitment Assistant Agent",
+          "purpose": "Fit for roles, summaries for hiring, availability, resume and contact.",
+          "input": "Hiring and availability questions, often in Recruiter mode.",
+          "output": "A concise summary plus résumé download and contact actions.",
+          "tags": ["career"],
+          "try": "How can I contact him for a professional opportunity?"
+        },
+        {
+          "slug": "portfolio-navigation-agent",
+          "name": "Portfolio Navigation Agent",
+          "purpose": "Opens the page the visitor names (or a named project) — only that one opens automatically.",
+          "input": "Requests such as “open the certifications page” or “take me to NexusAI”.",
+          "output": "A navigation action that opens the page, plus related links.",
+          "tags": ["automation"],
+          "try": "Open the certifications page"
+        },
+        {
+          "slug": "response-validation-agent",
+          "name": "Response Validation Agent",
+          "purpose": "Fact-checks every model draft against the evidence — numbers, quantities, employers, names and citations — and replaces a failing draft with the verified answer.",
+          "input": "A model-written draft and the evidence it was given.",
+          "output": "The draft unchanged, or the verified instant answer with the reasons recorded.",
+          "tags": ["validation"],
+          "guardrails": ["Deterministic — no model checks another model", "A decline despite evidence, or an ignored “no information” caveat, also triggers replacement"],
+          "note": "Acts only when an AI model is enabled; instant answers are verified by construction."
+        }
+      ]
+    },
+    {
+      "id": "nexusai",
+      "name": "NexusAI",
+      "category": "personal",
+      "status": "complete",
+      "period": "2026",
+      "project": "nexusai",
+      "where": "NexusAI's Streamlit web app and Android client (Kotlin / Jetpack Compose) through a FastAPI + Server-Sent Events gateway.",
+      "problem": "One chat box should handle weather, news, knowledge, travel, finance, career, research and productivity requests — routed cheaply, grounded in tools, and guarded on the way in and out.",
+      "framework": ["Custom Python orchestration (asyncio)", "FastAPI + SSE", "Pydantic", "Streamlit"],
+      "models": ["GPT-4o (Azure OpenAI)"],
+      "evidence": "214 offline tests run against a deterministic mock LLM client (no API calls). Private repository.",
+      "code": { "visibility": "private" },
+      "workflow": ["Input guardrails: flood control, injection and toxicity checks, PII redaction.", "Four-stage hybrid router: keyword rules, follow-up context, a GPT-4o JSON classifier, then a fallback; low confidence becomes a clarifying question.", "Concurrent fan-out to one or more specialists; each runs a ReAct tool loop with an iteration cap (the final round runs without tools to force an answer).", "Answers merge into one stream through an asyncio queue and an aggregation step.", "Output guardrails: prompt-leak check, disclaimers and PII.", "Single-writer memory commit; typed events stream to the web and Android clients."],
+      "agents": [
+        {
+          "slug": "nexusai-master-orchestrator",
+          "name": "MasterOrchestrator",
+          "purpose": "Runs NexusAI's seven-stage pipeline on every turn and sends each turn to one or more of the eight specialists.",
+          "input": "A user turn from the web or Android client.",
+          "output": "One merged, guarded answer streamed as typed events.",
+          "tags": ["orchestration"],
+          "guardrails": ["Input rails (flood control, injection and toxicity checks, PII redaction)", "Output rails (prompt-leak check, finance and medical disclaimers, PII)"]
+        }
+      ],
+      "fromProject": {
+        "nameSuffix": " Agent",
+        "input": "A user turn the MasterOrchestrator routed to this specialist.",
+        "output": "A tool-grounded answer, merged with other specialists' answers when several run.",
+        "workflow": "ReAct tool-calling loop with an iteration cap; built by an agent factory from a playbook, a prompt, guardrail overlays and a tool allow-list.",
+        "tags": {
+          "Weather": ["domain"],
+          "News": ["research"],
+          "Knowledge": ["research"],
+          "Travel": ["domain", "automation"],
+          "Finance": ["domain", "research"],
+          "Career": ["career"],
+          "Research": ["research"],
+          "Productivity": ["automation"]
+        }
+      }
+    },
+    {
+      "id": "intellihub",
+      "name": "IntelliHub",
+      "category": "personal",
+      "status": "complete",
+      "period": "2026",
+      "project": "intellihub",
+      "where": "IntelliHub's Streamlit app and CLI — one question in, one sourced briefing out.",
+      "problem": "News, markets, jobs and lab reports live in different places; one question should return one briefing with sources, an honest status and its token cost — with every figure computed in Python, not by the model.",
+      "framework": ["Microsoft AutoGen (AssistantAgent, FunctionTool)", "Python asyncio", "Pydantic"],
+      "models": ["GPT-4o (Azure OpenAI)"],
+      "evidence": "357 offline tests, run against a deterministic mock that implements AutoGen's real client interface (no API keys). Private repository.",
+      "code": { "visibility": "private" },
+      "workflow": ["A deterministic intent classifier scores the query and picks agents, a strategy (concurrent or sequential), a confidence and a time window.", "A ReAct-style planner builds the execution plan.", "Collector agents run concurrently with asyncio.gather; the health pipeline runs afterwards in a fixed, guarded order.", "Python section builders compute every figure; the LLM writes the narrative only.", "The briefing carries de-duplicated sources, a status (PARTIAL / DEGRADED when appropriate) and token cost."],
+      "agents": [
+        {
+          "slug": "intellihub-planner",
+          "name": "Intent classifier & planner",
+          "purpose": "Decides which domain agents to run, in what order, with what confidence and time window, and builds the execution plan.",
+          "input": "The user's question and follow-up context.",
+          "output": "An execution plan: agents, strategy and time window.",
+          "tags": ["orchestration"],
+          "note": "Deterministic plain Python — no model call for routing."
+        }
+      ],
+      "fromProject": {
+        "nameSuffix": " Agent",
+        "input": "A sub-task from the planner's execution plan.",
+        "output": "Tool results for the Python section builders plus a short status line for the narrative.",
+        "workflow": "Wraps an AutoGen AssistantAgent whose tools are AutoGen FunctionTools; full tool results go to a side collector and the model sees only a short status line.",
+        "tags": {
+          "AI Intelligence": ["research"],
+          "India Market": ["research", "domain"],
+          "US Market": ["research", "domain"],
+          "Global News": ["research"],
+          "Gov Jobs": ["career", "research"],
+          "Private & World Jobs": ["career", "research"],
+          "World Market": ["research", "domain"],
+          "Health": ["automation", "document"]
+        }
+      }
+    },
+    {
+      "id": "autogen-code-team",
+      "name": "AutoGen code-generation team",
+      "category": "learning",
+      "status": "prototype",
+      "period": "2024 – 2025",
+      "project": "autogen-code-generation",
+      "where": "A two-agent AutoGen setup for natural-language coding tasks.",
+      "problem": "Turn a natural-language task into code that actually runs — by letting one agent write and another execute, iterating on the errors.",
+      "framework": ["Microsoft AutoGen (conversable agents)", "Python virtual environment"],
+      "models": ["GPT-4o (OpenAI)"],
+      "evidence": "Described in the case study and the 2024–25 builds of the specialization period. Private repository.",
+      "code": { "visibility": "private" },
+      "workflow": ["The user describes the task.", "The Code Writer Agent drafts code.", "The Code Executor Agent runs it in an isolated virtual environment.", "Output and errors go back to the writer until the task succeeds or a turn limit is reached."],
+      "agents": [
+        {
+          "slug": "code-writer-agent",
+          "name": "Code Writer Agent",
+          "purpose": "Proposes code for the user's task and revises it from execution feedback.",
+          "input": "A natural-language task, then execution output and errors.",
+          "output": "Python code for the executor.",
+          "tags": ["automation"],
+          "collaborates": ["code-executor-agent"]
+        },
+        {
+          "slug": "code-executor-agent",
+          "name": "Code Executor Agent",
+          "purpose": "Runs the proposed code in an isolated virtual environment and reports the result.",
+          "input": "Code from the writer.",
+          "output": "Program output or the error trace.",
+          "tags": ["automation"],
+          "collaborates": ["code-writer-agent"],
+          "guardrails": ["Execution happens inside an isolated virtual environment", "A turn limit stops endless iteration"]
+        }
+      ]
+    },
+    {
+      "id": "teachable-metadata",
+      "name": "Teachable metadata extractor",
+      "category": "learning",
+      "status": "prototype",
+      "period": "2024 – 2025",
+      "project": "teachable-metadata-extractor",
+      "where": "A Flask web service for e-commerce and retail content.",
+      "problem": "Turn free-text product and retail content into structured JSON — and ask for what's missing instead of guessing — while remembering what it has been taught.",
+      "framework": ["Microsoft AutoGen (teachable agent)", "Flask", "SQLite"],
+      "models": ["Azure OpenAI"],
+      "evidence": "Described in the case study and the 2024–25 builds of the specialization period. Private repository.",
+      "code": { "visibility": "private" },
+      "workflow": ["A Flask endpoint receives free-text content.", "The teachable agent extracts metadata fields with Azure OpenAI.", "What it is taught persists in a local SQLite store.", "A missing-field check asks the user for required details.", "Structured JSON is returned for downstream systems."],
+      "agents": [
+        {
+          "slug": "teachable-metadata-agent",
+          "name": "Teachable Metadata Agent",
+          "purpose": "Extracts structured metadata from e-commerce and retail text and learns from corrections across sessions.",
+          "input": "Free-text product or retail content.",
+          "output": "Structured JSON, or a question asking for missing required fields.",
+          "tags": ["automation", "document"],
+          "memory": "Taught facts persist in a local SQLite store, so the agent improves across sessions.",
+          "guardrails": ["Validates extracted fields", "Asks for missing required details instead of guessing"]
+        }
+      ]
+    },
+    {
+      "id": "rag-research-qa",
+      "name": "Medical-research Q&A assistant",
+      "category": "learning",
+      "status": "prototype",
+      "period": "2024 – 2025",
+      "project": "rag-medical-research-qa",
+      "where": "A REST API over a library of medical-research PDFs stored in AWS S3.",
+      "problem": "Answer and summarise questions over a library of research PDFs, grounded in the most relevant passages.",
+      "framework": ["LangChain", "FAISS", "PyPDF2", "AWS S3 (boto3)"],
+      "models": ["GPT-4", "OpenAI embeddings"],
+      "evidence": "Described in the case study and the 2024–25 builds of the specialization period. Private repository.",
+      "code": { "visibility": "private" },
+      "workflow": ["PDFs are loaded from AWS S3 and their text extracted with PyPDF2.", "Passages are embedded with OpenAI embeddings and indexed in FAISS.", "A question retrieves the most relevant passages.", "GPT-4 answers or summarises from those passages through LangChain.", "Answers are served through a REST API."],
+      "agents": [
+        {
+          "slug": "research-qa-assistant",
+          "name": "Research Q&A Assistant",
+          "purpose": "Answers and summarises questions over research PDFs, grounded in retrieved passages.",
+          "input": "A question about the PDF library.",
+          "output": "An answer or summary based on the retrieved passages.",
+          "tags": ["research", "retrieval"],
+          "note": "A retrieval-augmented assistant (one model call per question), not an autonomous agent — listed here because it is the retrieval pattern the later agents build on."
+        }
+      ]
+    }
+  ],
+  "patterns": [
+    {
+      "title": "Route before you reason",
+      "body": "Cheap, deterministic routing first; a model only where rules are unsure — and uncertainty becomes a clarifying question, not a guess.",
+      "usedIn": [
+        { "label": "NexusAI four-stage router", "href": "/agents/nexusai-master-orchestrator" },
+        { "label": "IntelliHub intent classifier", "href": "/agents/intellihub-planner" },
+        { "label": "This site's hybrid router", "href": "/agents/conversation-orchestrator" },
+        { "label": "Note: Routing before reasoning — a four-stage hybrid router", "href": "/knowledge/routing-before-reasoning" }
+      ]
+    },
+    {
+      "title": "Cap every loop",
+      "body": "Tool-calling loops get an iteration cap; NexusAI's final round runs without tools to force an answer, and the AutoGen code team stops at a turn limit.",
+      "usedIn": [
+        { "label": "NexusAI specialists", "href": "/agents/nexusai-research" },
+        { "label": "AutoGen code team", "href": "/agents/code-writer-agent" }
+      ]
+    },
+    {
+      "title": "Tools that never raise",
+      "body": "Every NexusAI tool returns a structured result with a status, a recovery hint and a source label, so one failing API degrades an answer instead of crashing a turn.",
+      "usedIn": [
+        { "label": "NexusAI tools", "href": "/projects/nexusai#approach" }
+      ]
+    },
+    {
+      "title": "Python computes, the model writes",
+      "body": "Figures are computed in Python so they are reproducible and testable; the model writes prose around them.",
+      "usedIn": [
+        { "label": "IntelliHub briefings", "href": "/agents/intellihub-planner" },
+        { "label": "Note: Let the LLM write prose — let Python compute the numbers", "href": "/knowledge/llm-writes-prose-python-computes-numbers" }
+      ]
+    },
+    {
+      "title": "Test agents offline",
+      "body": "Deterministic mock LLM clients let whole agent loops run in CI without API keys — 214 tests for NexusAI, 357 for IntelliHub, and contract tests for this site's assistant.",
+      "usedIn": [
+        { "label": "Note: Testing multi-agent systems without an API key", "href": "/knowledge/testing-multi-agent-systems-offline" },
+        { "label": "NexusAI", "href": "/projects/nexusai" },
+        { "label": "IntelliHub", "href": "/projects/intellihub" }
+      ]
+    },
+    {
+      "title": "Guard both ways, validate or replace",
+      "body": "Deterministic input guardrails before any model call; output checks after. On this site a draft with an unsupported name or number is replaced by the verified answer.",
+      "usedIn": [
+        { "label": "Response Validation Agent", "href": "/agents/response-validation-agent" },
+        { "label": "NexusAI input & output rails", "href": "/agents/nexusai-master-orchestrator" }
+      ]
+    },
+    {
+      "title": "Ask instead of guessing",
+      "body": "Missing information becomes a question: NexusAI asks when routing is unsure, and the teachable extractor asks for required fields instead of inventing them.",
+      "usedIn": [
+        { "label": "Teachable Metadata Agent", "href": "/agents/teachable-metadata-agent" },
+        { "label": "NexusAI clarification", "href": "/agents/nexusai-master-orchestrator" }
+      ]
+    }
+  ]
+}

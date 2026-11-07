@@ -87,6 +87,35 @@ const scenarios = [
     expect: "/RAG-Powered QA for Medical Research/",
   },
   { name: "34-phone-skills-chart", device: PHONE, path: "/skills", expect: "/Where the evidence is/" },
+  // Themes, agents directory, AI Lab, topic map
+  { name: "35-desktop-agents", device: DESKTOP, path: "/agents", expect: "/29 agents I've built[\\s\\S]*Live[\\s\\S]*Complete · tested[\\s\\S]*Prototype/" },
+  { name: "36-desktop-agent-detail", device: DESKTOP, path: "/agents/nexusai-research", expect: "/web_search[\\s\\S]*Works with[\\s\\S]*214 offline tests/" },
+  { name: "37-desktop-agents-filtered", device: DESKTOP, path: "/agents?tag=research&framework=Microsoft%20AutoGen", expect: "/Showing 7 of 29 agents/" },
+  {
+    name: "38-desktop-lab-inspector",
+    device: DESKTOP,
+    path: "/lab",
+    // Real in-browser inference: downloads the embedding model on first use (fresh profile).
+    script: `[...document.querySelectorAll('button')].find(b=>b.textContent.trim()==='Does he know FAISS?')?.click(); for (let i=0;i<60;i++){ await new Promise(r=>setTimeout(r,1000)); if (/Search \\+ routing/.test(document.body.innerText)) break; } document.getElementById('inspector-title')?.scrollIntoView();`,
+    expect: "/Semantic search\\s*on \\(bge-small\\)[\\s\\S]*Vector Databases \\(FAISS, ChromaDB\\)/",
+  },
+  { name: "39-desktop-knowledge-topics", device: DESKTOP, path: "/knowledge", script: `document.getElementById('topics-title')?.scrollIntoView();`, expect: "/Model Fine-Tuning[\\s\\S]*Not part of my project work yet/" },
+  ...[
+    ["40-desktop-theme-midnight", DESKTOP, "/", "midnight"],
+    ["41-desktop-theme-aurora-agents", DESKTOP, "/agents", "aurora"],
+    ["42-desktop-theme-neon-lab", DESKTOP, "/lab", "neon"],
+    ["43-desktop-theme-contrast-skills", DESKTOP, "/skills", "contrast"],
+    ["44-phone-theme-light-agent", PHONE, "/agents/professional-profile-agent", "light"],
+    ["45-tablet-theme-aurora-home", TABLET, "/", "aurora"],
+  ].map(([name, device, path, theme]) => ({
+    name,
+    device,
+    path,
+    theme,
+    // The stored theme must be applied before paint and survive the page load.
+    script: `document.body.insertAdjacentHTML('beforeend','<p class="sr-only">qa-theme='+document.documentElement.dataset.theme+'</p>');`,
+    expect: `/qa-theme=${theme}/`,
+  })),
 ];
 
 /** Opens the chat (optional setup), asks a question through the real form and waits for the answer. */

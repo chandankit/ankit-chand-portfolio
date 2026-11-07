@@ -151,7 +151,7 @@ export function NeuralField({ className }: { className?: string }) {
       resize();
       if (!running) draw(false);
     });
-    // Theme switches change the palette (the theme toggle sets a class on <html>).
+    // Theme switches change the palette (the theme selector sets data-theme on <html>).
     const mo = new MutationObserver(() => {
       readColors();
       if (!running) draw(false);
@@ -167,7 +167,7 @@ export function NeuralField({ className }: { className?: string }) {
       canvas.dataset.ready = "true";
       io.observe(canvas);
       ro.observe(canvas);
-      mo.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+      mo.observe(document.documentElement, { attributes: true, attributeFilter: ["class", "data-theme"] });
       window.addEventListener("pointermove", onPointer, { passive: true });
       document.documentElement.addEventListener("pointerleave", onLeave);
       document.addEventListener("visibilitychange", onVisibility);

@@ -1,9 +1,11 @@
 import { certifications, education, experience, projects, skillCategories } from "./content";
 import { getArticles } from "./articles";
 import { allPages } from "./site";
+import { agents } from "./agents";
+import { THEMES } from "./themes";
 
 export type SearchEntry = {
-  group: "Pages" | "Projects" | "Experience" | "Skills" | "Certifications" | "Education" | "Notes";
+  group: "Pages" | "Agents" | "Projects" | "Experience" | "Skills" | "Certifications" | "Education" | "Notes" | "Themes";
   title: string;
   subtitle: string;
   href: string;
@@ -14,6 +16,9 @@ export type SearchEntry = {
 export function buildSearchIndex(): SearchEntry[] {
   const entries: SearchEntry[] = [];
   for (const p of allPages) entries.push({ group: "Pages", title: p.label, subtitle: p.description ?? "", href: p.href, keywords: p.label });
+  for (const a of agents) entries.push({ group: "Agents", title: a.name, subtitle: `${a.system.name} · ${a.purpose}`.slice(0, 110), href: `/agents/${a.slug}`, keywords: [a.system.name, ...a.tags, ...(a.tools ?? []), ...a.system.framework].join(" ") });
+  // Themes are actions, not pages: the palette switches the theme for "theme:<id>" entries.
+  for (const t of [{ id: "system", label: "Auto", description: "Follow your device" }, ...THEMES]) entries.push({ group: "Themes", title: `Theme: ${t.label}`, subtitle: t.description, href: `theme:${t.id}`, keywords: "theme appearance colour color dark light" });
   for (const p of projects)
     entries.push({
       group: "Projects",

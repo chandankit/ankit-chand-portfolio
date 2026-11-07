@@ -5,6 +5,8 @@ import { getArticles } from "@/lib/articles";
 import { projects, certifications } from "@/lib/content";
 import { ArticleList } from "@/components/article-list";
 import { Container, PageHeader, SectionHeading } from "@/components/ui";
+import { ArrowUpRight, ExternalLink } from "lucide-react";
+import topics from "@content/topics.json";
 
 export const metadata: Metadata = pageMetadata({
   title: "Knowledge — Engineering Notes",
@@ -42,6 +44,47 @@ export default function KnowledgePage() {
       />
       <Container className="space-y-20">
         <ArticleList articles={articles} topics={TOPICS} />
+
+        <section aria-labelledby="topics-title">
+          <SectionHeading
+            id="topics-title"
+            eyebrow="Topic map"
+            title="Thirteen areas, each with evidence and where to learn more"
+            description="A plain explanation of each area, the projects, notes and courses that show my work in it, and official resources for going deeper. Where I have no project evidence yet, the card says so."
+          />
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {topics.map((t) => (
+              <article key={t.id} id={`topic-${t.id}`} data-glow className="card flex flex-col p-5">
+                <h3 className="font-display text-lg font-semibold text-fg">{t.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{t.summary}</p>
+                <p className="mt-4 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-subtle">My evidence</p>
+                {t.evidence.length ? (
+                  <ul className="mt-1.5 space-y-1">
+                    {t.evidence.map((e) => (
+                      <li key={e.href + e.label}>
+                        <Link href={e.href} className="inline-flex items-start gap-1 text-sm text-indigo hover:text-fg">
+                          {e.label} <ArrowUpRight className="mt-0.5 size-3.5 shrink-0" aria-hidden />
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="mt-1.5 text-sm text-muted">{"gap" in t ? t.gap : "No project evidence yet."}</p>
+                )}
+                <p className="mt-4 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-subtle">Learn more</p>
+                <ul className="mt-1.5 space-y-1">
+                  {t.resources.map((r) => (
+                    <li key={r.href}>
+                      <a href={r.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-start gap-1 text-sm text-muted hover:text-fg">
+                        {r.label} <ExternalLink className="mt-0.5 size-3.5 shrink-0" aria-hidden />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
 
         <section aria-labelledby="map-title">
           <SectionHeading id="map-title" eyebrow="Learning map" title="Where each topic shows up in my work" description="Each area links to the projects where I applied it and the courses behind it." />

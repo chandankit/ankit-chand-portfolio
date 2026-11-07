@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Menu, Search, Sparkles, X } from "lucide-react";
 import { credentialsNav, primaryNav } from "@/lib/site";
 import { cn } from "@/lib/format";
-import { ThemeToggle } from "./theme-toggle";
+import { ThemeSwitcher } from "./theme-switcher";
 import { usePalette } from "./command-palette";
 import { GitHubIcon, LinkedInIcon } from "./icons";
 import { ModeSwitcher } from "./modes";
@@ -123,7 +123,7 @@ export function Navbar({ name, github, linkedin }: { name: string; github: strin
             <Search className="size-4" aria-hidden />
           </button>
           <ModeSwitcher className="hidden md:block" compact />
-          <ThemeToggle />
+          <ThemeSwitcher />
           <button
             type="button"
             onClick={() => openAssistant(true)}

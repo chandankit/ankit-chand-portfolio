@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Check, Copy } from "lucide-react";
+import { toast } from "./toaster";
 
 export function CopyButton({ value, label }: { value: string; label: string }) {
   const [copied, setCopied] = useState(false);
@@ -12,6 +13,7 @@ export function CopyButton({ value, label }: { value: string; label: string }) {
         try {
           await navigator.clipboard.writeText(value);
           setCopied(true);
+          toast("Copied to clipboard");
           setTimeout(() => setCopied(false), 1800);
         } catch {
           /* clipboard unavailable (e.g. insecure context) — the mailto link still works */
