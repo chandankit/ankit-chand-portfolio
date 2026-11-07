@@ -2,7 +2,7 @@
   "base": "https://ankit-chand-portfolio.vercel.app",
   "browser": "msedge.exe",
   "freshInPrivateProfile": true,
-  "runAt": "2026-11-06T13:31:21.681Z",
+  "runAt": "2026-11-07T09:14:17.841Z",
   "results": [
     {
       "name": "01-desktop-home",
@@ -197,6 +197,48 @@
       "name": "28-desktop-admin-disabled",
       "url": "https://ankit-chand-portfolio.vercel.app/admin/login",
       "device": "1440x900",
+      "theme": "dark",
+      "problems": []
+    },
+    {
+      "name": "29-desktop-ask-mode-sync",
+      "url": "https://ankit-chand-portfolio.vercel.app/ask",
+      "device": "1440x900",
+      "theme": "dark",
+      "problems": []
+    },
+    {
+      "name": "30-desktop-skills-evidence-chart",
+      "url": "https://ankit-chand-portfolio.vercel.app/skills",
+      "device": "1440x900",
+      "theme": "dark",
+      "problems": []
+    },
+    {
+      "name": "31-desktop-home-toolkit",
+      "url": "https://ankit-chand-portfolio.vercel.app/",
+      "device": "1440x900",
+      "theme": "dark",
+      "problems": []
+    },
+    {
+      "name": "32-desktop-contact-delivery-notice",
+      "url": "https://ankit-chand-portfolio.vercel.app/contact",
+      "device": "1440x900",
+      "theme": "dark",
+      "problems": []
+    },
+    {
+      "name": "33-desktop-assistant-long-question",
+      "url": "https://ankit-chand-portfolio.vercel.app/ask",
+      "device": "1440x900",
+      "theme": "dark",
+      "problems": []
+    },
+    {
+      "name": "34-phone-skills-chart",
+      "url": "https://ankit-chand-portfolio.vercel.app/skills",
+      "device": "390x844 (mobile)",
       "theme": "dark",
       "problems": []
     }
