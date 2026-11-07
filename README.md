@@ -12,6 +12,8 @@ A fast, accessible, content-driven site built with **Next.js 16 (App Router), Ty
 
 Lighthouse (production, desktop): **Accessibility 100 · Best practices 100 · SEO 100**; performance 98 on the home page and 80–91 on the heaviest case-study page on a throttled test laptop. Fresh-profile browser QA: **28/28 scenarios clean** on production. More screenshots in [docs/screenshots](docs/screenshots).
 
+> **Audit, November 2026:** what was checked, every fix with its root cause, the real-inference agent report and the QA results are in **[docs/AUDIT_REPORT.md](docs/AUDIT_REPORT.md)**.
+
 ## Features
 
 | Area | What it does |
