@@ -12,6 +12,8 @@ A fast, accessible, content-driven site built with **Next.js 16 (App Router), Ty
 
 Lighthouse (production, desktop): **Accessibility 100 · Best practices 100 · SEO 100**; performance 98 on the home page and 80–91 on the heaviest case-study page on a throttled test laptop. Fresh-profile browser QA: **28/28 scenarios clean** on production. More screenshots in [docs/screenshots](docs/screenshots).
 
+> **New:** seven themes (Auto, Dark, Light, Midnight, Aurora, Cyber Neon, High contrast), an **Agents directory** (29 agents, honest statuses, detail pages), an **AI Lab** (live retrieval inspector + measured model comparison) and a knowledge **topic map** — see [docs/FEATURES_REPORT.md](docs/FEATURES_REPORT.md).
+>
 > **Audit, November 2026:** what was checked, every fix with its root cause, the real-inference agent report and the QA results are in **[docs/AUDIT_REPORT.md](docs/AUDIT_REPORT.md)**.
 
 ## Features
@@ -57,6 +59,7 @@ Requires Node.js ≥ 20.9 (≥ 22 for the `tools/` workspace). The assistant nee
 | `cd tools && npm run kb:embed` | Rebuild the assistant's embeddings after editing `/content` (a test fails if they are stale) |
 | `cd tools && npm test` / `npm run eval` | Assistant tests (guardrails, validator, routing, modes, evidence, timeouts, photo publishing, evaluation set, model contract) / retrieval evaluation |
 | `cd tools && npm run bench` | Open-weight model benchmark with llama.cpp ([results](docs/benchmarks/README.md)) |
+| `cd tools && node --no-warnings bench/export-site.ts` | Re-export measured benchmark results to `content/benchmarks.json` for the AI Lab page (the only way that file is written) |
 | `cd tools && node --no-warnings bench/agents.ts` | Agent execution report: 22 scenarios through every agent with **real** llama.cpp inference ([results](docs/benchmarks/agent-execution.json)) |
 
 ## Updating content (no code changes)
