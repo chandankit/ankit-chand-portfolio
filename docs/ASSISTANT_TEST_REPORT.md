@@ -10,14 +10,14 @@ Rule followed: **a test is only listed as passed if it was executed and passed.*
 > |---|---|
 > | `tools/tests/modes.test.ts` — six interaction modes are personas, change instant answers, grammatical audience sentence | 4/4 (mutation-checked) |
 > | `tools/tests/routing.test.ts` — the owner's ten questions + project-shaped follow-ups route correctly with the real embedding model | 2/2 (fails with hybrid routing switched off) |
-> | `tools/tests/evidence.test.ts` — breadth-first project evidence, depth for a named project, preamble ≠ unknown topic, real unknown still declined | 4/4 (both fixes mutation-checked) |
+> | `tools/tests/evidence.test.ts` — breadth-first project evidence, depth for a named project, preamble ≠ unknown topic, real unknown still declined, Navigation agent opens the named page | 5/5 (all three fixes mutation-checked) |
 > | `tools/tests/llm-http.test.ts` — watchdogs against real local HTTP servers: silent server, stalled stream, slow-but-steady stream completes, visitor cancel stays AbortError | 4/4 |
 > | `tools/tests/photo-publish.test.ts` — publish/revert against a fake GitHub API: src-only edit, idempotent revert, two-commit publish from placeholder, errors | 5/5 |
 > | `tools/tests/assistant.test.ts` — now also asserts the CSP allows only the three pinned jsDelivr package paths | 27/27 |
-> | **All tools tests** (`cd tools && npm test`) | **47/47** |
+> | **All tools tests** (`cd tools && npm test`) | **48/48** |
 > | `tests/admin-api.test.mjs` (+ revert: session, confirmation, connection) | **15/15** |
 > | `tests/llm-proxy.test.mjs` · `tests/contact-api.test.mjs` | **6/6 · 8/8** |
-> | Real-inference agent run (`tools/bench/agents.ts`, Qwen2.5-0.5B on llama.cpp, 21 scenarios) | see AUDIT_REPORT §C |
+> | Real-inference agent run (`tools/bench/agents.ts`, Qwen2.5-0.5B on llama.cpp, 22 scenarios) | see AUDIT_REPORT §C |
 > | Browser QA (`npm run qa`, now 34 scenarios) | local build 33/34 → the failure was the scenario's own isolation (a previous scenario's conversation hid the picker); fixed and re-run clean; production results in AUDIT_REPORT §D |
 
 ## 1. Automated suites

@@ -55,7 +55,7 @@ Requires Node.js ≥ 20.9 (≥ 22 for the `tools/` workspace). The assistant nee
 | `cd tools && npm run kb:embed` | Rebuild the assistant's embeddings after editing `/content` (a test fails if they are stale) |
 | `cd tools && npm test` / `npm run eval` | Assistant tests (guardrails, validator, routing, modes, evidence, timeouts, photo publishing, evaluation set, model contract) / retrieval evaluation |
 | `cd tools && npm run bench` | Open-weight model benchmark with llama.cpp ([results](docs/benchmarks/README.md)) |
-| `cd tools && node --no-warnings bench/agents.ts` | Agent execution report: 21 scenarios through every agent with **real** llama.cpp inference ([results](docs/benchmarks/agent-execution.json)) |
+| `cd tools && node --no-warnings bench/agents.ts` | Agent execution report: 22 scenarios through every agent with **real** llama.cpp inference ([results](docs/benchmarks/agent-execution.json)) |
 
 ## Updating content (no code changes)
 

@@ -52,7 +52,7 @@ type Scenario = {
   /** Which engine to use: the real model (default), a closed port, or a server that never answers. */
   engine?: "model" | "down" | "hang";
   /** Pass criteria. */
-  expect: { agents?: AgentId[]; mode?: Answer["mode"][]; decline?: boolean; citations?: boolean; textIncludes?: string[] };
+  expect: { agents?: AgentId[]; mode?: Answer["mode"][]; decline?: boolean; citations?: boolean; textIncludes?: string[]; autoNavigate?: string };
 };
 
 // The owner's ten example questions, then edge cases.
@@ -64,7 +64,8 @@ const SCENARIOS: Scenario[] = [
   { id: "rag-architecture", checks: "Project + Technical agents on architecture", q: "Explain his RAG architecture.", persona: "genai", expect: { agents: ["projects", "technical"], citations: true, textIncludes: ["faiss"] } },
   { id: "open-models", checks: "Technical agent on models used", q: "Which open-source models does he use?", expect: { agents: ["technical", "projects"], citations: true } },
   { id: "autogen", checks: "Named-technology question", q: "Explain his experience with AutoGen.", persona: "agentic", expect: { agents: ["technical", "projects"], citations: true, textIncludes: ["autogen"] } },
-  { id: "github", checks: "Navigation agent: links to code", q: "Show me his GitHub projects.", expect: { agents: ["navigator", "projects"], citations: true } },
+  { id: "github", checks: "Project agent: projects with public code", q: "Show me his GitHub projects.", expect: { agents: ["navigator", "projects"], citations: true } },
+  { id: "navigate", checks: "Navigation agent leads and opens the page itself", q: "Take me to his resume page.", expect: { agents: ["navigator"], autoNavigate: "/resume" } },
   { id: "certifications", checks: "Profile/Recruiter agents on credentials", q: "What certifications has he completed?", expect: { agents: ["profile", "recruiter"], citations: true } },
   { id: "contact", checks: "Recruiter/Navigation agents on contact", q: "How can I contact him for a professional opportunity?", persona: "recruiter", expect: { agents: ["recruiter", "navigator"], citations: true } },
   // Edge cases
@@ -155,6 +156,7 @@ for (const s of SCENARIOS) {
   if (s.expect.citations) checks.citations = !!a && a.citations.length > 0;
   if (s.expect.decline) checks.decline = declined || (!!a && a.citations.length === 0);
   if (s.expect.textIncludes) checks.content = s.expect.textIncludes.every((k) => text.toLowerCase().includes(k));
+  if (s.expect.autoNavigate) checks.navigation = !!a && a.actions.some((x) => x.auto && x.href.startsWith(s.expect.autoNavigate!));
   checks.noError = !error;
   const pass = Object.values(checks).every(Boolean);
   rows.push({

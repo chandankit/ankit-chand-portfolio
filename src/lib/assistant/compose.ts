@@ -132,3 +132,33 @@ export function followupsFor(evidence: ScoredChunk[], agents: AgentId[], asked: 
   for (const q of personaSuggestions) add(q);
   return out;
 }
+
+/**
+ * The Portfolio Navigation Agent's destinations. When the visitor names a page ("open the
+ * certifications page", "take me to his resume"), that page is the destination — not the
+ * page of whichever evidence chunk ranked first (measured: "Open the certifications page"
+ * auto-opened /resume because the word "page" matched the résumé chunk).
+ */
+const PAGE_TARGETS: { href: string; label: string; words: RegExp }[] = [
+  { href: "/certifications", label: "Open certifications", words: /\b(certifications?|certificates?|credentials?|courses?)\b/i },
+  { href: "/resume", label: "Open resume", words: /\b(resume|résumé|cv)\b/i },
+  { href: "/projects", label: "Browse all projects", words: /\b(projects?|case stud(y|ies)|portfolio of work)\b/i },
+  { href: "/skills", label: "Explore skills", words: /\b(skills?|tech(nology)? stack|toolkit)\b/i },
+  { href: "/experience", label: "View experience", words: /\b(experience|work history|career|jobs?)\b/i },
+  { href: "/education", label: "View education", words: /\b(education|degrees?|universit(y|ies))\b/i },
+  { href: "/achievements", label: "View milestones", words: /\b(achievements?|milestones?)\b/i },
+  { href: "/knowledge", label: "Read the notes", words: /\b(knowledge|notes?|articles?|blog)\b/i },
+  { href: "/contact", label: "Contact Ankit", words: /\b(contact|get in touch|email)\b/i },
+  { href: "/about", label: "About Ankit", words: /\babout (page|him|ankit)\b/i },
+];
+
+export function navigationTarget(question: string, namedProjects: string[], catalog: Catalog): AnswerAction | null {
+  const slug = namedProjects.find((s) => catalog.projects.some((p) => p.slug === s));
+  if (slug) {
+    const p = catalog.projects.find((x) => x.slug === slug)!;
+    const wantsDiagram = /\b(architecture|diagram)\b/i.test(question) && p.architecture;
+    return { label: `Open ${p.title}`, href: `/projects/${slug}${wantsDiagram ? "#architecture" : ""}`, kind: "navigate", auto: true };
+  }
+  const page = PAGE_TARGETS.find((t) => t.words.test(question));
+  return page ? { label: page.label, href: page.href, kind: "navigate", auto: true } : null;
+}

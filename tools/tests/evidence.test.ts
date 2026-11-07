@@ -36,3 +36,21 @@ test("an unknown topic in the question itself is still declined honestly", async
   const a = await ask("Has he built a video editing agent?");
   assert.match(a.text, /don.?t have verified information about “editing”/);
 });
+
+test("the Navigation agent opens the page the visitor names", async () => {
+  // Was: "Open the certifications page" auto-opened /resume (the word "page" matched the
+  // résumé chunk, and the agent opened the top evidence chunk's page).
+  const cases: [string, string][] = [
+    ["Open the certifications page", "/certifications"],
+    ["Take me to his resume page.", "/resume"],
+    ["Go to the contact page", "/contact"],
+    ["Open the NexusAI project page", "/projects/nexusai"],
+  ];
+  for (const [q, href] of cases) {
+    const a = await ask(q);
+    assert.ok(a.agents.includes("navigator"), `${q} → ${a.agents.join("+")}`);
+    const auto = a.actions.filter((x) => x.auto);
+    assert.equal(auto.length, 1, `${q}: exactly one page opens automatically`);
+    assert.ok(auto[0].href.startsWith(href), `${q} → ${auto[0].href}`);
+  }
+});

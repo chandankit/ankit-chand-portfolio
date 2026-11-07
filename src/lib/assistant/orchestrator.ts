@@ -11,14 +11,14 @@
  * no model at all. Failures in any model step degrade to the verified
  * extractive answer — the assistant never fails silently.
  */
-import type { Answer, AgentEvent, AgentId, ChatTurn, ChunkType, LlmEngine, Persona, ScoredChunk } from "./types.ts";
+import type { Answer, AgentEvent, AgentId, AnswerAction, ChatTurn, ChunkType, LlmEngine, Persona, ScoredChunk } from "./types.ts";
 import { SPECIALISTS, agentById } from "./agents.ts";
 import { HybridRetriever } from "./retriever.ts";
 import { SemanticRouter, specialistsFor } from "./router.ts";
 import { checkInput, GENERIC_TERMS } from "./guardrails.ts";
 import { validateAnswer, isDecline } from "./validator.ts";
 import { answerMessages, plannerMessages, stripReasoning } from "./prompts.ts";
-import { actionsFor, cardsFor, citationsFor, extractiveAnswer, followupsFor, type Catalog } from "./compose.ts";
+import { actionsFor, cardsFor, citationsFor, extractiveAnswer, followupsFor, navigationTarget, type Catalog } from "./compose.ts";
 import { queryTokens, splitSentences } from "./text.ts";
 
 export type OrchestratorDeps = {
@@ -215,7 +215,7 @@ export async function answerQuestion(rawQuestion: string, history: ChatTurn[], d
     text,
     citations: citationsFor(finalEvidence),
     cards: cardsFor(finalEvidence, plan.agents, deps.catalog),
-    actions: weak ? [{ label: "Browse all projects", href: "/projects", kind: "navigate" }] : actionsFor(finalEvidence, plan.agents, deps.catalog),
+    actions: weak ? [{ label: "Browse all projects", href: "/projects", kind: "navigate" }] : withDestination(actionsFor(finalEvidence, plan.agents, deps.catalog), plan.agents[0] === "navigator" ? navigationTarget(focus, named, deps.catalog) : null),
     followups: followupsFor(finalEvidence, plan.agents, asked, deps.persona?.suggestions ?? []),
     agents: ["orchestrator", ...plan.agents, ...(mode === "llm" || validation.replaced ? (["validator"] as AgentId[]) : [])],
     mode,
@@ -245,4 +245,10 @@ function breadthFirst(chunks: ScoredChunk[]): ScoredChunk[] {
     seen.add(key);
   }
   return [...first, ...rest];
+}
+
+/** The navigation agent's named destination goes first and is the only one opened automatically. */
+function withDestination(actions: AnswerAction[], dest: AnswerAction | null): AnswerAction[] {
+  if (!dest) return actions;
+  return [dest, ...actions.filter((a) => a.href !== dest.href).map((a) => ({ ...a, auto: false }))].slice(0, 3);
 }

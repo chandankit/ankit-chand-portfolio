@@ -65,7 +65,7 @@ flowchart TD
 | Technical Expertise Agent | Skills, frameworks, methods, where each skill was used | skill, project, article, experience |
 | Project Intelligence Agent | Projects, architectures, agents, testing, results; breadth-first (one chunk per project) when no project is named | project, article, fact |
 | Recruitment Assistant Agent | Availability, role fit, résumé, contact, freelance | profile, experience, skill, certification, education, fact, project |
-| Portfolio Navigation Agent | Takes the visitor to the right page/section (auto-navigates for “show me…”) | project, profile, certification, education, article, fact |
+| Portfolio Navigation Agent | Takes the visitor to the page they name (“open the certifications page”) or to a named project; only that page opens automatically | project, profile, certification, education, article, fact |
 | Response Validation Agent | Deterministic fact-check of every model draft; replaces failing drafts | evidence given to the model |
 
 Agents are prompts + retrieval scopes + type weights (`src/lib/assistant/agents.ts`), not separate model calls — that's what keeps it to one generation per question. Up to two specialists collaborate when routing scores are close.
