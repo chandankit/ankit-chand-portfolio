@@ -10,7 +10,7 @@ import { useEffect, useRef } from "react";
  * Built to cost nothing the visitor would notice:
  *  • starts only once the browser is idle, so it never competes with first paint (LCP);
  *  • pauses while scrolled out of view or while the tab is hidden;
- *  • prefers-reduced-motion → a single static frame, no animation loop;
+ *  • prefers-reduced-motion, phones and touch screens → a single static frame, no loop;
  *  • 24–70 nodes scaled to the area, device-pixel ratio capped at 2;
  *  • aria-hidden and pointer-events: none — it never blocks clicks, focus or reading.
  */
@@ -25,7 +25,11 @@ export function NeuralField({ className }: { className?: string }) {
     type Node = { x: number; y: number; vx: number; vy: number; c: number; r: number };
     const LINK = 132;
     const POINTER = 170;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    // Reduced motion, and also single-column / touch layouts: there the network is only a
+    // faint band above the text and there is no pointer to follow, so a static frame is
+    // enough — no animation loop eating a phone's CPU and battery (measured on Lighthouse
+    // mobile: rendering and style work dominate the throttled main thread).
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce), (max-width: 1023px), (pointer: coarse)");
     let nodes: Node[] = [];
     let colors: string[] = [];
     let w = 0;
