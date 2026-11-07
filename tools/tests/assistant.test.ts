@@ -216,6 +216,26 @@ test("validator tolerates form differences that the benchmark showed were false 
   ok("Employed as a Data Scientist at Retisio, he built models [1]."); // title-cased verb
 });
 
+test("validator accepts a known name with a modifier suffix (Qwen3-1.7B 'AutoGen-based' false alarm)", () => {
+  // Evidence the benchmark retrieved for "What is his experience with Microsoft AutoGen?", in order
+  // (minus the skill chunk, whose id is a content hash).
+  const ev = [chunk("experience:summary"), chunk("project:autogen-code-generation:stack"), chunk("project:autogen-code-generation:overview"), chunk("project:intellihub:stack")];
+  // Preconditions: the compound itself is nowhere in the knowledge base, only the name is —
+  // so these cases exercise the suffix rule, not a lucky substring match.
+  assert.ok(known.has("autogen") && !known.has("autogen-based"));
+  assert.ok(!ev.some((c) => /autogen[- ]?(based|powered)/i.test(`${c.title} ${c.text}`)));
+  const ok = (draft: string) => {
+    const v = validateAnswer(draft, ev, "What is his experience with Microsoft AutoGen?", known, employers);
+    assert.equal(v.ok, true, `${draft} → ${v.hard.join("; ")}`);
+  };
+  // The draft Qwen3-1.7B wrote (3/3 runs), which was replaced although accurate and cited.
+  ok("Ankit has used Microsoft AutoGen in IntelliHub and Autonomous Code Generation & Execution. His experience includes developing and deploying AutoGen-based solutions for AI automation and code execution [1][3][4].");
+  ok("He built AutoGen-powered agents in IntelliHub [4].");
+  ok("He designed Microsoft AutoGen-Driven agent teams [3]."); // title-cased suffix
+  ok("It uses GPT-4o-powered code generation [2]."); // name that itself contains a hyphen
+  ok("He built LLM-based agents [1]."); // generic acronym + suffix
+});
+
 test("validator still rejects the hallucinations the benchmark caught", () => {
   const ev = [chunk("project:rag-medical-research-qa:overview"), chunk("project:rag-medical-research-qa:stack")];
   for (const draft of ["He used Word2Vec and GloVe embeddings [1].", "He evaluated models with RMSE and MAE [1].", "He worked at Google on RAG [1].", "He has about 5 years of RAG experience [1]."]) {
@@ -228,6 +248,23 @@ test("validator still rejects the hallucinations the benchmark caught", () => {
   assert.equal(validateAnswer("He worked for Medical Research.\nThis shows his RAG skills [1].", ev, "q", known, employers).ok, true);
   // A real invented employer is still caught in the same shape.
   assert.equal(validateAnswer("He worked at Google. This was his first job [1].", ev, "q", known, employers).ok, false);
+});
+
+test("validator still rejects invented hyphenated names, with or without a modifier suffix", () => {
+  // Evidence the benchmark retrieved for "Explain his multi-agent architecture." — the case where
+  // Llama-3.2-1B invented "Task-Write-Execute" from the steps "1. Task … 2. Write … execute".
+  const multiagent = [chunk("project:autogen-code-generation:architecture"), chunk("project:nexusai:architecture"), chunk("project:intellihub:architecture")];
+  const autogen = [chunk("project:autogen-code-generation:overview"), chunk("project:autogen-code-generation:stack"), chunk("project:intellihub:stack")];
+  const rejected = (draft: string, ev: typeof autogen, issue: string) => {
+    const v = validateAnswer(draft, ev, "q", known, employers);
+    assert.equal(v.ok, false, draft);
+    assert.ok(v.hard.includes(`unsupported name "${issue}"`), `${draft} → ${v.hard.join("; ")}`);
+  };
+  rejected("His architecture follows a Task-Write-Execute loop [1].", multiagent, "Task-Write-Execute"); // every part is an evidence word, the name is not
+  rejected("His architecture uses a Task-Write-based loop [1].", multiagent, "Task-Write-based"); // suffix on an invented name
+  rejected("He built AutoGenX-based agents [1].", autogen, "AutoGenX-based"); // suffix on a misspelt/invented name
+  rejected("He used AutoGen-Studio to design agents [1].", autogen, "AutoGen-Studio"); // a different product, not a modifier
+  rejected("He is a Microsoft-certified AutoGen developer [1].", autogen, "Microsoft-certified"); // a relationship claim, not a modifier
 });
 
 test("validator rejects citations that point at no evidence", () => {

@@ -11,7 +11,7 @@ import { spawn, execSync } from "node:child_process";
 import { mkdirSync, writeFileSync, existsSync } from "node:fs";
 import path from "node:path";
 import { EVAL_SET } from "./eval-set.ts";
-import { createHarness, grade } from "./harness.ts";
+import { createHarness, grade, recordDrafts } from "./harness.ts";
 import { draftAcceptance } from "./metrics.ts";
 import { HttpLlmEngine } from "../../src/lib/assistant/llm-http.ts";
 import { ROOT } from "../kb/content.ts";
@@ -85,18 +85,22 @@ for (const m of models) {
   await engine.complete({ messages: [{ role: "user", content: "Say OK." }], maxTokens: 4 }).catch(() => null);
   const memMB = rssMB(server.pid!);
 
+  const recorder = recordDrafts(engine);
   const rows = [];
   for (const c of cases) {
     const t0 = Date.now();
     let error: string | null = null;
     let answer;
+    recorder.take();
     try {
-      answer = (await harness.ask(c, engine)).answer;
+      answer = (await harness.ask(c, recorder.engine)).answer;
     } catch (e) {
       error = String((e as Error).message).slice(0, 120);
     }
+    // The model's own wording (null when the model was not asked for a draft).
+    const draft = recorder.take();
     if (!answer) {
-      rows.push({ id: c.id, error });
+      rows.push({ id: c.id, error, draft });
       continue;
     }
     const g = grade(c, answer);
@@ -111,6 +115,7 @@ for (const m of models) {
       ms: Date.now() - t0,
       genMs: answer.timings.generationMs ?? null,
       text: answer.text,
+      draft,
     });
     process.stdout.write(g.pass ? "." : "x");
   }

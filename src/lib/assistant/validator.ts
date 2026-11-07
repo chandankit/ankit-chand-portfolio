@@ -14,7 +14,8 @@
  *
  * Deterministic on purpose: verification must not hallucinate either. It is
  * strict about *facts* but tolerant of *form* — "2024." vs "2024", "October"
- * vs "Oct", "Postgraduate" vs "Post Graduate", "four" vs "4", "LLMs" vs "LLM" —
+ * vs "Oct", "Postgraduate" vs "Post Graduate", "four" vs "4", "LLMs" vs "LLM",
+ * "AutoGen-based" vs "AutoGen" —
  * because false alarms throw away good answers (measured in the benchmark).
  */
 import type { Chunk } from "./types.ts";
@@ -29,6 +30,18 @@ const COMMON = new Set(
 );
 /** Generic acronyms that are vocabulary, not claims. */
 const ACRONYMS = new Set("ai ml nlp llm llms api apis url urls pdf pdfs json csv sql http https rest ui ux gpu gpus cpu id ids faq qa q&a etc e.g i.e".split(" "));
+
+/**
+ * English modifier suffixes that turn a name into an adjective without naming anything new:
+ * "AutoGen-based", "LLM-powered", "Streamlit-style". A name + one of these is supported
+ * exactly when the name is. Deliberately narrow: suffixes that form a different product or
+ * organisation name ("-Studio", "-Hub", "-Pro", "-Agent", "-GPT", "-Labs") or claim a
+ * relationship ("-certified", "-backed", "-sponsored", "-funded", "-owned", "-endorsed",
+ * "-affiliated", "-led") are not here, so those compounds must be supported as a whole.
+ */
+const MODIFIER_SUFFIXES = new Set(
+  "based powered driven enabled built style styled like inspired compatible native centric oriented focused specific aware assisted generated integrated related friendly ready first only heavy".split(" "),
+);
 
 const MONTHS: Record<string, string> = { january: "jan", february: "feb", march: "mar", april: "apr", may: "may", june: "jun", july: "jul", august: "aug", september: "sep", october: "oct", november: "nov", december: "dec" };
 const NUMBER_WORDS: Record<string, string> = { one: "1", two: "2", three: "3", four: "4", five: "5", six: "6", seven: "7", eight: "8", nine: "9", ten: "10", eleven: "11", twelve: "12", "a dozen": "12" };
@@ -97,8 +110,13 @@ export function validateAnswer(answer: string, evidence: Chunk[], question: stri
   }
 
   // 5) proper nouns and product names
-  const supported = (w: string) => {
+  //    Hyphenated compounds are one token on purpose, so an invented hyphenated name
+  //    ("Task-Write-Execute") is judged as a whole rather than word by word. A known name
+  //    followed by a modifier suffix ("AutoGen-based") is judged by the name alone.
+  const supported = (w: string): boolean => {
     const lw = w.toLowerCase();
+    const modified = lw.match(/^(.+)-([a-z]+)$/);
+    if (modified && MODIFIER_SUFFIXES.has(modified[2]) && supported(w.slice(0, modified[1].length))) return true;
     if (COMMON.has(lw) || ACRONYMS.has(lw)) return true;
     if (known.has(lw) || evidenceLower.includes(lw)) return true;
     const c = compact(w);
