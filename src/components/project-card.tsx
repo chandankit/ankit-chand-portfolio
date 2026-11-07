@@ -44,7 +44,7 @@ export function RepoStatus({ project, compact = false }: { project: Project; com
 export function ProjectCard({ project, size = "md", headingLevel = 3 }: { project: Project; size?: "md" | "lg"; headingLevel?: 2 | 3 }) {
   const H = `h${headingLevel}` as const;
   return (
-    <article className={cn("card group relative flex h-full flex-col overflow-hidden p-6 transition-all duration-300 hover:-translate-y-1 hover:border-line-strong", size === "lg" && "sm:p-7")}>
+    <article data-glow data-tilt className={cn("card group relative flex h-full flex-col overflow-hidden p-6 transition-all duration-300 hover:-translate-y-1 hover:border-line-strong", size === "lg" && "sm:p-7")}>
       <div aria-hidden className="pointer-events-none absolute -right-24 -top-24 size-56 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: "radial-gradient(closest-side, color-mix(in oklab, var(--grad-b) 30%, transparent), transparent)" }} />
       <div className="flex flex-wrap items-center gap-2">
         <Badge tone={contextTone[project.context]}>{project.context}</Badge>

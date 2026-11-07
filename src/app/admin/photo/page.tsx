@@ -1,3 +1,4 @@
+import { githubTarget } from "@/lib/photo-publish";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
@@ -20,7 +21,7 @@ export default async function PhotoStudioPage() {
           current={profile.photo.src}
           limits={{ maxMB: PHOTO_LIMITS.maxBytes / 1048576, minSide: PHOTO_LIMITS.minSide }}
           enhancerConfigured={Boolean(process.env.PHOTO_ENHANCER_URL)}
-          publishConfigured={Boolean(process.env.GITHUB_TOKEN && process.env.GITHUB_REPO)}
+          publishConfigured={githubTarget() !== null}
         />
       </Container>
     </>

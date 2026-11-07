@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { milestones, profile } from "@/lib/content";
 import { MilestoneTimeline } from "@/components/milestone-timeline";
 import { Reveal } from "@/components/reveal";
 import { Container, PageHeader } from "@/components/ui";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Achievements & Milestones",
   description: "Career milestones, project achievements and learning accomplishments of Ankit Chand, from IIIT Bangalore to multi-agent AI platforms.",
-  alternates: { canonical: "/achievements" },
-};
+  path: "/achievements",
+});
 
 export default function AchievementsPage() {
   return (
     <>
-      <PageHeader eyebrow="Achievements" title="Milestones along the way" description="Career steps, shipped projects and completed learning — newest first. Filter by type, and open any milestone for the full story." />
+      <PageHeader eyebrow="Achievements" title="Milestones along the way" description="Career steps, shipped projects and completed learning — newest first. Filter by type, and follow a milestone’s link for the full story." />
       <Container>
         <div className="mb-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {profile.highlights.map((h, i) => (

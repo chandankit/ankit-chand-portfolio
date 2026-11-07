@@ -18,14 +18,14 @@ export function citationsFor(evidence: ScoredChunk[]): Citation[] {
 /** Removes markdown list/heading markers that article chunks can start with. */
 const plain = (s: string) => s.replace(/^\s*(?:[-*•]|#{1,6}|\d+\.)\s+/, "").trim();
 
-export function extractiveAnswer(evidence: ScoredChunk[], missingTerms: string[]): string {
+export function extractiveAnswer(evidence: ScoredChunk[], missingTerms: string[], maxPoints = 3): string {
   if (!evidence.length) return "I don't have verified information about that in Ankit's portfolio. Try asking about his projects, skills, experience or certifications.";
   const lead = evidence[0];
   const leadText = plain(lead.type === "fact" || lead.id.startsWith("profile:contact") || lead.id.startsWith("profile:resume") ? lead.text : firstSentences(lead.text, 2));
   const seen = new Set([lead.entity ?? lead.id]);
   const points: string[] = [];
   for (const [i, e] of evidence.slice(1).entries()) {
-    if (points.length >= 3) break;
+    if (points.length >= maxPoints) break;
     // Projects and profile paragraphs are distinct facts even when they share an entity.
     const key = e.type === "project" || e.type === "profile" ? e.id : (e.entity ?? e.id);
     if (seen.has(key)) continue;

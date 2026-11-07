@@ -11,7 +11,7 @@
  * no model at all. Failures in any model step degrade to the verified
  * extractive answer — the assistant never fails silently.
  */
-import type { Answer, AgentEvent, AgentId, ChatTurn, LlmEngine, Persona, ScoredChunk } from "./types.ts";
+import type { Answer, AgentEvent, AgentId, ChatTurn, ChunkType, LlmEngine, Persona, ScoredChunk } from "./types.ts";
 import { SPECIALISTS, agentById } from "./agents.ts";
 import { HybridRetriever } from "./retriever.ts";
 import { SemanticRouter, specialistsFor } from "./router.ts";
@@ -19,7 +19,7 @@ import { checkInput, GENERIC_TERMS } from "./guardrails.ts";
 import { validateAnswer, isDecline } from "./validator.ts";
 import { answerMessages, plannerMessages, stripReasoning } from "./prompts.ts";
 import { actionsFor, cardsFor, citationsFor, extractiveAnswer, followupsFor, type Catalog } from "./compose.ts";
-import { queryTokens } from "./text.ts";
+import { queryTokens, splitSentences } from "./text.ts";
 
 export type OrchestratorDeps = {
   retriever: HybridRetriever;
@@ -38,6 +38,9 @@ export type OrchestratorDeps = {
   /** Dense-similarity floor below which evidence is treated as unrelated (model-specific). */
   denseFloor?: number;
 };
+
+/** Score window (router units) within which the LLM planner may pick agents. */
+const PLANNER_TIE = 0.03;
 
 const ANAPHORA = /\b(it|its|it's|this|that|these|those|they|them|their|the project|the same|there|above|more about)\b/i;
 
@@ -62,6 +65,12 @@ export async function answerQuestion(rawQuestion: string, history: ChatTurn[], d
     };
   }
   const question = guard.question;
+  // What is actually being asked: the sentence(s) with a question mark, else the last one.
+  // Context around it ("I'm a hiring manager reviewing candidates for an AI role.") still
+  // reaches the model, but must not steer retrieval and routing, or become an "unknown topic".
+  const sentences = splitSentences(question);
+  const asking = sentences.filter((x) => x.includes("?"));
+  const focus = sentences.length > 1 ? (asking.length ? asking.join(" ") : sentences[sentences.length - 1]) : question;
   emit({ type: "status", agent: "orchestrator", message: "Understanding the question" });
 
   // 2) Follow-up resolution: carry the entity being discussed into retrieval
@@ -72,7 +81,7 @@ export async function answerQuestion(rawQuestion: string, history: ChatTurn[], d
   const entityTitles = (named.length ? [] : boostEntities)
     .map((e) => deps.catalog.projects.find((p) => p.slug === e)?.title ?? deps.retriever.chunks.find((c) => c.entity === e)?.title.split(" — ")[0] ?? "")
     .filter(Boolean);
-  let query = entityTitles.length ? `${question} ${entityTitles.join(" ")}` : question;
+  let query = entityTitles.length ? `${focus} ${entityTitles.join(" ")}` : focus;
   // "Who is Ankit?" carries no topical keywords after stop-words — anchor it to the profile.
   if (!queryTokens(query).tokens.length) query = `${query} profile introduction background`;
 
@@ -87,17 +96,21 @@ export async function answerQuestion(rawQuestion: string, history: ChatTurn[], d
       qVec = null; // keyword retrieval still works
     }
   }
-  let evidence = deps.retriever.retrieve(query, qVec, { k: 12, boostEntities });
+  // The visitor's mode/persona can prefer evidence types (e.g. projects in Project explorer).
+  const prefer = deps.persona?.answer?.prefer;
+  const points = deps.persona?.answer?.points ?? 3;
+  let evidence = deps.retriever.retrieve(query, qVec, { k: 12, boostEntities, typeWeights: prefer });
 
   // 4) Is the question covered at all?
   //    • Unknown proper nouns ("Content AI", "Kubernetes") → deterministic, honest decline:
   //      the model never sees them, so it cannot invent a story about them.
   //    • Unknown ordinary topic words ("editing") → a caveat, only when the KB's direct
   //      keyword coverage of the question is weak.
+  //    Only the asking sentences are checked (see `focus` above).
   const kbText = (p: string) => deps.retriever.chunks.some((c) => `${c.title} ${c.text} ${c.tags.join(" ")}`.toLowerCase().includes(p.toLowerCase()));
-  const words = [...question.matchAll(/[A-Za-z][A-Za-z0-9+#.\-]*[A-Za-z0-9+#]|[A-Za-z]/g)].map((m) => ({ w: m[0].replace(/[.\-]+$/, ""), pos: m.index ?? 0 }));
+  const words = [...focus.matchAll(/[A-Za-z][A-Za-z0-9+#.\-]*[A-Za-z0-9+#]|[A-Za-z]/g)].map((m) => ({ w: m[0].replace(/[.\-]+$/, ""), pos: m.index ?? 0 }));
   const isUnknownWord = (w: string) => queryTokens(w).tokens.length > 0 && !deps.retriever.bm25.knows(w) && !kbText(w);
-  const capPhrases = [...question.matchAll(/(?<=\s)([A-Z][a-zA-Z0-9+#]*(?:\s+[A-Z][a-zA-Z0-9+#]*)+)/g)].map((m) => m[1]).filter((p) => !/\bAnkit\b|\bChand\b/.test(p) && !kbText(p));
+  const capPhrases = [...focus.matchAll(/(?<=\s)([A-Z][a-zA-Z0-9+#]*(?:\s+[A-Z][a-zA-Z0-9+#]*)+)/g)].map((m) => m[1]).filter((p) => !/\bAnkit\b|\bChand\b/.test(p) && !kbText(p));
   const capWords = words.filter(({ w, pos }) => pos > 0 && /^[A-Z]/.test(w) && w.length >= 3 && !/^(Ankit|Chand|Ankit's)$/.test(w) && isUnknownWord(w)).map((x) => x.w);
   const strongUnknown = [...new Set([...capPhrases, ...capWords.filter((w) => !capPhrases.some((p) => p.includes(w)))])];
   const softUnknown = words.filter(({ w }) => /^[a-z]/.test(w) && w.length >= 4 && !GENERIC_TERMS.has(queryTokens(w).tokens[0] ?? w) && !GENERIC_TERMS.has(w.toLowerCase()) && isUnknownWord(w)).map((x) => x.w);
@@ -116,13 +129,18 @@ export async function answerQuestion(rawQuestion: string, history: ChatTurn[], d
       const p = plannerMessages({ agents: SPECIALISTS, history, question });
       const r = await deps.llm.complete({ messages: p.messages, jsonSchema: p.schema, maxTokens: 80, temperature: 0, signal: deps.signal });
       const parsed = JSON.parse(stripReasoning(r.text).replace(/^[^{]*/, "").replace(/[^}]*$/, ""));
-      const agents = (Array.isArray(parsed.agents) ? parsed.agents : []).filter((a: string) => SPECIALISTS.some((s) => s.id === a)).slice(0, 2) as AgentId[];
+      // The planner only breaks ties: it may choose among agents the semantic router scored
+      // within PLANNER_TIE of the best, never one the router clearly ranked lower. Measured:
+      // a 0.5B model overrode a near-tie ("multi-agent projects") with profile + technical.
+      const best = Math.max(...Object.values(plan.scores));
+      const candidates = new Set(Object.entries(plan.scores).filter(([, s]) => s >= best - PLANNER_TIE).map(([id]) => id));
+      const agents = (Array.isArray(parsed.agents) ? parsed.agents : []).filter((a: string) => candidates.has(a)).slice(0, 2) as AgentId[];
       if (agents.length) {
         plan = { ...plan, agents };
         method = "llm";
         if (typeof parsed.query === "string" && parsed.query.trim().length > 3 && parsed.query.length < 300) {
           query = parsed.query;
-          evidence = deps.retriever.retrieve(query, qVec, { k: 12, boostEntities });
+          evidence = deps.retriever.retrieve(query, qVec, { k: 12, boostEntities, typeWeights: prefer });
         }
       }
     } catch {
@@ -139,8 +157,9 @@ export async function answerQuestion(rawQuestion: string, history: ChatTurn[], d
   };
   for (const spec of specs) {
     emit({ type: "status", agent: spec.id, message: `${spec.name} is gathering evidence` });
-    const scoped = deps.retriever.retrieve(query, qVec, { k: 6, types: spec.scope, typeWeights: spec.typeWeights, boostEntities });
-    scoped.slice(0, specs.length > 1 ? 3 : 5).forEach(take);
+    const scoped = deps.retriever.retrieve(query, qVec, { k: 10, types: spec.scope, typeWeights: mergeWeights(spec.typeWeights, prefer), boostEntities });
+    const ordered = spec.diverse && !boostEntities.length ? breadthFirst(scoped) : scoped;
+    ordered.slice(0, specs.length > 1 ? 3 : 5).forEach(take);
   }
   if (chosen.length < 3) evidence.slice(0, 5).forEach(take);
   const finalEvidence = weak ? [] : chosen.slice(0, 6);
@@ -180,14 +199,14 @@ export async function answerQuestion(rawQuestion: string, history: ChatTurn[], d
     if (missing.length && !declined) policy.push(`model ignored that the portfolio has no information about ${missing.map((t) => `"${t}"`).join(", ")}`);
     if (!v.ok || !text.trim() || policy.length) {
       validation = { ok: false, issues: [...v.hard, ...policy, ...v.soft], replaced: true };
-      text = extractiveAnswer(finalEvidence, missing);
+      text = extractiveAnswer(finalEvidence, missing, points);
       mode = "retrieval";
     } else {
       validation = { ok: true, issues: v.soft, replaced: false };
     }
     emit({ type: "validation", ok: validation.ok, issues: validation.issues });
   }
-  if (!text) text = extractiveAnswer(finalEvidence, missing);
+  if (!text) text = extractiveAnswer(finalEvidence, missing, points);
 
   // 9) Cards, navigation and follow-ups
   const asked = history.filter((t) => t.role === "user").map((t) => t.content).concat(question);
@@ -205,4 +224,25 @@ export async function answerQuestion(rawQuestion: string, history: ChatTurn[], d
     timings: { totalMs: Date.now() - t0, retrievalMs, generationMs },
     entities,
   };
+}
+
+/** Multiplies two evidence-type weight maps (an agent's own scope weights × the persona's preference). */
+function mergeWeights(a?: Partial<Record<ChunkType, number>>, b?: Partial<Record<ChunkType, number>>): Partial<Record<ChunkType, number>> | undefined {
+  if (!a || !b) return a ?? b;
+  const out: Partial<Record<ChunkType, number>> = { ...a };
+  for (const [k, v] of Object.entries(b) as [ChunkType, number][]) out[k] = (out[k] ?? 1) * v;
+  return out;
+}
+
+/** Best chunk of each distinct entity first (in rank order), then the remaining chunks. */
+function breadthFirst(chunks: ScoredChunk[]): ScoredChunk[] {
+  const seen = new Set<string>();
+  const first: ScoredChunk[] = [];
+  const rest: ScoredChunk[] = [];
+  for (const c of chunks) {
+    const key = c.entity ?? c.id;
+    (seen.has(key) ? rest : first).push(c);
+    seen.add(key);
+  }
+  return [...first, ...rest];
 }

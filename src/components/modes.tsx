@@ -4,9 +4,9 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState, ty
 import { Check, ChevronDown, SlidersHorizontal } from "lucide-react";
 import { cn } from "@/lib/format";
 
-import { MODES, MODE_KEY, type ModeId } from "@/lib/modes";
+import { MODES, MODE_EVENT, MODE_KEY, type ModeId } from "@/lib/modes";
 
-export { MODES, MODE_KEY, type ModeId };
+export { MODES, MODE_EVENT, MODE_KEY, type ModeId };
 
 const ModeContext = createContext<{ mode: ModeId; setMode: (m: ModeId) => void }>({ mode: "overview", setMode: () => {} });
 export const useMode = () => useContext(ModeContext);
@@ -25,6 +25,7 @@ export function ModeProvider({ children }: { children: ReactNode }) {
       /* storage unavailable — mode still applies for this page view */
     }
     setModeState(m);
+    window.dispatchEvent(new CustomEvent(MODE_EVENT, { detail: m }));
   }, []);
   return <ModeContext.Provider value={{ mode, setMode }}>{children}</ModeContext.Provider>;
 }

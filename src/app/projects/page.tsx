@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Suspense } from "react";
 import { allProjectCategories, projects } from "@/lib/content";
 import { projectCategories } from "@/lib/schema";
@@ -6,12 +7,11 @@ import { Container, PageHeader } from "@/components/ui";
 import { ProjectExplorer } from "@/components/project-explorer";
 import { ProjectCard } from "@/components/project-card";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Projects",
-  description:
-    "Project catalogue of Ankit Chand: multi-agent platforms (NexusAI, IntelliHub), RAG, AutoGen agents, NER for e-commerce search, forecasting and deep-learning case studies — searchable and filterable.",
-  alternates: { canonical: "/projects" },
-};
+  description: "Project catalogue of Ankit Chand: multi-agent platforms (NexusAI, IntelliHub), RAG, AutoGen agents, NER for e-commerce search, forecasting and deep-learning case studies — searchable and filterable.",
+  path: "/projects",
+});
 
 export default function ProjectsPage() {
   const categories = projectCategories.filter((c) => allProjectCategories.includes(c));

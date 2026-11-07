@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { certifications } from "@/lib/content";
 import { CertGallery } from "@/components/cert-gallery";
 import { Container, PageHeader } from "@/components/ui";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Certifications",
   description: "Certifications and professional training of Ankit Chand: Anthropic Academy (Claude Code in Action, Introduction to Agent Skills, Claude with Amazon Bedrock), Udemy AutoGen agent teams, and Great Learning's PG Program in Data Science with Generative AI.",
-  alternates: { canonical: "/certifications" },
-};
+  path: "/certifications",
+});
 
 export default function CertificationsPage() {
   const done = certifications.filter((c) => c.status === "Completed").length;

@@ -10,14 +10,15 @@
 import { spawn, execSync } from "node:child_process";
 import { mkdirSync, writeFileSync, existsSync } from "node:fs";
 import path from "node:path";
+import { homedir } from "node:os";
 import { EVAL_SET } from "./eval-set.ts";
 import { createHarness, grade } from "./harness.ts";
 import { draftAcceptance } from "./metrics.ts";
 import { HttpLlmEngine } from "../../src/lib/assistant/llm-http.ts";
 import { ROOT } from "../kb/content.ts";
 
-const LLAMA_DIR = process.env.LLAMA_DIR ?? "C:/Users/Abhisek Chand/.tools/llama.cpp";
-const MODELS_DIR = process.env.MODELS_DIR ?? "C:/Users/Abhisek Chand/.tools/models";
+const LLAMA_DIR = process.env.LLAMA_DIR ?? path.join(homedir(), ".tools", "llama.cpp");
+const MODELS_DIR = process.env.MODELS_DIR ?? path.join(homedir(), ".tools", "models");
 const PORT = 8091;
 
 type ModelDef = { key: string; name: string; file: string; params: string; license: string; webllm: string; extraBody?: Record<string, unknown> };

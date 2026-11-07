@@ -33,7 +33,21 @@ export type ScoredChunk = Chunk & { score: number; lexical: number; dense: numbe
 
 export type AgentId = "orchestrator" | "profile" | "technical" | "projects" | "recruiter" | "navigator" | "validator";
 
-export type PersonaId = "recruiter" | "data-science" | "ml" | "genai" | "agentic" | "student" | "collaborator" | "freelance" | "explore";
+/** The first six are the portfolio's interaction modes (see src/lib/modes.ts); the rest are audiences. */
+export type PersonaId =
+  | "overview"
+  | "recruiter"
+  | "technical"
+  | "student"
+  | "projects"
+  | "conversation"
+  | "data-science"
+  | "ml"
+  | "genai"
+  | "agentic"
+  | "collaborator"
+  | "freelance"
+  | "explore";
 
 export type Persona = {
   id: PersonaId;
@@ -41,9 +55,17 @@ export type Persona = {
   short: string;
   icon: string;
   description: string;
+  /** Sentence telling the model who it is talking to; defaults to "The visitor is a <label>." */
+  audience?: string;
   style: string;
   agents: Partial<Record<AgentId, number>>;
   suggestions: string[];
+  /**
+   * Shapes answers even without a language model (instant mode), so a mode is more than
+   * a prompt hint: `points` = supporting points after the lead sentence (default 3);
+   * `prefer` = evidence-type weights applied during retrieval (1 = neutral).
+   */
+  answer?: { points?: number; prefer?: Partial<Record<ChunkType, number>> };
 };
 
 export type ChatTurn = { role: "user" | "assistant"; content: string; entities?: string[] };

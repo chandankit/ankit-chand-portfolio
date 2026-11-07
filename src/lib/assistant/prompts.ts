@@ -30,7 +30,7 @@ export function answerMessages(opts: { agents: AgentSpec[]; persona: Persona | n
   const system = [
     `You are the ${who} ${ANSWER_SIGNATURE}`,
     ...agents.map((a) => a.instructions),
-    persona ? `The visitor is a ${persona.label.toLowerCase()}. ${persona.style}` : "",
+    persona ? `${persona.audience ?? `The visitor is a ${persona.label.toLowerCase()}.`} ${persona.style}` : "",
     "Rules:",
     "1. Use ONLY the numbered evidence. Do not use outside knowledge about Ankit.",
     "2. If the evidence does not answer the question, say: \"I don't have verified information about that in Ankit's portfolio.\" Then mention what related information exists.",

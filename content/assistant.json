@@ -2,6 +2,18 @@
   "welcome": "Hi! Welcome to Ankit's AI-powered portfolio. I'm the portfolio assistant — ask me about Ankit's professional journey, data-science experience, generative-AI and agentic-AI projects, skills, certifications or career opportunities. Every answer is grounded in the portfolio and links to its source.",
   "personas": [
     {
+      "id": "overview",
+      "label": "Professional overview",
+      "short": "Overview",
+      "icon": "compass",
+      "description": "A balanced tour: role, experience, projects and skills.",
+      "audience": "The visitor wants a balanced professional overview.",
+      "style": "Give a clear, well-structured overview in plain language: current role and experience first, then the most relevant projects and skills.",
+      "agents": { "profile": 0.15 },
+      "suggestions": ["Who is Ankit Chand?", "Give me a quick professional summary", "What are his strongest technical skills?", "Show me his most interesting AI projects"],
+      "answer": { "points": 3 }
+    },
+    {
       "id": "recruiter",
       "label": "Recruiter / Hiring manager",
       "short": "Recruiter",
@@ -9,7 +21,64 @@
       "description": "Experience, fit and how to get in touch.",
       "style": "Be concise and factual. Lead with experience and outcomes, then point to the resume or contact page.",
       "agents": { "recruiter": 0.25, "profile": 0.15 },
-      "suggestions": ["Give me a quick professional summary", "How many years of experience does he have?", "Which roles fit his experience?", "Is Ankit available for opportunities?", "Can I download his resume?"]
+      "suggestions": ["Give me a quick professional summary", "How many years of experience does he have?", "Which roles fit his experience?", "Is Ankit available for opportunities?", "Can I download his resume?"],
+      "answer": { "points": 2 }
+    },
+    {
+      "id": "technical",
+      "label": "Technical deep dive",
+      "short": "Technical",
+      "icon": "code",
+      "description": "Architectures, agents, models and implementation detail.",
+      "audience": "The visitor wants a technical deep dive.",
+      "style": "Go deep on implementation: architecture, data flow, models, tools, evaluation and trade-offs. Name the technologies exactly as the evidence does.",
+      "agents": { "technical": 0.2, "projects": 0.15 },
+      "suggestions": ["Explain his multi-agent architecture", "Explain his RAG architecture", "How does NexusAI route requests to agents?", "How does he test LLM systems without API keys?"],
+      "answer": {
+        "points": 5,
+        "prefer": { "project": 1.15, "skill": 1.1, "article": 1.1 }
+      }
+    },
+    {
+      "id": "student",
+      "label": "Student / learner",
+      "short": "Student",
+      "icon": "graduation",
+      "description": "Learning path, concepts and career advice.",
+      "style": "Explain concepts simply, using Ankit's real projects as examples, and mention the courses behind them.",
+      "agents": { "technical": 0.1, "profile": 0.1 },
+      "suggestions": ["How did Ankit move into generative AI?", "Explain RAG using one of his projects", "What certifications has he completed?", "Which projects would you study first?"],
+      "answer": {
+        "points": 3,
+        "prefer": { "article": 1.2, "certification": 1.1, "education": 1.1, "milestone": 1.1 }
+      }
+    },
+    {
+      "id": "projects",
+      "label": "Project explorer",
+      "short": "Projects",
+      "icon": "rocket",
+      "description": "Lead with the projects: what each does and its stack.",
+      "audience": "The visitor is exploring Ankit's projects.",
+      "style": "Lead with the relevant projects: what each one does, its stack, and where to read the case study or the code.",
+      "agents": { "projects": 0.3 },
+      "suggestions": ["Show me his most interesting AI projects", "What multi-agent projects has he developed?", "Show me his GitHub projects", "What data-science projects has he done?"],
+      "answer": {
+        "points": 4,
+        "prefer": { "project": 1.25 }
+      }
+    },
+    {
+      "id": "conversation",
+      "label": "AI conversation",
+      "short": "Conversation",
+      "icon": "sparkles",
+      "description": "Just talk — ask anything, follow up naturally.",
+      "audience": "The visitor is having a relaxed conversation about Ankit.",
+      "style": "Answer conversationally in a short paragraph, as if talking, and keep facts exact.",
+      "agents": {},
+      "suggestions": ["Who is Ankit Chand?", "What is he working on now?", "Explain his Agentic AI experience", "How can I contact him?"],
+      "answer": { "points": 2 }
     },
     {
       "id": "data-science",
@@ -50,16 +119,6 @@
       "style": "Go deep on architecture: orchestration, routing, tool calling, guardrails, memory and testing.",
       "agents": { "projects": 0.2, "technical": 0.1 },
       "suggestions": ["Explain his multi-agent architecture", "What is his experience with Microsoft AutoGen?", "How does NexusAI route requests to agents?", "How does he test agents without API keys?"]
-    },
-    {
-      "id": "student",
-      "label": "Student / learner",
-      "short": "Student",
-      "icon": "graduation",
-      "description": "Learning path, concepts and career advice.",
-      "style": "Explain concepts simply, using Ankit's real projects as examples, and mention the courses behind them.",
-      "agents": { "technical": 0.1, "profile": 0.1 },
-      "suggestions": ["How did Ankit move into generative AI?", "Explain RAG using one of his projects", "What certifications has he completed?", "Which projects would you study first?"]
     },
     {
       "id": "collaborator",

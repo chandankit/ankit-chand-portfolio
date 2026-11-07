@@ -94,6 +94,12 @@ test("publishing and enhancement refuse to run when not connected (nothing is co
   assert.equal((await upload("action=enhance", photo, session)).status, 501);
 });
 
+test("reverting to the placeholder needs a session, explicit confirmation and a connection", { skip }, async () => {
+  assert.equal((await upload("action=revert&confirm=true", "")).status, 401);
+  assert.equal((await upload("action=revert", "", session)).status, 400);
+  assert.equal((await upload("action=revert&confirm=true", "", session)).status, 501);
+});
+
 test("sign-out clears the session cookie", { skip }, async () => {
   const r = await fetch(`${BASE}/api/admin/login`, { method: "DELETE", headers: { Cookie: session } });
   assert.equal(r.status, 200);

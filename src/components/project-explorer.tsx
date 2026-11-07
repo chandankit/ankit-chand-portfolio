@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { Search, X } from "lucide-react";
@@ -10,9 +10,30 @@ import { ProjectCard } from "./project-card";
 
 const CONTEXTS = ["Independent", "Industry", "Internship", "Coursework", "Competition"] as const;
 
+/** Everything a visitor might search for — including the problem, approach, features and agents. */
+export function projectSearchText(p: Project) {
+  return [
+    p.title,
+    p.tagline,
+    p.summary,
+    p.organisation ?? "",
+    p.problem,
+    p.objective,
+    ...p.approach,
+    ...p.features,
+    ...(p.agents ?? []).flatMap((a) => [a.name, a.role, ...(a.tools ?? [])]),
+    ...(p.challenges ?? []).flatMap((c) => [c.challenge, c.solution]),
+    ...p.stack,
+    ...p.categories,
+    p.context,
+  ]
+    .join(" ")
+    .toLowerCase();
+}
+
 function matches(p: Project, q: string) {
   if (!q) return true;
-  const hay = [p.title, p.tagline, p.summary, p.organisation ?? "", ...p.stack, ...p.categories, p.context].join(" ").toLowerCase();
+  const hay = projectSearchText(p);
   return q
     .toLowerCase()
     .split(/\s+/)
@@ -28,13 +49,39 @@ function ProjectExplorerInner({ projects, categories }: { projects: Project[]; c
   const category = params.get("category") ?? "All";
   const context = params.get("context") ?? "All";
 
+  // Read the live URL, not the render-time `params`: a filter clicked right after typing
+  // must not drop the search term that the debounced update just wrote.
   const setParam = (key: string, value: string) => {
-    const next = new URLSearchParams(params.toString());
+    const next = new URLSearchParams(window.location.search);
     if (!value || value === "All") next.delete(key);
     else next.set(key, value);
     const qs = next.toString();
     router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
   };
+
+  // Typing updates the URL (debounced), so a search can be shared or bookmarked.
+  const typing = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  // The last search value this component wrote to the URL. The URL updates asynchronously,
+  // so when that write lands the visitor may already have typed more: our own echo must
+  // never overwrite newer input.
+  const written = useRef(params.get("q") ?? "");
+  const writeQuery = (value: string) => {
+    written.current = value;
+    setParam("q", value);
+  };
+  const onType = (value: string) => {
+    setQuery(value);
+    clearTimeout(typing.current);
+    typing.current = setTimeout(() => writeQuery(value.trim()), 350);
+  };
+  useEffect(() => () => clearTimeout(typing.current), []);
+  // Back / forward (or a link to ?q=…) updates the box — only for changes made elsewhere.
+  const urlQuery = params.get("q") ?? "";
+  useEffect(() => {
+    if (urlQuery === written.current) return;
+    written.current = urlQuery;
+    setQuery(urlQuery);
+  }, [urlQuery]);
 
   const filtered = useMemo(
     () =>
@@ -71,8 +118,13 @@ function ProjectExplorerInner({ projects, categories }: { projects: Project[]; c
             <input
               type="search"
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onBlur={() => setParam("q", query.trim())}
+              onChange={(e) => onType(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  clearTimeout(typing.current);
+                  writeQuery(query.trim());
+                }
+              }}
               placeholder="Search by name, technology or problem — e.g. AutoGen, FAISS, churn"
               className="h-11 w-full rounded-full border border-line bg-surface pl-10 pr-4 text-sm text-fg outline-none transition placeholder:text-subtle focus:border-line-strong"
             />
@@ -103,6 +155,7 @@ function ProjectExplorerInner({ projects, categories }: { projects: Project[]; c
           <button
             type="button"
             onClick={() => {
+              clearTimeout(typing.current);
               setQuery("");
               router.replace(pathname, { scroll: false });
             }}

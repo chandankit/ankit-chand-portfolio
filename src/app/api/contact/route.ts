@@ -29,8 +29,10 @@ export async function POST(req: NextRequest) {
   if (!req.headers.get("content-type")?.includes("application/json")) {
     return reply({ ok: false, code: "bad_request", message: "Expected a JSON body." }, 415);
   }
+  // Reject oversized bodies before reading them, then re-check the real byte length.
+  if (Number(req.headers.get("content-length") ?? 0) > MAX_BODY_BYTES) return reply({ ok: false, code: "bad_request", message: "Message is too large." }, 413);
   const raw = await req.text();
-  if (raw.length > MAX_BODY_BYTES) return reply({ ok: false, code: "bad_request", message: "Message is too large." }, 413);
+  if (Buffer.byteLength(raw, "utf8") > MAX_BODY_BYTES) return reply({ ok: false, code: "bad_request", message: "Message is too large." }, 413);
 
   // 3. Rate limit per IP.
   const { allowed, retryAfterSec, remaining } = rateLimit(clientIp(req.headers));

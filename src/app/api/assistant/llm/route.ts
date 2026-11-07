@@ -13,6 +13,10 @@ import { checkInput } from "@/lib/assistant/guardrails.ts";
  */
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+/** Hard ceiling for one streamed answer (seconds) — bounds cost and stuck connections. */
+export const maxDuration = 180;
+/** How long the upstream may take to start responding (it then streams freely). */
+const UPSTREAM_HEADERS_TIMEOUT_MS = 60_000;
 
 const limiter = createRateLimiter({ windowMs: 10 * 60 * 1000, max: 40 });
 
@@ -57,6 +61,12 @@ export async function POST(req: NextRequest) {
   const question = questionOf(user.content);
   if (question === null || !checkInput(question).ok) return NextResponse.json({ error: "Question rejected by guardrails" }, { status: 400 });
 
+  // The timeout must cover only the wait for response headers: an AbortSignal.timeout()
+  // on fetch also aborts the streamed body, which cut slow-but-healthy answers off at 60 s.
+  // A visitor who disconnects (or whose client watchdog gives up) cancels the upstream too.
+  const ctrl = new AbortController();
+  const headersTimer = setTimeout(() => ctrl.abort(), UPSTREAM_HEADERS_TIMEOUT_MS);
+  req.signal.addEventListener("abort", () => ctrl.abort(), { once: true });
   const upstream = await fetch(`${base.replace(/\/$/, "")}/chat/completions`, {
     method: "POST",
     headers: { "Content-Type": "application/json", ...(process.env.INFERENCE_API_KEY ? { Authorization: `Bearer ${process.env.INFERENCE_API_KEY}` } : {}) },
@@ -69,8 +79,10 @@ export async function POST(req: NextRequest) {
       stream_options: { include_usage: true },
       ...(parsed.data.json_schema ? { response_format: { type: "json_schema", json_schema: { name: "plan", schema: parsed.data.json_schema } } } : {}),
     }),
-    signal: AbortSignal.timeout(60_000),
-  }).catch(() => null);
+    signal: ctrl.signal,
+  })
+    .catch(() => null)
+    .finally(() => clearTimeout(headersTimer));
   if (!upstream || !upstream.ok || !upstream.body) return NextResponse.json({ error: "Inference server unavailable" }, { status: 502 });
 
   return new Response(upstream.body, {

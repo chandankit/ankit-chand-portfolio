@@ -7,6 +7,7 @@ import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { ArrowUpRight, ChartLine, Network, Search, Server, Sparkles, X } from "lucide-react";
 import type { SkillCategory } from "@/lib/schema";
 import { cn } from "@/lib/format";
+import { Reveal } from "./reveal";
 
 const catIcon = { chart: ChartLine, sparkles: Sparkles, network: Network, server: Server } as Record<string, typeof Sparkles>;
 
@@ -26,9 +27,54 @@ function SkillExplorerInner({ categories, projectTitles }: { categories: SkillCa
     [categories, active, q],
   );
   const total = visible.reduce((n, c) => n + c.skills.length, 0);
+  // The skills with the most project evidence — a single-series bar chart (count of
+  // case studies using the skill). Each bar is a button that opens that skill's evidence.
+  const top = useMemo(
+    () =>
+      categories
+        .flatMap((c) => c.skills.map((s) => ({ name: s.name, count: s.evidence.length })))
+        .filter((s) => s.count > 0)
+        .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name))
+        .slice(0, 10),
+    [categories],
+  );
+  const max = Math.max(1, ...top.map((t) => t.count));
+  const pick = (name: string) => {
+    setActive("all");
+    setQuery(name);
+    setSelected(name);
+    requestAnimationFrame(() => document.getElementById("skill-results")?.scrollIntoView({ behavior: "smooth", block: "start" }));
+  };
 
   return (
     <div>
+      <Reveal className="card mb-6 p-5 sm:p-6">
+        <h2 className="font-display text-lg font-semibold text-fg">Where the evidence is</h2>
+        <p className="mt-1 text-sm text-muted">The ten skills used in the most case studies. Select one to see the projects.</p>
+        <ol className="mt-5 space-y-2.5">
+          {top.map((t, i) => (
+            <li key={t.name}>
+              <button
+                type="button"
+                onClick={() => pick(t.name)}
+                aria-label={`${t.name}: used in ${t.count} projects. Show the evidence.`}
+                className="group grid w-full grid-cols-[minmax(0,9rem)_1fr_auto] items-center gap-3 rounded-lg px-2 py-1 text-left transition hover:bg-surface-strong sm:grid-cols-[minmax(0,15rem)_1fr_auto]"
+              >
+                <span className="truncate text-sm text-fg">{t.name}</span>
+                <span className="relative h-2.5 rounded-sm bg-surface-strong" aria-hidden>
+                  <span
+                    className="evidence-bar absolute inset-y-0 left-0 rounded-r-[4px]"
+                    style={{ width: `${(t.count / max) * 100}%`, background: "var(--chart-1)", "--i": i } as React.CSSProperties}
+                  />
+                </span>
+                <span className="font-mono text-xs tabular-nums text-muted">
+                  {t.count} project{t.count === 1 ? "" : "s"}
+                </span>
+              </button>
+            </li>
+          ))}
+        </ol>
+      </Reveal>
       <div className="card flex flex-col gap-3 p-4 sm:p-5 lg:flex-row lg:items-center">
         <label className="relative flex-1">
           <span className="sr-only">Search skills</span>
@@ -61,7 +107,7 @@ function SkillExplorerInner({ categories, projectTitles }: { categories: SkillCa
           ))}
         </div>
       </div>
-      <p className="mt-4 text-sm text-muted" aria-live="polite">
+      <p id="skill-results" className="mt-4 scroll-mt-28 text-sm text-muted" aria-live="polite">
         {total} skill{total === 1 ? "" : "s"} · select one to see where I&apos;ve used it
       </p>
 

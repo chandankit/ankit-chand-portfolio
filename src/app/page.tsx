@@ -11,20 +11,25 @@ import { ButtonLink, Container, Eyebrow, SectionHeading, buttonClass } from "@/c
 import { AskButton } from "@/components/assistant/assistant-panel";
 import { AllProjects, ArchitectureSpotlight, AskTeaser, ConversationSection, LearningPath, RecruiterBrief } from "@/components/home-modes";
 import { GitHubIcon, LinkedInIcon, iconMap } from "@/components/icons";
+import { NeuralField } from "@/components/neural-field";
+import { CountUp } from "@/components/count-up";
+import { TechMarquee } from "@/components/tech-marquee";
 
 export default function HomePage() {
   const latest = experience[0];
   const skillCount = skillCategories.reduce((n, c) => n + c.skills.length, 0);
   const notes = getArticles();
   const completedCerts = certifications.filter((c) => c.status === "Completed").length;
+  const inProgressCerts = certifications.length - completedCerts;
+  const latestDegree = education.find((e) => e.status === "Completed");
   const publicRepos = projects.filter((p) => p.links.repoVisibility === "public").length;
 
   const explore = [
     { href: "/experience", icon: Briefcase, title: "Experience", body: `${latest.role} · ${latest.company}`, meta: `${experience.length} roles since 2021` },
     { href: "/projects", icon: Layers, title: "Projects", body: `${projects.length} case studies — multi-agent platforms to deep learning`, meta: `${publicRepos} with public code` },
     { href: "/skills", icon: Sparkles, title: "Skills", body: skillCategories.map((c) => c.title.split(" ")[0]).join(" · "), meta: `${skillCount} skills, each linked to evidence` },
-    { href: "/certifications", icon: Award, title: "Certifications", body: "Anthropic Academy, Udemy and Great Learning", meta: `${completedCerts} completed · 1 in progress` },
-    { href: "/education", icon: GraduationCap, title: "Education", body: education.map((e) => e.institution.split(",")[0]).join(" · "), meta: "PG Diploma in Data Science, 2020" },
+    { href: "/certifications", icon: Award, title: "Certifications", body: "Anthropic Academy, Udemy and Great Learning", meta: `${completedCerts} completed${inProgressCerts ? ` · ${inProgressCerts} in progress` : ""}` },
+    { href: "/education", icon: GraduationCap, title: "Education", body: education.map((e) => e.institution.split(",")[0]).join(" · "), meta: latestDegree ? `${latestDegree.qualification.replace("Post Graduate Diploma", "PG Diploma")} · ${latestDegree.period.replace(/^Completed\s+/, "")}` : `${education.length} qualifications` },
     { href: "/achievements", icon: Trophy, title: "Achievements", body: milestones[0]?.title ?? "", meta: `${milestones.length} milestones` },
     { href: "/knowledge", icon: BookOpen, title: "Knowledge", body: notes[0]?.title ?? "Engineering notes", meta: `${notes.length} engineering notes` },
     { href: "/resume", icon: FileText, title: "Resume", body: "Preview online or download the PDF", meta: `Updated ${formatYearMonth(profile.resume.updated)}` },
@@ -33,7 +38,8 @@ export default function HomePage() {
   return (
     <div className="home-sections flex flex-col">
       {/* ---------------- Hero ---------------- */}
-      <section data-section="hero" className="relative overflow-hidden pb-16 pt-28 sm:pt-36 lg:pb-24" aria-labelledby="hero-title">
+      <section data-section="hero" className="relative isolate overflow-hidden pb-16 pt-28 sm:pt-36 lg:pb-24" aria-labelledby="hero-title">
+        <NeuralField className="absolute inset-0 -z-10 size-full" />
         <Container className="grid items-center gap-14 lg:grid-cols-[1.15fr_1fr]">
           <div>
             <div className="fade-up" style={{ "--d": "0s" } as React.CSSProperties}>
@@ -98,6 +104,7 @@ export default function HomePage() {
         </Container>
       </section>
 
+      <TechMarquee />
       <ConversationSection />
       <RecruiterBrief />
       <ArchitectureSpotlight />
@@ -111,7 +118,9 @@ export default function HomePage() {
           <div className="card ring-gradient grid divide-y divide-line overflow-hidden sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
             {profile.highlights.map((h, i) => (
               <Reveal key={h.label} delay={i * 0.05} className="p-6">
-                <p className="font-display text-4xl font-semibold tracking-tight text-gradient">{h.value}</p>
+                <p className="font-display text-4xl font-semibold tracking-tight text-gradient">
+                  <CountUp value={h.value} />
+                </p>
                 <p className="mt-2 text-sm font-semibold text-fg">{h.label}</p>
                 <p className="mt-1 text-xs leading-relaxed text-subtle">{h.detail}</p>
               </Reveal>
@@ -129,7 +138,7 @@ export default function HomePage() {
               const Icon = iconMap[e.icon];
               return (
                 <Reveal key={e.title} delay={i * 0.05}>
-                  <div className="card h-full p-6">
+                  <div data-glow className="card h-full p-6">
                     <span className="grid size-11 place-items-center rounded-xl border border-line bg-surface-strong text-teal">
                       <Icon className="size-5" aria-hidden />
                     </span>
@@ -186,7 +195,7 @@ export default function HomePage() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {explore.map((e, i) => (
               <Reveal key={e.href} delay={i * 0.03} className="h-full">
-                <Link href={e.href} className="card group flex h-full flex-col p-5 transition-all hover:-translate-y-1 hover:border-line-strong">
+                <Link href={e.href} data-glow className="card group flex h-full flex-col p-5 transition-all hover:-translate-y-1 hover:border-line-strong">
                   <div className="flex items-center justify-between">
                     <e.icon className="size-5 text-indigo" aria-hidden />
                     <ArrowUpRight className="size-4 text-subtle transition group-hover:text-fg" aria-hidden />

@@ -118,7 +118,7 @@ export function CertGallery({ certs }: { certs: Certification[] }) {
                 </div>
                 <div>
                   <dt className="text-subtle">Completed</dt>
-                  <dd className="mt-1 font-medium text-fg">{current.date ? formatYearMonth(current.date) : current.status === "In progress" ? "Ongoing" : "—"}</dd>
+                  <dd className="mt-1 font-medium text-fg">{current.date ? formatYearMonth(current.date) : current.status === "In progress" ? "Ongoing" : "Date not listed"}</dd>
                 </div>
                 <div>
                   <dt className="text-subtle">Category</dt>

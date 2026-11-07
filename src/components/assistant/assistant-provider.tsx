@@ -7,7 +7,7 @@ import { loadRuntime, ServerProxyEngine, type AssistantRuntime } from "@/lib/ass
 import { shouldAutoLoadEmbeddings, type EmbedderStatus } from "@/lib/assistant/browser/embedder.ts";
 import { detectWebGpu, isModelCached, WebLlmEngine, type WebGpuSupport } from "@/lib/assistant/browser/webllm-engine.ts";
 import { DEFAULT_BROWSER_MODEL_ID, modelById } from "@/lib/assistant/models.ts";
-import { MODES, useMode } from "@/components/modes";
+import { MODES, MODE_EVENT, useMode, type ModeId } from "@/components/modes";
 
 export type ChatMessage = {
   id: string;
@@ -74,7 +74,7 @@ const write = (k: string, v: unknown, store: Storage | undefined) => {
 };
 const uid = () => Math.random().toString(36).slice(2, 10);
 
-export function AssistantProvider({ children, defaultPersona = "explore" }: { children: ReactNode; defaultPersona?: PersonaId }) {
+export function AssistantProvider({ children, defaultPersona = "overview" }: { children: ReactNode; defaultPersona?: PersonaId }) {
   const router = useRouter();
   const pathname = usePathname();
   const [open, setOpenState] = useState(false);
@@ -91,14 +91,33 @@ export function AssistantProvider({ children, defaultPersona = "explore" }: { ch
   const abortRef = useRef<AbortController | null>(null);
   const engineRef = useRef<EngineState>(engine);
   engineRef.current = engine;
-  const { mode } = useMode();
+  const { mode, setMode } = useMode();
 
-  // A new visitor mode suggests a matching persona — unless a conversation is under way.
+  // The six interaction modes ARE assistant personas, kept in sync both ways:
+  //  • on load, the restored mode sets the persona (unless a conversation is restored);
+  //  • an explicit mode switch always sets the persona, even mid-conversation;
+  //  • picking a mode persona in the assistant switches the site's view (choosePersona).
   useEffect(() => {
     const m = MODES.find((x) => x.id === mode);
     if (m && messages.length === 0) setPersonaId(m.persona);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode]);
+  useEffect(() => {
+    const onMode = (e: Event) => {
+      const m = MODES.find((x) => x.id === (e as CustomEvent<ModeId>).detail);
+      if (m) setPersonaId(m.persona);
+    };
+    window.addEventListener(MODE_EVENT, onMode);
+    return () => window.removeEventListener(MODE_EVENT, onMode);
+  }, []);
+  const choosePersona = useCallback(
+    (id: PersonaId) => {
+      setPersonaId(id);
+      const m = MODES.find((x) => x.persona === id);
+      if (m && m.id !== mode) setMode(m.id);
+    },
+    [mode, setMode],
+  );
 
   // Restore this tab's conversation (session-scoped: nothing leaves the browser).
   useEffect(() => {
@@ -281,7 +300,7 @@ export function AssistantProvider({ children, defaultPersona = "explore" }: { ch
       busy,
       persona,
       personas,
-      setPersona: setPersonaId,
+      setPersona: choosePersona,
       welcome: rt?.payload.welcome ?? "Hi! I'm the portfolio assistant. Ask me anything about Ankit's experience, projects, skills or certifications.",
       runtime: runtimeState,
       embedder,
@@ -292,7 +311,7 @@ export function AssistantProvider({ children, defaultPersona = "explore" }: { ch
       disableModel,
       selectedModelId,
     }),
-    [open, setOpen, messages, ask, stop, clear, busy, persona, personas, rt, runtimeState, embedder, engine, webgpu, serverModel, enableBrowserModel, disableModel, selectedModelId],
+    [open, setOpen, messages, ask, stop, clear, busy, persona, personas, choosePersona, rt, runtimeState, embedder, engine, webgpu, serverModel, enableBrowserModel, disableModel, selectedModelId],
   );
   return <AssistantContext.Provider value={value}>{children}</AssistantContext.Provider>;
 }

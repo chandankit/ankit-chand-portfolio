@@ -11,8 +11,23 @@ import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
  * CSS fallback timer — even if hydration is slow. Reduced-motion users see
  * content immediately.
  */
-export function Reveal({ children, delay = 0, className, y = 18 }: { children: ReactNode; delay?: number; className?: string; y?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
+export function Reveal({
+  children,
+  delay = 0,
+  className,
+  y = 18,
+  as: Tag = "div",
+  id,
+}: {
+  children: ReactNode;
+  delay?: number;
+  className?: string;
+  y?: number;
+  /** Render as a list item when revealing items of a <ul>/<ol> (a <div> there is invalid markup). */
+  as?: "div" | "li";
+  id?: string;
+}) {
+  const ref = useRef<HTMLElement>(null);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -33,8 +48,8 @@ export function Reveal({ children, delay = 0, className, y = 18 }: { children: R
     return () => io.disconnect();
   }, []);
   return (
-    <div ref={ref} data-reveal="" className={className} style={{ "--reveal-delay": `${delay}s`, "--reveal-y": `${y}px` } as CSSProperties}>
+    <Tag ref={ref as never} id={id} data-reveal="" className={className} style={{ "--reveal-delay": `${delay}s`, "--reveal-y": `${y}px` } as CSSProperties}>
       {children}
-    </div>
+    </Tag>
   );
 }

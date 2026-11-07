@@ -19,6 +19,12 @@ export type AgentSpec = {
   typeWeights: Partial<Record<ChunkType, number>>;
   instructions: string;
   examples: string[];
+  /**
+   * Breadth before depth: when the question names no specific entity, take the best chunk
+   * of each distinct entity first. For "Which multi-agent projects…?" this stops three
+   * chunks of one project from crowding the others (measured: NexusAI ranked 8th).
+   */
+  diverse?: boolean;
 };
 
 export const SPECIALISTS: AgentSpec[] = [
@@ -70,6 +76,7 @@ export const SPECIALISTS: AgentSpec[] = [
     role: "Project objectives, architecture, agents, stack, results and links.",
     scope: ["project", "article", "fact"],
     typeWeights: { project: 1, article: 0.7, fact: 0.75 },
+    diverse: true,
     instructions: "Explain projects: the problem, the architecture, the agents and tools, the stack, challenges and results. Mention whether the code is public and point to the project page.",
     examples: [
       "Explain his multi-agent architecture",
@@ -83,6 +90,11 @@ export const SPECIALISTS: AgentSpec[] = [
       "What deep-learning projects has he done?",
       "What challenges did he solve in his projects?",
       "Show his GitHub projects",
+      // "Which projects …" phrasings: without these, questions that name a technique and ask
+      // for projects ("Which projects use multi-agent orchestration?") routed to the recruiter.
+      "Which of his projects use AI agents or tool calling?",
+      "List the projects he has built with LLMs",
+      "What has he developed with multi-agent systems?",
     ],
   },
   {

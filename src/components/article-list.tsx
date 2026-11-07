@@ -13,7 +13,8 @@ export function ArticleList({ articles, topics }: { articles: Item[]; topics: st
   return (
     <div>
       <div className="flex flex-wrap gap-2" role="group" aria-label="Filter notes by topic">
-        {["All", ...topics].map((t) => {
+        {/* Only topics that have at least one note — a permanently disabled chip is a dead control. */}
+        {["All", ...topics.filter((t) => articles.some((a) => a.topics.includes(t)))].map((t) => {
           const count = t === "All" ? articles.length : articles.filter((a) => a.topics.includes(t)).length;
           return (
             <button

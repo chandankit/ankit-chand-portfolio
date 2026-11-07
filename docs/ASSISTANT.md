@@ -37,14 +37,15 @@ Tier C was verified end to end on this machine with a real model: `llama-server`
 flowchart TD
   Q[Visitor question + persona] --> G{Guardrails<br/>deterministic}
   G -- injection / private / abuse / too long --> R1[Polite refusal · no model call]
-  G -- ok --> F[Follow-up resolution<br/>entities from previous turn]
+  G -- ok --> QF[Question focus<br/>the asking sentence(s) drive retrieval;<br/>context sentences only reach the model]
+  QF --> F[Follow-up resolution<br/>entities from previous turn]
   F --> E[Query embedding<br/>bge-small-en-v1.5 in a Web Worker<br/>precomputed for suggested questions]
   E --> H[Hybrid retrieval<br/>BM25 + dense cosine, convex fusion]
   H --> U{Unknown-topic check}
   U -- named thing not in portfolio --> R2[Honest decline + closest facts · no model call]
-  U -- ok --> RT[Semantic router<br/>example similarity + evidence type vote + persona prior]
-  RT -- ambiguous AND model available --> P[LLM planner<br/>JSON schema, 80 tokens]
-  RT --> S[Specialist agents<br/>scoped re-retrieval with type weights]
+  U -- ok --> RT[Hybrid router<br/>example similarity: dense + BM25<br/>+ evidence type vote + persona prior]
+  RT -- near-tie AND model available --> P[LLM planner<br/>JSON schema, 80 tokens<br/>may only pick among near-tied agents]
+  RT --> S[Specialist agents<br/>scoped re-retrieval with type weights;<br/>Projects agent: one chunk per project first]
   P --> S
   S --> M{Model available?}
   M -- no --> X[Extractive composer<br/>verified sentences + citations]
@@ -62,7 +63,7 @@ flowchart TD
 | Conversation Orchestrator | Guardrails, follow-up resolution, routing, merging, fallbacks | all |
 | Professional Profile Agent | Background, experience, education, certifications | profile, experience, education, certification, milestone, fact |
 | Technical Expertise Agent | Skills, frameworks, methods, where each skill was used | skill, project, article, experience |
-| Project Intelligence Agent | Projects, architectures, agents, testing, results | project, article, fact |
+| Project Intelligence Agent | Projects, architectures, agents, testing, results; breadth-first (one chunk per project) when no project is named | project, article, fact |
 | Recruitment Assistant Agent | Availability, role fit, résumé, contact, freelance | profile, experience, skill, certification, education, fact, project |
 | Portfolio Navigation Agent | Takes the visitor to the right page/section (auto-navigates for “show me…”) | project, profile, certification, education, article, fact |
 | Response Validation Agent | Deterministic fact-check of every model draft; replaces failing drafts | evidence given to the model |
@@ -71,7 +72,18 @@ Agents are prompts + retrieval scopes + type weights (`src/lib/assistant/agents.
 
 ### Personas and visitor modes
 
-Nine personas (Recruiter, Data Science, ML, GenAI, Agentic AI, Student, Collaborator, Freelance, Explore) bias routing (prior weight 0.5), answer style and suggested questions. Six site modes (Overview, Recruiter, Technical, Student, Project explorer, AI conversation) re-order the home page with CSS before first paint (`<html data-mode>`; `?mode=recruiter` links work) and pick the matching persona.
+The six **interaction modes** — Professional overview, Recruiter, Technical deep dive, Student, Project explorer, AI conversation — are both site views and assistant personas, kept in sync in both directions: switching the view (navbar "View" menu, or a `?mode=technical` link) switches the assistant's persona even mid-conversation, and picking a mode in the assistant switches the view. Each mode re-orders the home page with CSS before first paint (`<html data-mode>`) and shapes answers **even without a model**:
+
+| Mode | Routing prior | Instant-answer shape |
+|---|---|---|
+| Professional overview | profile +0.15 | lead + 3 points |
+| Recruiter | recruiter +0.25, profile +0.15 | lead + 2 points; résumé/contact actions |
+| Technical deep dive | technical +0.2, projects +0.15 | lead + 5 points; prefers project, skill and article evidence |
+| Student | technical +0.1, profile +0.1 | lead + 3 points; prefers notes, certifications, education, milestones |
+| Project explorer | projects +0.3 | lead + 4 points; prefers project evidence (project cards first) |
+| AI conversation | — | lead + 2 points, conversational follow-ups |
+
+Seven further audience personas (Data science, ML, GenAI, Agentic AI, Collaborator, Freelance, Explore) remain available under "Or tailor answers to an audience". With a model loaded, each mode/persona also adds an audience sentence and a style instruction to the prompt.
 
 ## 3. Knowledge base and RAG
 
@@ -80,7 +92,7 @@ Nine personas (Recruiter, Data Science, ML, GenAI, Agentic AI, Student, Collabor
 - **Embeddings**: `Xenova/bge-small-en-v1.5` (MIT, 33 M params, 384-d, int8 ONNX, CLS pooling, query instruction prefix). Built offline by `tools/kb/embed.ts` with transformers.js on Node (incremental, keyed by chunk hash), stored as int8 + per-vector scale in `/kb/embeddings.json` (222 KB raw / 154 KB gzip), plus vectors for the 144 suggested questions so the common path needs no model at all. At runtime the same model runs in a Web Worker (WASM); measured browser-vs-Node cosine for the same query: **1.00000**; ~0.1 s per query once loaded.
 - **Retrieval**: BM25 (k1 1.4, b 0.6, title ×2, tags, synonym expansion at half weight) fused with dense cosine by a convex combination (0.55 lexical / 0.45 dense, each normalised). Reciprocal-rank fusion was tried first and dropped — it erased decisive BM25 margins (measured on the eval set). Entity boost for named projects (×1.6 overview, ×1.35 other chunks), per-agent type weights, and a mild ×1.12 prior for featured projects on open questions.
 - **Vector store**: flat exact search in memory. With 209 vectors it takes well under a millisecond, is the accuracy upper bound, and needs no server. FAISS, Chroma and Qdrant were considered and rejected *at this size*: each adds a service (cost) or a large WASM bundle for no accuracy gain. Revisit with an HNSW index (e.g. a self-hosted Qdrant) beyond ~50 k chunks.
-- **Unknown topics**: capitalised names absent from the knowledge base (“Content AI”, “Kubernetes”) produce a deterministic decline with the closest related facts — the model is never asked to improvise. Lower-case unknown words produce a caveat that the model must keep (the validator enforces it).
+- **Unknown topics**: capitalised names absent from the knowledge base (“Content AI”, “Kubernetes”) produce a deterministic decline with the closest related facts — the model is never asked to improvise. Lower-case unknown words produce a caveat that the model must keep (the validator enforces it). Only the *asking* sentence(s) are checked: context such as “I am a hiring manager reviewing candidates…” before the question no longer produces “no information about ‘manager’” (found by the real-model agent run, regression-tested).
 
 **Retrieval evaluation** (no model; `cd tools && npm run eval`, 38 ground-truth questions incl. follow-ups, unknowns and guardrails): hybrid **38/38**, retrieval hit 32/32, routing 32/32, keyword coverage 88 %, ~18 ms/question; BM25-only 36/38.
 
@@ -133,9 +145,10 @@ On-device generation speed could therefore **not** be measured on this machine; 
 | Model declines despite evidence / ignores a missing-topic caveat | Policy checks in the orchestrator replace the draft. |
 | Using the optional proxy as a free general chatbot | Proxy accepts only `[system, user]` prompts carrying this assistant's signature, ≤ 400 output tokens, 16 k chars; same-origin check; 40 requests / 10 min / IP. |
 | Leaking the inference server address or key | Only the server knows `INFERENCE_*`; `/api/assistant/status` returns a label and health only (tested). |
-| Unsafe third-party code | CDN scripts are version-pinned (WebLLM 0.2.87, transformers.js 4.3.2); CSP allows only jsDelivr for scripts, Hugging Face/jsDelivr/raw.githubusercontent for model files, workers from self/blob, `'wasm-unsafe-eval'` (WebAssembly only, not JS `eval`). |
+| Unsafe third-party code | CDN scripts are version-pinned (WebLLM 0.2.87, transformers.js 4.3.2 and the onnxruntime-web build it loads). The CSP allows exactly those three **package paths** on jsDelivr — not the whole host, which serves any npm package — plus Hugging Face / raw.githubusercontent for model files, workers from self/blob, and `'wasm-unsafe-eval'` (WebAssembly only, not JS `eval`). A test fails if the CSP and the pinned versions drift apart. |
+| A self-hosted model server that hangs | The HTTP engine has its own watchdog (90 s to the first token — a slow CPU needs ~47 s just to read the prompt — then 20 s between tokens) and throws a plain error, so the visitor gets the verified answer. The proxy's 60 s limit covers only the wait for the upstream to start responding (it previously also cut off slow-but-healthy streams); a whole answer is capped at 180 s, and a disconnecting visitor cancels the upstream request. |
 | Visitor tracking | Questions are processed in the browser (tiers A/B); conversation history lives in `sessionStorage` and is cleared with the tab or the *Clear* button. No analytics, no accounts. |
-| Photo Studio abuse | Disabled unless `ADMIN_PASSWORD` + 32-char `ADMIN_SESSION_SECRET` are set; HMAC-signed HttpOnly, Secure, SameSite=Strict cookie (2 h); constant-time password check; 5 attempts / 15 min / IP; same-origin checks; images validated by magic bytes and dimensions (JPEG/PNG/WebP, 600–6000 px, ≤ 4 MB, size checked before reading); publishing requires approval + typed `PUBLISH` + `confirm=true` and only commits through a scoped GitHub token; enhancement only calls a self-hosted service you configure. `/admin` is `noindex` and disallowed in robots.txt. |
+| Photo Studio abuse | Disabled unless `ADMIN_PASSWORD` + 32-char `ADMIN_SESSION_SECRET` are set; HMAC-signed HttpOnly, Secure, SameSite=Strict cookie (2 h); constant-time password check; 5 attempts / 15 min / IP; same-origin checks; images validated by magic bytes and dimensions (JPEG/PNG/WebP, 600–6000 px, ≤ 4 MB, size checked before reading); publishing requires approval + typed `PUBLISH` + `confirm=true` and only commits through a scoped GitHub token (it also points `profile.photo.src` at the photo); **reverting to the placeholder** requires typed `REMOVE` + `confirm=true` and only changes `profile.photo.src` (the image file stays in history); every GitHub call has a 20 s timeout and a clear error; enhancement only calls a self-hosted service you configure. `/admin` is `noindex` and disallowed in robots.txt. |
 
 Rate limits are in-memory per serverless instance — good enough against casual abuse, not a distributed attack (use Vercel's firewall rules if that ever matters).
 
@@ -210,6 +223,6 @@ Then on Vercel set `INFERENCE_BASE_URL=https://your-host/v1`, `INFERENCE_API_KEY
 - **On-device AI needs a capable GPU.** It is opt-in, and on the development laptop (Intel UHD 620) generation hangs, so tier B was verified only up to “model loads + probe fails safely + watchdog fallback works”. Token/s for tier B on working hardware is unmeasured here.
 - **Instant answers are extractive.** They are correct and cited but read like a summary of facts, and the lead sentence is the top-ranked chunk — e.g. “explain his multi-agent architecture” leads with the two-agent code generator before NexusAI.
 - **Small models are weak writers.** Even the best candidate has drafts rejected; the validator is deliberately strict, so some acceptable phrasings are replaced by the instant answer. Known open false alarm: a hyphenated form of a known name (“AutoGen-based”) is flagged as an unsupported name, which cost Qwen3-1.7B an accurate draft in the benchmark.
-- **The validator is lexical.** It can't judge reasoning quality, only that names, numbers, quantities, employers and citations are supported; a fluent but misleading paraphrase built entirely from supported words could pass.
+- **The validator is lexical.** It can't judge reasoning quality, only that names, numbers, quantities, employers and citations are supported; a fluent but misleading paraphrase built entirely from supported words could pass. Observed in the agent run: when NexusAI was missing from the evidence, Qwen2.5-0.5B listed a forecasting project among “multi-agent projects” and the draft passed (every name was real). Widening the Project agent's evidence fixed that case; category errors of this kind are still not detectable lexically.
 - **English only**, and knowledge is only as current as `content/` (rebuild embeddings after edits; the tests fail if the build drifts).
 - **Rate limits are per instance**, and the free CDNs (HF Hub, jsDelivr) are third-party dependencies outside this project's control.

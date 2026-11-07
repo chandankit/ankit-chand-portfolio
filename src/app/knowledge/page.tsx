@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { getArticles } from "@/lib/articles";
 import { projects, certifications } from "@/lib/content";
 import { ArticleList } from "@/components/article-list";
 import { Container, PageHeader, SectionHeading } from "@/components/ui";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Knowledge — Engineering Notes",
   description: "Engineering notes by Ankit Chand on agentic AI, multi-agent architecture, LLM testing and AI engineering, drawn from building NexusAI and IntelliHub.",
-  alternates: { canonical: "/knowledge" },
-};
+  path: "/knowledge",
+});
 
 /** Topics the knowledge hub is organised around. Add an article with any of these topics and it appears automatically. */
 const TOPICS = ["Python", "Machine Learning", "Deep Learning", "Generative AI", "RAG", "Agentic AI", "Multi-Agent Architecture", "Prompt Engineering", "LLM Evaluation", "AI Engineering"];

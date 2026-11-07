@@ -38,5 +38,6 @@ export const allPages: NavItem[] = [
   ...credentialsNav,
   { href: "/knowledge", label: "Knowledge", description: "Engineering notes" },
   { href: "/resume", label: "Resume", description: "Preview and download" },
+  { href: "/ask", label: "Ask about Ankit", description: "AI assistant, grounded in this site" },
   { href: "/contact", label: "Contact", description: "Get in touch" },
 ];

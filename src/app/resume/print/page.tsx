@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { certifications, education, experience, getProject, profile, skillCategories } from "@/lib/content";
 import { formatYearMonth } from "@/lib/format";
 import { siteUrl } from "@/lib/site";
+import { PrintButton } from "@/components/print-button";
 
 /**
  * Print-optimised, one-document resume generated from the same content as the
@@ -24,6 +25,9 @@ export default function ResumePrintPage() {
   return (
     <div className="px-3 pb-16 pt-24 print:p-0">
       <style>{`@page { size: A4; margin: 11mm 13mm; } @media print { html, body { background: #fff !important; } }`}</style>
+      <div className="mx-auto mb-4 flex max-w-[210mm] justify-end print:hidden">
+        <PrintButton />
+      </div>
       <article className="mx-auto max-w-[210mm] bg-white px-[13mm] py-[11mm] text-[9.4pt] leading-[1.38] text-[#1f2937] shadow-2xl print:max-w-none print:p-0 print:shadow-none">
         <header className="border-b-2 border-[#4f46e5] pb-3">
           <h1 className="font-display text-[22pt] font-semibold leading-tight tracking-tight text-[#0b1222]">{profile.name}</h1>

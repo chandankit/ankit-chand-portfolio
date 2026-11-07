@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { ArrowUpRight, Briefcase, CheckCircle2 } from "lucide-react";
 import { experience, getProject } from "@/lib/content";
@@ -6,11 +7,11 @@ import { formatDuration, formatYearMonth } from "@/lib/format";
 import { Reveal } from "@/components/reveal";
 import { Badge, Container, PageHeader, TechTag } from "@/components/ui";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Experience",
   description: "Professional experience of Ankit Chand: Data Scientist at Retisio India and AIE Software India, independent generative-AI and multi-agent projects, and a data-science internship in forecasting.",
-  alternates: { canonical: "/experience" },
-};
+  path: "/experience",
+});
 
 const typeTone = { "Full-time": "teal", Internship: "sky", Independent: "indigo", Contract: "amber" } as const;
 
@@ -29,8 +30,7 @@ export default function ExperiencePage() {
       <Container>
         <ol className="relative space-y-6 before:absolute before:bottom-4 before:left-[19px] before:top-4 before:w-px before:bg-line sm:before:left-[23px]">
           {experience.map((e, i) => (
-            <Reveal key={e.id} delay={i * 0.04}>
-              <li id={e.id} className="relative grid grid-cols-[40px_1fr] gap-4 sm:grid-cols-[48px_1fr] sm:gap-6">
+            <Reveal as="li" key={e.id} id={e.id} delay={i * 0.04} className="relative grid grid-cols-[40px_1fr] gap-4 sm:grid-cols-[48px_1fr] sm:gap-6">
                 <span className="relative z-10 grid size-10 place-items-center rounded-full border border-line-strong bg-elev sm:size-12">
                   <Briefcase className="size-4 text-indigo sm:size-5" aria-hidden />
                 </span>
@@ -86,7 +86,6 @@ export default function ExperiencePage() {
                     )}
                   </div>
                 </details>
-              </li>
             </Reveal>
           ))}
         </ol>

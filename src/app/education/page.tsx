@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { BookOpen, GraduationCap } from "lucide-react";
 import { education, projects } from "@/lib/content";
 import { Reveal } from "@/components/reveal";
 import { ArrowLink, Badge, Container, PageHeader } from "@/components/ui";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Education",
   description: "Education of Ankit Chand: Post Graduate Diploma in Data Science from IIIT Bangalore, B.Tech in Mechanical Engineering from Lovely Professional University, and Great Learning's PG Program in Data Science with Generative AI (in progress).",
-  alternates: { canonical: "/education" },
-};
+  path: "/education",
+});
 
 export default function EducationPage() {
   const coursework = projects.filter((p) => p.context === "Coursework");

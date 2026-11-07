@@ -9,10 +9,11 @@
 import { execFileSync } from "node:child_process";
 import { existsSync, writeFileSync } from "node:fs";
 import path from "node:path";
+import { homedir } from "node:os";
 import { ROOT } from "../kb/content.ts";
 
-const LLAMA_DIR = process.env.LLAMA_DIR ?? "C:/Users/Abhisek Chand/.tools/llama.cpp";
-const MODELS_DIR = process.env.MODELS_DIR ?? "C:/Users/Abhisek Chand/.tools/models";
+const LLAMA_DIR = process.env.LLAMA_DIR ?? path.join(homedir(), ".tools", "llama.cpp");
+const MODELS_DIR = process.env.MODELS_DIR ?? path.join(homedir(), ".tools", "models");
 const MODELS = [
   ["Qwen2.5-0.5B-Instruct", "qwen2.5-0.5b-instruct-q4_k_m.gguf"],
   ["Gemma-3-1B-it", "gemma-3-1b-it-Q4_K_M.gguf"],

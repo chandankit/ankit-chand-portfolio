@@ -12,7 +12,7 @@ import { ButtonLink, Container, SectionHeading, buttonClass } from "./ui";
 
 /** Signature feature teaser — visible in every mode except AI conversation (which shows the chat itself). */
 export function AskTeaser() {
-  const starters = assistantJson.personas.find((p) => p.id === "explore")?.suggestions ?? [];
+  const starters = assistantJson.personas.find((p) => p.id === "conversation")?.suggestions ?? [];
   return (
     <section data-section="ask" data-mode-hide="conversation" className="py-16" aria-labelledby="ask-title">
       <Container>

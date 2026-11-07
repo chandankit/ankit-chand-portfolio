@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { Download, ExternalLink, Printer } from "lucide-react";
 import { certifications, education, experience, profile, skillCategories } from "@/lib/content";
 import { formatYearMonth } from "@/lib/format";
 import { ButtonLink, Container, PageHeader } from "@/components/ui";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Resume",
   description: "Resume of Ankit Chand — Data Scientist and Generative AI & Agentic AI Engineer. Preview online or download the PDF.",
-  alternates: { canonical: "/resume" },
-};
+  path: "/resume",
+});
 
 function Block({ title, children }: { title: string; children: React.ReactNode }) {
   return (

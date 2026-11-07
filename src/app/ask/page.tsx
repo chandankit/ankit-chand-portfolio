@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Cpu, Lock, Server, ShieldCheck, Zap } from "lucide-react";
 import { ArchitectureDiagram } from "@/components/architecture-diagram";
 import { AssistantChat } from "@/components/assistant/assistant-chat";
@@ -6,11 +7,11 @@ import { Container, PageHeader } from "@/components/ui";
 import { BROWSER_MODELS } from "@/lib/assistant/models";
 import { EMBEDDING_MODEL } from "@/lib/assistant/embedding-config";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Ask About Ankit — AI portfolio assistant",
   description: "Ask a multi-agent assistant about Ankit Chand's experience, projects, skills and certifications. Grounded in the portfolio, built only with open-source models.",
-  alternates: { canonical: "/ask" },
-};
+  path: "/ask",
+});
 
 const architecture = {
   title: "How a question is answered",

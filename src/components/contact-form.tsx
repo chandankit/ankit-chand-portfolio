@@ -2,15 +2,21 @@
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
-import { CircleCheck, CircleX, LoaderCircle, Mail, Send } from "lucide-react";
+import { CircleCheck, CircleX, Info, LoaderCircle, Mail, Send } from "lucide-react";
 import { ContactSchema, enquiryTypes, type ContactInput, type ContactResponse } from "@/lib/contact-schema";
 import { cn } from "@/lib/format";
 import { buttonClass } from "./ui";
 
 type Fields = Pick<ContactInput, "name" | "email" | "subject" | "message"> & { enquiryType: string };
-type Status = { kind: "idle" } | { kind: "sending" } | { kind: "success" } | { kind: "error"; message: string; fallback?: boolean };
+type Status = { kind: "idle" } | { kind: "sending" } | { kind: "success" } | { kind: "handed-off" } | { kind: "error"; message: string; fallback?: boolean };
 
-export function ContactForm({ email }: { email: string }) {
+/**
+ * `delivery`: whether the server can deliver messages (Resend or a webhook is configured).
+ * When it can't, the form says so BEFORE the visitor types, and "submit" validates the
+ * message and opens the visitor's own email app with it filled in — the form is never a
+ * dead end that only reveals the problem after the message has been written.
+ */
+export function ContactForm({ email, delivery = true }: { email: string; delivery?: boolean }) {
   const params = useSearchParams();
   const [fields, setFields] = useState<Fields>({ name: "", email: "", subject: params.get("subject") ?? "", enquiryType: "", message: "" });
   const [errors, setErrors] = useState<Partial<Record<keyof ContactInput, string>>>({});
@@ -42,6 +48,12 @@ export function ContactForm({ email }: { email: string }) {
       setErrors(fe);
       const first = Object.keys(fe)[0];
       document.getElementById(`contact-${first}`)?.focus();
+      return;
+    }
+    if (!delivery) {
+      window.location.href = mailtoHref;
+      setStatus({ kind: "handed-off" });
+      requestAnimationFrame(() => statusRef.current?.focus());
       return;
     }
     setStatus({ kind: "sending" });
@@ -93,7 +105,16 @@ export function ContactForm({ email }: { email: string }) {
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="card relative space-y-5 p-6 sm:p-8" aria-describedby="contact-privacy">
+    <form onSubmit={onSubmit} noValidate className="card relative space-y-5 p-6 sm:p-8" aria-describedby={delivery ? "contact-privacy" : "contact-delivery contact-privacy"}>
+      {!delivery && (
+        <p id="contact-delivery" className="flex gap-3 rounded-xl border border-indigo/30 bg-indigo/10 px-4 py-3 text-sm text-fg">
+          <Info className="mt-0.5 size-4 shrink-0 text-indigo" aria-hidden />
+          <span>
+            Fill this in and press <strong>Open in my email app</strong> — your message is checked here, then opens in your email app addressed to {email}, ready to send. Nothing is
+            sent from this website.
+          </span>
+        </p>
+      )}
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="contact-name" className="text-sm font-medium text-fg">
@@ -153,6 +174,18 @@ export function ContactForm({ email }: { email: string }) {
       </div>
 
       <div ref={statusRef} tabIndex={-1} aria-live="polite" className="outline-none">
+        {status.kind === "handed-off" && (
+          <div role="status" className="flex gap-3 rounded-xl border border-teal/40 bg-teal/10 px-4 py-3 text-sm text-fg">
+            <CircleCheck className="mt-0.5 size-4 shrink-0 text-teal" aria-hidden />
+            <p>
+              Your email app should now be open with the message ready — just press send. If nothing opened,{" "}
+              <a href={mailtoHref} className="font-semibold text-indigo hover:text-fg">
+                try again
+              </a>{" "}
+              or email <span className="font-medium">{email}</span> directly; your text is still in the form.
+            </p>
+          </div>
+        )}
         {status.kind === "error" && (
           <div role="alert" className="flex gap-3 rounded-xl border border-rose/40 bg-rose/10 px-4 py-3 text-sm text-fg">
             <CircleX className="mt-0.5 size-4 shrink-0 text-rose" aria-hidden />
@@ -173,8 +206,8 @@ export function ContactForm({ email }: { email: string }) {
           Your details are used only to reply to you. Nothing is stored on this website.
         </p>
         <button type="submit" disabled={status.kind === "sending"} className={buttonClass("gradient", "shrink-0 whitespace-nowrap")}>
-          {status.kind === "sending" ? <LoaderCircle className="size-4 animate-spin" aria-hidden /> : <Send className="size-4" aria-hidden />}
-          {status.kind === "sending" ? "Sending…" : "Send message"}
+          {status.kind === "sending" ? <LoaderCircle className="size-4 animate-spin" aria-hidden /> : delivery ? <Send className="size-4" aria-hidden /> : <Mail className="size-4" aria-hidden />}
+          {status.kind === "sending" ? "Sending…" : delivery ? "Send message" : "Open in my email app"}
         </button>
       </div>
     </form>

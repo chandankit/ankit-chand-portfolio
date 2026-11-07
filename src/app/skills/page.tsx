@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Suspense } from "react";
 import { projects, skillCategories } from "@/lib/content";
 import { Container, PageHeader } from "@/components/ui";
 import { SkillExplorer } from "@/components/skill-explorer";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Skills",
   description: "Technical skills of Ankit Chand across data science and machine learning, generative AI, agentic AI and backend engineering — each linked to the projects where it was used.",
-  alternates: { canonical: "/skills" },
-};
+  path: "/skills",
+});
 
 export default function SkillsPage() {
   const titles = Object.fromEntries(projects.map((p) => [p.slug, p.title]));

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { Briefcase, Brain, ChartLine, CodeXml, Compass, GraduationCap, Network, Rocket, RotateCcw, Send, Sparkles, Square, UserRound } from "lucide-react";
 import { MAX_QUESTION_CHARS } from "@/lib/assistant/guardrails.ts";
 import type { PersonaId } from "@/lib/assistant/types.ts";
+import { MODES } from "@/lib/modes";
 import { cn } from "@/lib/format";
 import { useAssistant } from "./assistant-provider";
 import { MessageView } from "./message-view";
@@ -21,35 +22,51 @@ const PERSONA_ICON: Record<string, typeof Sparkles> = {
   compass: Compass,
 };
 
+/** The six interaction modes come first (they also switch the site's view); the rest are audiences. */
 export function PersonaPicker({ onPick }: { onPick?: (id: PersonaId) => void }) {
   const { personas, persona, setPersona } = useAssistant();
   if (!personas.length) return <div className="h-20 animate-pulse rounded-xl bg-surface" aria-hidden />;
+  const modeIds = new Set<string>(MODES.map((m) => m.persona));
+  const groups = [
+    { title: "Interaction modes", items: personas.filter((p) => modeIds.has(p.id)) },
+    { title: "Or tailor answers to an audience", items: personas.filter((p) => !modeIds.has(p.id)) },
+  ];
   return (
-    <div role="radiogroup" aria-label="I'm here as a…" className="grid grid-cols-2 gap-1.5 sm:grid-cols-3">
-      {personas.map((p) => {
-        const Icon = PERSONA_ICON[p.icon] ?? Sparkles;
-        const active = persona?.id === p.id;
-        return (
-          <button
-            key={p.id}
-            type="button"
-            role="radio"
-            aria-checked={active}
-            onClick={() => {
-              setPersona(p.id);
-              onPick?.(p.id);
-            }}
-            className={cn(
-              "flex items-center gap-2 rounded-xl border px-2.5 py-2 text-left text-xs transition",
-              active ? "border-indigo/50 bg-indigo/15 text-fg" : "border-line bg-surface text-muted hover:border-line-strong hover:text-fg",
-            )}
-            title={p.description}
-          >
-            <Icon className={cn("size-3.5 shrink-0", active ? "text-indigo" : "text-subtle")} aria-hidden />
-            <span className="truncate">{p.short}</span>
-          </button>
-        );
-      })}
+    <div role="radiogroup" aria-label="Answer style" className="space-y-2.5">
+      {groups.map((g) => (
+        <div key={g.title}>
+          <p aria-hidden className="mb-1.5 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-subtle">
+            {g.title}
+          </p>
+          <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3">
+            {g.items.map((p) => {
+              const Icon = PERSONA_ICON[p.icon] ?? Sparkles;
+              const active = persona?.id === p.id;
+              return (
+                <button
+                  key={p.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={active}
+                  aria-label={`${p.label}: ${p.description}`}
+                  onClick={() => {
+                    setPersona(p.id);
+                    onPick?.(p.id);
+                  }}
+                  className={cn(
+                    "flex items-center gap-2 rounded-xl border px-2.5 py-2 text-left text-xs transition",
+                    active ? "border-indigo/50 bg-indigo/15 text-fg" : "border-line bg-surface text-muted hover:border-line-strong hover:text-fg",
+                  )}
+                  title={p.description}
+                >
+                  <Icon className={cn("size-3.5 shrink-0", active ? "text-indigo" : "text-subtle")} aria-hidden />
+                  <span className="truncate">{p.short}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
@@ -149,7 +166,7 @@ export function AssistantChat({ variant = "panel" }: { variant?: "panel" | "page
             maxLength={MAX_QUESTION_CHARS}
             onChange={(e) => setDraft(e.target.value)}
             onKeyDown={onKey}
-            placeholder={!persona || persona.id === "explore" ? "Ask anything about Ankit…" : `Ask about Ankit (${persona.short} view)…`}
+            placeholder={!persona || ["explore", "overview", "conversation"].includes(persona.id) ? "Ask anything about Ankit…" : `Ask about Ankit (${persona.short} view)…`}
             className="max-h-32 min-h-[2.25rem] flex-1 resize-none bg-transparent py-1.5 text-sm text-fg outline-none placeholder:text-subtle"
           />
           {busy ? (

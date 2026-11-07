@@ -4,6 +4,22 @@ Date: 6 Nov 2026. Machine: Intel Core i7-8665U (4 cores / 8 threads), 16 GB RAM,
 
 Rule followed: **a test is only listed as passed if it was executed and passed.** Anything not run is listed under *Not tested*.
 
+> **Update, 7 Nov 2026 — end-to-end audit pass.** New suites and their results are summarised here; the full audit, root causes and the agent execution report are in **[AUDIT_REPORT.md](AUDIT_REPORT.md)**. Sections 1–5 below are the original 6 Nov report and are kept as they were.
+>
+> | Suite (new or extended) | Result |
+> |---|---|
+> | `tools/tests/modes.test.ts` — six interaction modes are personas, change instant answers, grammatical audience sentence | 4/4 (mutation-checked) |
+> | `tools/tests/routing.test.ts` — the owner's ten questions + project-shaped follow-ups route correctly with the real embedding model | 2/2 (fails with hybrid routing switched off) |
+> | `tools/tests/evidence.test.ts` — breadth-first project evidence, depth for a named project, preamble ≠ unknown topic, real unknown still declined | 4/4 (both fixes mutation-checked) |
+> | `tools/tests/llm-http.test.ts` — watchdogs against real local HTTP servers: silent server, stalled stream, slow-but-steady stream completes, visitor cancel stays AbortError | 4/4 |
+> | `tools/tests/photo-publish.test.ts` — publish/revert against a fake GitHub API: src-only edit, idempotent revert, two-commit publish from placeholder, errors | 5/5 |
+> | `tools/tests/assistant.test.ts` — now also asserts the CSP allows only the three pinned jsDelivr package paths | 27/27 |
+> | **All tools tests** (`cd tools && npm test`) | **47/47** |
+> | `tests/admin-api.test.mjs` (+ revert: session, confirmation, connection) | **15/15** |
+> | `tests/llm-proxy.test.mjs` · `tests/contact-api.test.mjs` | **6/6 · 8/8** |
+> | Real-inference agent run (`tools/bench/agents.ts`, Qwen2.5-0.5B on llama.cpp, 21 scenarios) | see AUDIT_REPORT §C |
+> | Browser QA (`npm run qa`, now 34 scenarios) | local build 33/34 → the failure was the scenario's own isolation (a previous scenario's conversation hid the picker); fixed and re-run clean; production results in AUDIT_REPORT §D |
+
 ## 1. Automated suites
 
 | Suite | What it covers | Result |

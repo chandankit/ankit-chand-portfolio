@@ -77,6 +77,12 @@ test("browser workers are static JS, pinned to the same library versions as the 
   // A static `import … from "https://…"` in a module worker is checked against CSP worker-src
   // ('self' only) and blocked; CDN code must be loaded with dynamic import() (script-src).
   for (const f of ["public/workers/embed-worker.js", "public/workers/webllm-worker.js"]) assert.doesNotMatch(read(f), /^\s*import\s[^(]*from\s*["']https?:/m, f);
+  // The CSP allows exactly these pinned jsDelivr package paths — never the whole host,
+  // which would let any npm package run on this origin.
+  const config = read("next.config.ts");
+  const ort = JSON.parse(read("tools/node_modules/onnxruntime-web/package.json")).version;
+  for (const pkg of [`@huggingface/transformers@${transformers}/`, `onnxruntime-web@${ort}/`, `@mlc-ai/web-llm@${webllm}/`]) assert.ok(config.includes(`https://cdn.jsdelivr.net/npm/${pkg}`), `CSP allows ${pkg}`);
+  assert.doesNotMatch(config, /https:\/\/cdn\.jsdelivr\.net[\s"`]/, "no host-wide jsDelivr source");
 });
 
 // ── 1. Guardrails ────────────────────────────────────────────────────────────

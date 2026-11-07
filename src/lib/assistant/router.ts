@@ -16,7 +16,10 @@ import { SPECIALISTS, type AgentSpec } from "./agents.ts";
 import { Bm25Index, cosine, decodeVector, type EmbeddingFile } from "./retriever.ts";
 import { hashString } from "./text.ts";
 
-export type RoutePlan = { agents: AgentId[]; confidence: number; scores: Record<string, number>; ambiguous: boolean };
+/** Weight of keyword overlap with an agent's examples, added to the embedding similarity. */
+const LEXICAL_WEIGHT = 0.1;
+
+export type RoutePlan ={ agents: AgentId[]; confidence: number; scores: Record<string, number>; ambiguous: boolean };
 
 export class SemanticRouter {
   private exampleVecs: Map<AgentId, Float32Array[]> | null = null;
@@ -43,21 +46,27 @@ export class SemanticRouter {
     const scores: Record<string, number> = {};
     // 1) semantic / lexical similarity to each agent's examples (0..1)
     const sim: Record<string, number> = {};
+    // Lexical (BM25) similarity to each agent's examples, normalised to 0..1.
+    const lexSim: Record<string, number> = Object.fromEntries(SPECIALISTS.map((a) => [a.id, 0]));
+    const lex = this.lexical.score(query);
+    const lmax = Math.max(...lex, 1e-9);
+    lex.forEach((s, i) => {
+      const owner = this.exampleOwner[i];
+      lexSim[owner] = Math.max(lexSim[owner], s / lmax);
+    });
     if (queryVec && this.exampleVecs) {
       for (const a of SPECIALISTS) {
         const vs = this.exampleVecs.get(a.id) ?? [];
         const top = vs.map((v) => cosine(queryVec, v)).sort((x, y) => y - x);
         // mean of the two best matches is steadier than the single max
-        sim[a.id] = top.length ? (top[0] + (top[1] ?? top[0])) / 2 : 0;
+        const dense = top.length ? (top[0] + (top[1] ?? top[0])) / 2 : 0;
+        // Hybrid, like retrieval: small embedding models score many intents almost equally
+        // (measured: five agents within 0.05 for "What multi-agent projects has he developed?"),
+        // so a little lexical evidence ("projects", "certifications") breaks those ties.
+        sim[a.id] = dense + LEXICAL_WEIGHT * lexSim[a.id];
       }
     } else {
-      const lex = this.lexical.score(query);
-      const max = Math.max(...lex, 1e-9);
-      for (const a of SPECIALISTS) sim[a.id] = 0;
-      lex.forEach((s, i) => {
-        const owner = this.exampleOwner[i];
-        sim[owner] = Math.max(sim[owner], s / max);
-      });
+      Object.assign(sim, lexSim);
     }
     // 2) evidence vote: weight by rank
     const vote: Record<string, number> = {};

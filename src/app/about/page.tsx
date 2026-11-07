@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { ProfilePhoto } from "@/components/profile-photo";
 import { ArrowRight, Compass, Languages, MapPin, Target } from "lucide-react";
 import { profile } from "@/lib/content";
 import { Reveal } from "@/components/reveal";
 import { ButtonLink, Container, PageHeader, SectionHeading } from "@/components/ui";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "About",
   description: "About Ankit Chand — from mechanical engineering to industry data science to designing multi-agent LLM systems. Career journey, engineering approach and goals.",
-  alternates: { canonical: "/about" },
-};
+  path: "/about",
+});
 
 export default function AboutPage() {
   const { about } = profile;
@@ -70,15 +71,13 @@ export default function AboutPage() {
             <SectionHeading id="journey-title" eyebrow="Career journey" title="How I got here" />
             <ol className="relative space-y-8 border-l border-line pl-8">
               {about.journey.map((j, i) => (
-                <Reveal key={j.title} delay={i * 0.04}>
-                  <li className="relative">
+                <Reveal as="li" key={j.title} delay={i * 0.04} className="relative">
                     <span className="absolute -left-[41px] top-1.5 grid size-5 place-items-center rounded-full border border-line-strong bg-elev">
                       <span className="size-2 rounded-full bg-gradient-brand" />
                     </span>
                     <p className="font-mono text-xs uppercase tracking-[0.14em] text-teal">{j.period}</p>
                     <h3 className="mt-1 font-display text-lg font-semibold text-fg">{j.title}</h3>
                     <p className="mt-2 leading-relaxed text-muted">{j.body}</p>
-                  </li>
                 </Reveal>
               ))}
             </ol>

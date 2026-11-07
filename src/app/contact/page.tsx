@@ -1,17 +1,19 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Suspense } from "react";
 import { Briefcase, Handshake, Mail, MapPin, Rocket } from "lucide-react";
 import { profile } from "@/lib/content";
 import { ContactForm } from "@/components/contact-form";
+import { deliveryConfigured } from "@/lib/contact-server";
 import { CopyButton } from "@/components/copy-button";
 import { Container, PageHeader } from "@/components/ui";
 import { GitHubIcon, LinkedInIcon } from "@/components/icons";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Contact",
   description: "Contact Ankit Chand about Data Scientist, GenAI Engineer and Agentic AI roles, freelance projects or collaboration.",
-  alternates: { canonical: "/contact" },
-};
+  path: "/contact",
+});
 
 const reasons = [
   { icon: Briefcase, title: "Full-time roles", body: "Data Scientist, GenAI Engineer and Agentic AI Engineer positions." },
@@ -84,7 +86,7 @@ export default function ContactPage() {
           </div>
         </div>
         <Suspense fallback={<div className="card h-[520px]" aria-busy="true" />}>
-          <ContactForm email={profile.email} />
+          <ContactForm email={profile.email} delivery={deliveryConfigured()} />
         </Suspense>
       </Container>
     </>

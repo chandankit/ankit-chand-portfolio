@@ -14,6 +14,7 @@ import { ModeProvider } from "@/components/modes";
 import { MODE_BOOT_SCRIPT } from "@/lib/modes";
 import { AssistantProvider } from "@/components/assistant/assistant-provider";
 import { AssistantPanel } from "@/components/assistant/assistant-panel";
+import { PointerEffects } from "@/components/pointer-effects";
 
 const sora = Sora({ subsets: ["latin"], variable: "--font-sora", display: "swap" });
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -81,6 +82,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <AssistantProvider>
           <CommandPaletteProvider>
             <Backdrop />
+            <div aria-hidden className="scroll-progress no-print" />
+            <PointerEffects />
             <Navbar name={profile.name} github={profile.socials.github} linkedin={profile.socials.linkedin} />
             <main id="main" className="relative">
               {children}

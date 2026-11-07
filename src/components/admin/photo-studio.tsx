@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { CircleCheck, Download, ImagePlus, LoaderCircle, LogOut, RotateCcw, Upload, WandSparkles, X, ZoomIn } from "lucide-react";
+import { CircleCheck, Download, ImagePlus, LoaderCircle, LogOut, RotateCcw, Upload, UserRound, WandSparkles, X, ZoomIn } from "lucide-react";
 import { buttonClass } from "@/components/ui";
 import { cn } from "@/lib/format";
 
@@ -21,8 +21,9 @@ export function PhotoStudio({ current, limits, enhancerConfigured, publishConfig
   const [exportUrl, setExportUrl] = useState<string | null>(null);
   const [approved, setApproved] = useState(false);
   const [msg, setMsg] = useState<{ kind: "ok" | "err" | "info"; text: string } | null>(null);
-  const [busy, setBusy] = useState<"enhance" | "publish" | null>(null);
+  const [busy, setBusy] = useState<"enhance" | "publish" | "revert" | null>(null);
   const [confirmText, setConfirmText] = useState("");
+  const [revertText, setRevertText] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -104,6 +105,7 @@ export function PhotoStudio({ current, limits, enhancerConfigured, publishConfig
       if (!r.ok) throw new Error(j?.error ?? `Publishing failed (${r.status}).`);
       setMsg({ kind: "ok", text: `Published. The site redeploys automatically from the new commit${j?.commit ? `: ${j.commit}` : "."}` });
       setConfirmText("");
+      setRevertText("");
     } catch (e) {
       setMsg({ kind: "err", text: (e as Error).message });
     } finally {
@@ -111,6 +113,27 @@ export function PhotoStudio({ current, limits, enhancerConfigured, publishConfig
     }
   };
 
+  /** Switches the live site back to the neutral placeholder (profile.photo.src = null). */
+  const revert = async () => {
+    setBusy("revert");
+    setMsg(null);
+    try {
+      const r = await fetch("/api/admin/photo?action=revert&confirm=true", { method: "POST" });
+      const j = await r.json().catch(() => null);
+      if (!r.ok) throw new Error(j?.error ?? `Reverting failed (${r.status}).`);
+      setMsg({
+        kind: "ok",
+        text: j?.unchanged ? "The site already shows the placeholder — nothing to change." : `Done. The site redeploys with the placeholder${j?.commit ? `: ${j.commit}` : "."} The photo file stays in the repository's history.`,
+      });
+      setRevertText("");
+    } catch (e) {
+      setMsg({ kind: "err", text: (e as Error).message });
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  /** Clears the upload being edited (does not touch the live site). */
   const remove = () => {
     setImg(null);
     setEnhanced(null);
@@ -183,7 +206,7 @@ export function PhotoStudio({ current, limits, enhancerConfigured, publishConfig
                 <RotateCcw className="size-4" aria-hidden /> Reset crop
               </button>
               <button type="button" onClick={remove} className={buttonClass("ghost")}>
-                <X className="size-4" aria-hidden /> Remove
+                <X className="size-4" aria-hidden /> Discard upload
               </button>
             </>
           )}
@@ -229,12 +252,27 @@ export function PhotoStudio({ current, limits, enhancerConfigured, publishConfig
 
         <div className="card space-y-3 p-5 text-sm">
           <p className="font-semibold text-fg">3 · Publish</p>
-          <p className="text-xs text-muted">Commits the image to the repository; the normal deploy then updates the site. Type PUBLISH to confirm.</p>
+          <p className="text-xs text-muted">Commits the image to the repository and points the profile at it; the site then redeploys. Type PUBLISH to confirm.</p>
           <input value={confirmText} onChange={(e) => setConfirmText(e.target.value)} placeholder="PUBLISH" aria-label="Type PUBLISH to confirm" className="w-full rounded-xl border border-line bg-surface px-3 py-2 text-sm text-fg outline-none" />
           <button type="button" disabled={!approved || confirmText !== "PUBLISH" || busy !== null || !publishConfigured} onClick={publish} className={buttonClass("gradient", "w-full")}>
             {busy === "publish" ? <LoaderCircle className="size-4 animate-spin" aria-hidden /> : <CircleCheck className="size-4" aria-hidden />} Publish photo
           </button>
           {!publishConfigured && <p className="text-xs text-subtle">Not connected — download the approved image instead, or set GITHUB_TOKEN and GITHUB_REPO.</p>}
+        </div>
+
+        <div className="card space-y-3 p-5 text-sm">
+          <p className="font-semibold text-fg">Remove the live photo</p>
+          <p className="text-xs text-muted">
+            {current ? "Shows the neutral placeholder on every page instead of the photo. The image file is kept, so you can publish again later. Type REMOVE to confirm." : "The site already shows the placeholder."}
+          </p>
+          {current && (
+            <>
+              <input value={revertText} onChange={(e) => setRevertText(e.target.value)} placeholder="REMOVE" aria-label="Type REMOVE to confirm" className="w-full rounded-xl border border-line bg-surface px-3 py-2 text-sm text-fg outline-none" />
+              <button type="button" disabled={revertText !== "REMOVE" || busy !== null || !publishConfigured} onClick={revert} className={buttonClass("ghost", "w-full")}>
+                {busy === "revert" ? <LoaderCircle className="size-4 animate-spin" aria-hidden /> : <UserRound className="size-4" aria-hidden />} Revert to placeholder
+              </button>
+            </>
+          )}
         </div>
 
         <button

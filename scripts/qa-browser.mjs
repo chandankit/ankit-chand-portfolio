@@ -65,6 +65,28 @@ const scenarios = [
   { name: "26-desktop-project-summary-view", device: DESKTOP, path: "/projects/intellihub?mode=recruiter" },
   { name: "27-phone-assistant-answer", device: PHONE, path: "/", script: ASK(`document.querySelector('button[aria-haspopup=dialog][aria-label^="Ask about Ankit"]')?.click(); await new Promise(r=>setTimeout(r,800));`, "Does he have experience with RAG?"), expect: "/RAG-Powered QA for Medical Research/" },
   { name: "28-desktop-admin-disabled", device: DESKTOP, path: "/admin/login", expect: "/Admin features are disabled|Password/" },
+  // Audit & polish (interaction modes, evidence chart, toolkit, contact hand-off, long questions)
+  {
+    name: "29-desktop-ask-mode-sync",
+    device: DESKTOP,
+    path: "/ask",
+    // Picking the "Projects" interaction mode in the assistant must switch the site's view too.
+    // Scenarios share one tab, so an earlier scenario's conversation may still be open (the
+    // picker is hidden mid-conversation by design): start a new conversation first.
+    script: `[...document.querySelectorAll('button')].find(b=>b.textContent.includes('New conversation'))?.click(); await new Promise(r=>setTimeout(r,600)); [...document.querySelectorAll('[role=radiogroup][aria-label="Answer style"] [role=radio]')].find(b=>b.textContent.trim()==='Projects')?.click(); await new Promise(r=>setTimeout(r,500)); document.body.insertAdjacentHTML('beforeend','<p class="sr-only">qa-mode='+document.documentElement.dataset.mode+'</p>');`,
+    expect: "/interaction modes[\\s\\S]*qa-mode=explorer/i",
+  },
+  { name: "30-desktop-skills-evidence-chart", device: DESKTOP, path: "/skills", expect: "/Where the evidence is[\\s\\S]*Python[\\s\\S]*4 projects/" },
+  { name: "31-desktop-home-toolkit", device: DESKTOP, path: "/", expect: "/Most-used in shipped projects/i" },
+  { name: "32-desktop-contact-delivery-notice", device: DESKTOP, path: "/contact", expect: "/Open in my email app|Send message/" },
+  {
+    name: "33-desktop-assistant-long-question",
+    device: DESKTOP,
+    path: "/ask",
+    script: ASK("", "I am a hiring manager reviewing candidates for an applied AI role. What has he built with retrieval-augmented generation?"),
+    expect: "/RAG-Powered QA for Medical Research/",
+  },
+  { name: "34-phone-skills-chart", device: PHONE, path: "/skills", expect: "/Where the evidence is/" },
 ];
 
 /** Opens the chat (optional setup), asks a question through the real form and waits for the answer. */
