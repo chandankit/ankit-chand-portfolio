@@ -43,6 +43,33 @@ export async function createHarness({ dense = true }: { dense?: boolean } = {}) 
   return { ask, chunks, personas };
 }
 
+/**
+ * Wraps an engine so the benchmark can store the model's raw answer draft for each case
+ * (before reasoning-stripping and validation). A rejected draft can then be classified —
+ * real hallucination or validator false alarm — from the result file, without re-running
+ * the model. Planner calls (constrained JSON) are routing, not drafts, and are not kept.
+ */
+export function recordDrafts(engine: LlmEngine) {
+  let draft: string | null = null;
+  const recording: LlmEngine = {
+    id: engine.id,
+    label: engine.label,
+    kind: engine.kind,
+    async complete(req) {
+      const r = await engine.complete(req);
+      if (!req.jsonSchema) draft = r.text;
+      return r;
+    },
+  };
+  /** Returns the draft recorded since the last call and clears it. */
+  const take = () => {
+    const d = draft;
+    draft = null;
+    return d;
+  };
+  return { engine: recording, take };
+}
+
 /** Scores one answer against its expectations. */
 export function grade(c: EvalCase, a: Answer) {
   const ids = a.citations.map((x) => x.id);

@@ -12,14 +12,14 @@ Models were run separately (one result file each, so a later run never overwrite
 
 - `llm-benchmark.json` — 2026-11-06 13:39 UTC: Qwen2.5-0.5B-Instruct, Llama-3.2-1B-Instruct
 - `llm-benchmark-qwen2.5-1.5b.json` — 2026-11-06 15:43 UTC: Qwen2.5-1.5B-Instruct
-- `llm-benchmark-qwen3-1.7b.json` — 2026-11-06 15:59 UTC: Qwen3-1.7B
+- `llm-benchmark-qwen3-1.7b.json` — 2026-11-07 08:19 UTC: Qwen3-1.7B
 
 | Model | Params | Quant | File | RAM | Final answers correct | Model drafts accepted by validator | Replaced | Keyword coverage | Unknowns declined | Prefill tok/s | Decode tok/s | Avg s / answer |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | Qwen2.5-0.5B-Instruct (Apache-2.0) | 0.5B | Q4_K_M (GGUF) | 469 MB | 527 MB | 100% (35/35) | 94% (31/33) | 2 | 75% | 3/3 | 18.7 | 3.6 | 44.0 |
 | Llama-3.2-1B-Instruct (Llama 3.2 Community) | 1.2B | Q4_K_M (GGUF) | 770 MB | 1424 MB | 100% (35/35) | 85% (28/33) | 5 | 84% | 3/3 | 42.6 | 9.2 | 104.7 |
 | Qwen2.5-1.5B-Instruct (Apache-2.0) | 1.5B | Q4_K_M (GGUF) | 1066 MB | 1722 MB | 100% (35/35) | 94% (31/33) | 2 | 88% | 3/3 | 42.7 | 9.7 | 24.5 |
-| Qwen3-1.7B (Apache-2.0) | 1.7B | Q4_K_M (GGUF) | 1056 MB | 2220 MB | 100% (35/35) | 94% (31/33) | 2 | 86% | 3/3 | 29.3 | 8.6 | 25.9 |
+| Qwen3-1.7B (Apache-2.0) | 1.7B | Q4_K_M (GGUF) | 1056 MB | 2221 MB | 100% (35/35) | 100% (33/33) | 0 | 83% | 3/3 | 22.2 | 3.3 | 63.8 |
 
 ### Every replaced or wrong answer
 
@@ -34,8 +34,6 @@ Models were run separately (one result file each, so a later run never overwrite
 | Llama-3.2-1B-Instruct | certs | correct after replacement | model declined although evidence was found |
 | Qwen2.5-1.5B-Instruct | interesting | correct after replacement | model declined although evidence was found; no citations |
 | Qwen2.5-1.5B-Instruct | architecture | correct after replacement | model declined although evidence was found; no citations |
-| Qwen3-1.7B | years | correct after replacement | unsupported number "3" |
-| Qwen3-1.7B | autogen | correct after replacement | unsupported name "AutoGen-based" |
 
 ## Agent execution (real inference) — 2026-11-07 08:53 UTC
 
